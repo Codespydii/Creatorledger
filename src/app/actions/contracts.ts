@@ -7,6 +7,7 @@ import { verifySession } from '@/lib/session'
 import { analyzeContract } from '@/lib/contract-analyzer'
 import { GeminiConfigError } from '@/lib/gemini'
 import { verifyFileMatchesMime } from '@/lib/file-validation'
+import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 import type { ActionState } from '@/types'
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024
@@ -26,6 +27,9 @@ export async function analyzeContractAction(
   formData: FormData,
 ): Promise<ActionState<{ contractId: string }>> {
   const session = await verifySession()
+
+  const limited = await rateLimit(LIMITS.ai, session.userId)
+  if (!limited.ok) return { success: false, error: rateLimitErrorMessage(limited) }
 
   const pastedText = (formData.get('text') as string | null)?.trim() || ''
   const file = formData.get('file') as File | null

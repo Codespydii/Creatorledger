@@ -64,6 +64,85 @@ function buildResetEmailHtml(p: PasswordResetParams): string {
 </html>`
 }
 
+interface VerifyEmailParams {
+  toEmail: string
+  toName: string
+  verifyUrl: string
+  expiresInHours: number
+}
+
+export async function sendVerificationEmail(p: VerifyEmailParams) {
+  if (!isEmailConfigured()) throw new Error('Email service is not configured')
+  await getResend().emails.send({
+    from: `Creator Ledger <${FROM}>`,
+    to: p.toEmail,
+    subject: 'Confirm your email — Creator Ledger',
+    html: `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:32px 16px;">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+    <div style="background:#7c3aed;padding:32px 40px;">
+      <h1 style="color:#ffffff;margin:0;font-size:20px;font-weight:600;">Confirm your email</h1>
+    </div>
+    <div style="padding:40px;">
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:0;">Hi ${p.toName},</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;">Click below to confirm this is your email. This link expires in ${p.expiresInHours} hours.</p>
+      <div style="text-align:center;margin:28px 0;">
+        <a href="${p.verifyUrl}" style="display:inline-block;background:#7c3aed;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:12px 32px;border-radius:8px;">Confirm email</a>
+      </div>
+      <p style="color:#64748b;font-size:13px;line-height:1.6;">Or paste this link into your browser:</p>
+      <p style="color:#7c3aed;font-size:13px;line-height:1.6;word-break:break-all;"><a href="${p.verifyUrl}" style="color:#7c3aed;">${p.verifyUrl}</a></p>
+      <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">If you didn&apos;t sign up for Creator Ledger, you can safely ignore this email.</p>
+    </div>
+  </div>
+</body></html>`,
+  })
+}
+
+interface WelcomeEmailParams {
+  toEmail: string
+  toName: string
+  dashboardUrl: string
+}
+
+export async function sendWelcomeEmail(p: WelcomeEmailParams) {
+  if (!isEmailConfigured()) throw new Error('Email service is not configured')
+  const firstName = p.toName.split(' ')[0]
+  await getResend().emails.send({
+    from: `Mahipal at Creator Ledger <${FROM}>`,
+    replyTo: 'mahipalsinghrajput476@gmail.com',
+    to: p.toEmail,
+    subject: `Welcome to Creator Ledger, ${firstName}`,
+    html: `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:32px 16px;">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+    <div style="background:#7c3aed;padding:32px 40px;">
+      <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Welcome to Creator Ledger 👋</h1>
+    </div>
+    <div style="padding:40px;">
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:0;">Hi ${firstName},</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;">Thanks for signing up. You&apos;re in the beta — free, no credit card, no surprise charges.</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;">Three things to try in your first 60 seconds:</p>
+      <ul style="color:#0f172a;font-size:15px;line-height:1.7;padding-left:20px;">
+        <li><strong>Connect your YouTube channel</strong> in Settings — AdSense revenue auto-syncs daily.</li>
+        <li><strong>Drop a sponsorship contract</strong> in Contracts — AI flags risky clauses in 15 seconds.</li>
+        <li><strong>Log your first brand deal</strong> in Brand Deals — pipeline view + reminders.</li>
+      </ul>
+      <div style="text-align:center;margin:32px 0;">
+        <a href="${p.dashboardUrl}" style="display:inline-block;background:#7c3aed;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:12px 32px;border-radius:8px;">Open dashboard</a>
+      </div>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:24px;">If you hit anything weird, just reply to this email. I&apos;m the founder and your message comes straight to me — no support team, no ticket system.</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-bottom:0;">— Mahipal</p>
+    </div>
+    <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">You&apos;re receiving this because you signed up at <a href="https://creatorledger.app" style="color:#7c3aed;text-decoration:none;">creatorledger.app</a></p>
+    </div>
+  </div>
+</body></html>`,
+  })
+}
+
 interface OverdueReminderParams {
   creatorName: string
   creatorEmail: string

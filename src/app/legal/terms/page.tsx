@@ -6,7 +6,8 @@ export const metadata = {
   description: 'Plain-English terms for using Creator Ledger during beta.',
 }
 
-const LAST_UPDATED = 'May 16, 2026'
+const LAST_UPDATED = 'May 17, 2026'
+const CONTACT_EMAIL = 'mahipalsinghrajput476@gmail.com'
 
 export default function TermsPage() {
   return (
@@ -92,8 +93,10 @@ export default function TermsPage() {
 
         <Section title="9. Contact">
           <p>
-            Email the founder directly. The address is in the welcome email you received when you
-            signed up.
+            Email the founder directly at{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary hover:underline font-medium">
+              {CONTACT_EMAIL}
+            </a>. There is no support team or ticket system — your message comes straight to me.
           </p>
         </Section>
 

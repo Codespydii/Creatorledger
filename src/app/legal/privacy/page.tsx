@@ -6,7 +6,8 @@ export const metadata = {
   description: 'What we collect, how we use it, and what we don\'t do with it.',
 }
 
-const LAST_UPDATED = 'May 16, 2026'
+const LAST_UPDATED = 'May 17, 2026'
+const CONTACT_EMAIL = 'mahipalsinghrajput476@gmail.com'
 
 export default function PrivacyPage() {
   return (
@@ -89,7 +90,12 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="8. Contact">
-          <p>Email the founder directly. The address is in the welcome email you received when you signed up.</p>
+          <p>
+            Email the founder directly at{' '}
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary hover:underline font-medium">
+              {CONTACT_EMAIL}
+            </a>. There is no support team or ticket system — your message comes straight to me.
+          </p>
         </Section>
 
         <div className="mt-12 pt-6 border-t border-border text-sm text-muted-foreground">

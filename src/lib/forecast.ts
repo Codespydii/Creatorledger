@@ -1,4 +1,9 @@
-import type { RevenueEntry, Expense, Invoice, Deal } from '@/generated/prisma/models'
+import type {
+  RevenueEntryModel as RevenueEntry,
+  ExpenseModel as Expense,
+  InvoiceModel as Invoice,
+  DealModel as Deal,
+} from '@/generated/prisma/models'
 import { formatCurrency } from '@/lib/utils'
 
 const HORIZON_DAYS = 90

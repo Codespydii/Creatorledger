@@ -69,12 +69,27 @@ GOOGLE_OAUTH_CLIENT_SECRET=""
 GOOGLE_OAUTH_REDIRECT_URI="http://localhost:3000/api/oauth/youtube/callback"
 GOOGLE_SIGNIN_REDIRECT_URI="http://localhost:3000/api/oauth/google/callback"
 
-# Email (https://resend.com)
+# Email (https://resend.com) — required for verification + welcome + password reset + invoice reminders
 RESEND_API_KEY=""
 RESEND_FROM_EMAIL="hello@yourdomain.com"
 
 # Cron auth (any random string; required by Vercel cron routes)
 CRON_SECRET="<random string>"
+
+# Rate limiting — REQUIRED in production (https://upstash.com — free tier covers beta)
+# In dev, leave blank for an in-memory fallback that warns loudly.
+UPSTASH_REDIS_REST_URL=""
+UPSTASH_REDIS_REST_TOKEN=""
+
+# Error monitoring — optional (https://sentry.io — free tier)
+# Server-side DSN
+SENTRY_DSN=""
+# Client-side DSN (usually same as SENTRY_DSN)
+NEXT_PUBLIC_SENTRY_DSN=""
+# Optional: source-map upload during build
+SENTRY_ORG=""
+SENTRY_PROJECT=""
+SENTRY_AUTH_TOKEN=""
 ```
 
 ### 3. Database
@@ -188,6 +203,19 @@ See [persona walkthrough findings] in commit history for the full list of known 
 
 ---
 
+## Deploy to Vercel
+
+1. **Push to GitHub** (already done — this repo).
+2. Go to https://vercel.com/new and import `Codespydii/Creatorledger`.
+3. Vercel auto-detects Next.js. **Framework Preset:** Next.js. **Build Command:** `next build` (default). **Install Command:** `npm install` (default).
+4. Add all environment variables from `.env.local` to **Project Settings → Environment Variables**. At minimum: `DATABASE_URL`, `SESSION_SECRET`, `GEMINI_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CRON_SECRET`, `NEXT_PUBLIC_APP_URL` (set to your Vercel URL or custom domain), plus Google OAuth + Upstash if using.
+5. Click **Deploy**. First build takes ~3 minutes.
+6. After deploy:
+   - Update `NEXT_PUBLIC_APP_URL` to the production URL and redeploy.
+   - Update `GOOGLE_OAUTH_REDIRECT_URI` + `GOOGLE_SIGNIN_REDIRECT_URI` to use the production domain, and add those URIs in Google Cloud Console → Credentials → OAuth Client ID → Authorized redirect URIs.
+   - In Resend, verify your sending domain (otherwise emails go to spam).
+7. **Cron jobs** in `vercel.json` are automatically registered on deploy. Verify them under **Project → Cron Jobs**.
+
 ## Security notes
 
 - Passwords are bcrypt-hashed (cost 12).
@@ -203,4 +231,6 @@ Currently unlicensed. Will pick a license before public launch. Don't redistribu
 
 ## Contact
 
-Solo-built. Reply to the welcome email after signup and you'll reach the founder directly.
+Solo-built. For bugs, feedback, licensing, or anything else: **mahipalsinghrajput476@gmail.com**.
+
+After signup, the welcome email is from the same address — replies go straight to the founder.

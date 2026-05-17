@@ -38,6 +38,7 @@ export type UserMinAggregateOutputType = {
   audienceTier: string | null
   primaryPain: string | null
   onboardedAt: Date | null
+  emailVerifiedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   stripeKey: string | null
@@ -57,6 +58,7 @@ export type UserMaxAggregateOutputType = {
   audienceTier: string | null
   primaryPain: string | null
   onboardedAt: Date | null
+  emailVerifiedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   stripeKey: string | null
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   audienceTier: number
   primaryPain: number
   onboardedAt: number
+  emailVerifiedAt: number
   createdAt: number
   updatedAt: number
   stripeKey: number
@@ -97,6 +100,7 @@ export type UserMinAggregateInputType = {
   audienceTier?: true
   primaryPain?: true
   onboardedAt?: true
+  emailVerifiedAt?: true
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
@@ -116,6 +120,7 @@ export type UserMaxAggregateInputType = {
   audienceTier?: true
   primaryPain?: true
   onboardedAt?: true
+  emailVerifiedAt?: true
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
@@ -135,6 +140,7 @@ export type UserCountAggregateInputType = {
   audienceTier?: true
   primaryPain?: true
   onboardedAt?: true
+  emailVerifiedAt?: true
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
@@ -227,6 +233,7 @@ export type UserGroupByOutputType = {
   audienceTier: string | null
   primaryPain: string | null
   onboardedAt: Date | null
+  emailVerifiedAt: Date | null
   createdAt: Date
   updatedAt: Date
   stripeKey: string | null
@@ -267,6 +274,7 @@ export type UserWhereInput = {
   audienceTier?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableFilter<"User"> | string | null
@@ -279,6 +287,7 @@ export type UserWhereInput = {
   contracts?: Prisma.ContractListRelationFilter
   youtubeConnection?: Prisma.XOR<Prisma.YouTubeConnectionNullableScalarRelationFilter, Prisma.YouTubeConnectionWhereInput> | null
   passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
+  emailVerificationTokens?: Prisma.EmailVerificationTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -295,6 +304,7 @@ export type UserOrderByWithRelationInput = {
   audienceTier?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPain?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -307,6 +317,7 @@ export type UserOrderByWithRelationInput = {
   contracts?: Prisma.ContractOrderByRelationAggregateInput
   youtubeConnection?: Prisma.YouTubeConnectionOrderByWithRelationInput
   passwordResetTokens?: Prisma.PasswordResetTokenOrderByRelationAggregateInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -326,6 +337,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   audienceTier?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableFilter<"User"> | string | null
@@ -338,6 +350,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   contracts?: Prisma.ContractListRelationFilter
   youtubeConnection?: Prisma.XOR<Prisma.YouTubeConnectionNullableScalarRelationFilter, Prisma.YouTubeConnectionWhereInput> | null
   passwordResetTokens?: Prisma.PasswordResetTokenListRelationFilter
+  emailVerificationTokens?: Prisma.EmailVerificationTokenListRelationFilter
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
@@ -354,6 +367,7 @@ export type UserOrderByWithAggregationInput = {
   audienceTier?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPain?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -379,6 +393,7 @@ export type UserScalarWhereWithAggregatesInput = {
   audienceTier?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -398,6 +413,7 @@ export type UserCreateInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -410,6 +426,7 @@ export type UserCreateInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -426,6 +443,7 @@ export type UserUncheckedCreateInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -438,6 +456,7 @@ export type UserUncheckedCreateInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -454,6 +473,7 @@ export type UserUpdateInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -466,6 +486,7 @@ export type UserUpdateInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -482,6 +503,7 @@ export type UserUncheckedUpdateInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -494,6 +516,7 @@ export type UserUncheckedUpdateInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -510,6 +533,7 @@ export type UserCreateManyInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -529,6 +553,7 @@ export type UserUpdateManyMutationInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -548,6 +573,7 @@ export type UserUncheckedUpdateManyInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -567,6 +593,7 @@ export type UserCountOrderByAggregateInput = {
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
@@ -586,6 +613,7 @@ export type UserMaxOrderByAggregateInput = {
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
@@ -605,6 +633,7 @@ export type UserMinOrderByAggregateInput = {
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
@@ -629,6 +658,20 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutEmailVerificationTokensInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedCreateWithoutEmailVerificationTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailVerificationTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEmailVerificationTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedCreateWithoutEmailVerificationTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEmailVerificationTokensInput
+  upsert?: Prisma.UserUpsertWithoutEmailVerificationTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmailVerificationTokensInput, Prisma.UserUpdateWithoutEmailVerificationTokensInput>, Prisma.UserUncheckedUpdateWithoutEmailVerificationTokensInput>
 }
 
 export type UserCreateNestedOneWithoutPasswordResetTokensInput = {
@@ -757,6 +800,138 @@ export type UserUpdateOneRequiredWithoutTeamMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTeamMembersInput, Prisma.UserUpdateWithoutTeamMembersInput>, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>
 }
 
+export type UserCreateWithoutEmailVerificationTokensInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash?: string | null
+  googleId?: string | null
+  avatarUrl?: string | null
+  channelName?: string | null
+  platform?: string | null
+  defaultCurrency?: string
+  primaryPlatform?: string | null
+  audienceTier?: string | null
+  primaryPain?: string | null
+  onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  stripeKey?: string | null
+  revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
+  contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
+  youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEmailVerificationTokensInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash?: string | null
+  googleId?: string | null
+  avatarUrl?: string | null
+  channelName?: string | null
+  platform?: string | null
+  defaultCurrency?: string
+  primaryPlatform?: string | null
+  audienceTier?: string | null
+  primaryPain?: string | null
+  onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  stripeKey?: string | null
+  revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
+  contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
+  youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEmailVerificationTokensInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedCreateWithoutEmailVerificationTokensInput>
+}
+
+export type UserUpsertWithoutEmailVerificationTokensInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutEmailVerificationTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedCreateWithoutEmailVerificationTokensInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEmailVerificationTokensInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEmailVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutEmailVerificationTokensInput>
+}
+
+export type UserUpdateWithoutEmailVerificationTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
+  contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
+  youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEmailVerificationTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
+  contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
+  youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutPasswordResetTokensInput = {
   id?: string
   email: string
@@ -771,6 +946,7 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -782,6 +958,7 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
@@ -798,6 +975,7 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -809,6 +987,7 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPasswordResetTokensInput = {
@@ -841,6 +1020,7 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -852,6 +1032,7 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
@@ -868,6 +1049,7 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -879,6 +1061,7 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutYoutubeConnectionInput = {
@@ -895,6 +1078,7 @@ export type UserCreateWithoutYoutubeConnectionInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -906,6 +1090,7 @@ export type UserCreateWithoutYoutubeConnectionInput = {
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
@@ -922,6 +1107,7 @@ export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -933,6 +1119,7 @@ export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutYoutubeConnectionInput = {
@@ -965,6 +1152,7 @@ export type UserUpdateWithoutYoutubeConnectionInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -976,6 +1164,7 @@ export type UserUpdateWithoutYoutubeConnectionInput = {
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
@@ -992,6 +1181,7 @@ export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1003,6 +1193,7 @@ export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContractsInput = {
@@ -1019,6 +1210,7 @@ export type UserCreateWithoutContractsInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1030,6 +1222,7 @@ export type UserCreateWithoutContractsInput = {
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContractsInput = {
@@ -1046,6 +1239,7 @@ export type UserUncheckedCreateWithoutContractsInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1057,6 +1251,7 @@ export type UserUncheckedCreateWithoutContractsInput = {
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContractsInput = {
@@ -1089,6 +1284,7 @@ export type UserUpdateWithoutContractsInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1100,6 +1296,7 @@ export type UserUpdateWithoutContractsInput = {
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContractsInput = {
@@ -1116,6 +1313,7 @@ export type UserUncheckedUpdateWithoutContractsInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1127,6 +1325,7 @@ export type UserUncheckedUpdateWithoutContractsInput = {
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMediaKitInput = {
@@ -1143,6 +1342,7 @@ export type UserCreateWithoutMediaKitInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1154,6 +1354,7 @@ export type UserCreateWithoutMediaKitInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMediaKitInput = {
@@ -1170,6 +1371,7 @@ export type UserUncheckedCreateWithoutMediaKitInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1181,6 +1383,7 @@ export type UserUncheckedCreateWithoutMediaKitInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMediaKitInput = {
@@ -1213,6 +1416,7 @@ export type UserUpdateWithoutMediaKitInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1224,6 +1428,7 @@ export type UserUpdateWithoutMediaKitInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMediaKitInput = {
@@ -1240,6 +1445,7 @@ export type UserUncheckedUpdateWithoutMediaKitInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1251,6 +1457,7 @@ export type UserUncheckedUpdateWithoutMediaKitInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRevenuesInput = {
@@ -1267,6 +1474,7 @@ export type UserCreateWithoutRevenuesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1278,6 +1486,7 @@ export type UserCreateWithoutRevenuesInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRevenuesInput = {
@@ -1294,6 +1503,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1305,6 +1515,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRevenuesInput = {
@@ -1337,6 +1548,7 @@ export type UserUpdateWithoutRevenuesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1348,6 +1560,7 @@ export type UserUpdateWithoutRevenuesInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRevenuesInput = {
@@ -1364,6 +1577,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1375,6 +1589,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInvoicesInput = {
@@ -1391,6 +1606,7 @@ export type UserCreateWithoutInvoicesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1402,6 +1618,7 @@ export type UserCreateWithoutInvoicesInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInvoicesInput = {
@@ -1418,6 +1635,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1429,6 +1647,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -1461,6 +1680,7 @@ export type UserUpdateWithoutInvoicesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1472,6 +1692,7 @@ export type UserUpdateWithoutInvoicesInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInvoicesInput = {
@@ -1488,6 +1709,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1499,6 +1721,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutExpensesInput = {
@@ -1515,6 +1738,7 @@ export type UserCreateWithoutExpensesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1526,6 +1750,7 @@ export type UserCreateWithoutExpensesInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutExpensesInput = {
@@ -1542,6 +1767,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1553,6 +1779,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutExpensesInput = {
@@ -1585,6 +1812,7 @@ export type UserUpdateWithoutExpensesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1596,6 +1824,7 @@ export type UserUpdateWithoutExpensesInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutExpensesInput = {
@@ -1612,6 +1841,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1623,6 +1853,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDealsInput = {
@@ -1639,6 +1870,7 @@ export type UserCreateWithoutDealsInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1650,6 +1882,7 @@ export type UserCreateWithoutDealsInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDealsInput = {
@@ -1666,6 +1899,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1677,6 +1911,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDealsInput = {
@@ -1709,6 +1944,7 @@ export type UserUpdateWithoutDealsInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1720,6 +1956,7 @@ export type UserUpdateWithoutDealsInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDealsInput = {
@@ -1736,6 +1973,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1747,6 +1985,7 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamMembersInput = {
@@ -1763,6 +2002,7 @@ export type UserCreateWithoutTeamMembersInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1774,6 +2014,7 @@ export type UserCreateWithoutTeamMembersInput = {
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamMembersInput = {
@@ -1790,6 +2031,7 @@ export type UserUncheckedCreateWithoutTeamMembersInput = {
   audienceTier?: string | null
   primaryPain?: string | null
   onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
@@ -1801,6 +2043,7 @@ export type UserUncheckedCreateWithoutTeamMembersInput = {
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamMembersInput = {
@@ -1833,6 +2076,7 @@ export type UserUpdateWithoutTeamMembersInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1844,6 +2088,7 @@ export type UserUpdateWithoutTeamMembersInput = {
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamMembersInput = {
@@ -1860,6 +2105,7 @@ export type UserUncheckedUpdateWithoutTeamMembersInput = {
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1871,6 +2117,7 @@ export type UserUncheckedUpdateWithoutTeamMembersInput = {
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
   passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1886,6 +2133,7 @@ export type UserCountOutputType = {
   teamMembers: number
   contracts: number
   passwordResetTokens: number
+  emailVerificationTokens: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1896,6 +2144,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   teamMembers?: boolean | UserCountOutputTypeCountTeamMembersArgs
   contracts?: boolean | UserCountOutputTypeCountContractsArgs
   passwordResetTokens?: boolean | UserCountOutputTypeCountPasswordResetTokensArgs
+  emailVerificationTokens?: boolean | UserCountOutputTypeCountEmailVerificationTokensArgs
 }
 
 /**
@@ -1957,6 +2206,13 @@ export type UserCountOutputTypeCountPasswordResetTokensArgs<ExtArgs extends runt
   where?: Prisma.PasswordResetTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEmailVerificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EmailVerificationTokenWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1972,6 +2228,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   audienceTier?: boolean
   primaryPain?: boolean
   onboardedAt?: boolean
+  emailVerifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
@@ -1984,6 +2241,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   contracts?: boolean | Prisma.User$contractsArgs<ExtArgs>
   youtubeConnection?: boolean | Prisma.User$youtubeConnectionArgs<ExtArgs>
   passwordResetTokens?: boolean | Prisma.User$passwordResetTokensArgs<ExtArgs>
+  emailVerificationTokens?: boolean | Prisma.User$emailVerificationTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2001,6 +2259,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   audienceTier?: boolean
   primaryPain?: boolean
   onboardedAt?: boolean
+  emailVerifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
@@ -2020,6 +2279,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   audienceTier?: boolean
   primaryPain?: boolean
   onboardedAt?: boolean
+  emailVerifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
@@ -2039,12 +2299,13 @@ export type UserSelectScalar = {
   audienceTier?: boolean
   primaryPain?: boolean
   onboardedAt?: boolean
+  emailVerifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "primaryPlatform" | "audienceTier" | "primaryPain" | "onboardedAt" | "createdAt" | "updatedAt" | "stripeKey", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "primaryPlatform" | "audienceTier" | "primaryPain" | "onboardedAt" | "emailVerifiedAt" | "createdAt" | "updatedAt" | "stripeKey", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
@@ -2055,6 +2316,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   contracts?: boolean | Prisma.User$contractsArgs<ExtArgs>
   youtubeConnection?: boolean | Prisma.User$youtubeConnectionArgs<ExtArgs>
   passwordResetTokens?: boolean | Prisma.User$passwordResetTokensArgs<ExtArgs>
+  emailVerificationTokens?: boolean | Prisma.User$emailVerificationTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2072,6 +2334,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     contracts: Prisma.$ContractPayload<ExtArgs>[]
     youtubeConnection: Prisma.$YouTubeConnectionPayload<ExtArgs> | null
     passwordResetTokens: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
+    emailVerificationTokens: Prisma.$EmailVerificationTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2087,6 +2350,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     audienceTier: string | null
     primaryPain: string | null
     onboardedAt: Date | null
+    emailVerifiedAt: Date | null
     createdAt: Date
     updatedAt: Date
     stripeKey: string | null
@@ -2493,6 +2757,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   contracts<T extends Prisma.User$contractsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$contractsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   youtubeConnection<T extends Prisma.User$youtubeConnectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$youtubeConnectionArgs<ExtArgs>>): Prisma.Prisma__YouTubeConnectionClient<runtime.Types.Result.GetResult<Prisma.$YouTubeConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   passwordResetTokens<T extends Prisma.User$passwordResetTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$passwordResetTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  emailVerificationTokens<T extends Prisma.User$emailVerificationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailVerificationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailVerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2535,6 +2800,7 @@ export interface UserFieldRefs {
   readonly audienceTier: Prisma.FieldRef<"User", 'String'>
   readonly primaryPain: Prisma.FieldRef<"User", 'String'>
   readonly onboardedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly stripeKey: Prisma.FieldRef<"User", 'String'>
@@ -3134,6 +3400,30 @@ export type User$passwordResetTokensArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.PasswordResetTokenScalarFieldEnum | Prisma.PasswordResetTokenScalarFieldEnum[]
+}
+
+/**
+ * User.emailVerificationTokens
+ */
+export type User$emailVerificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EmailVerificationToken
+   */
+  select?: Prisma.EmailVerificationTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EmailVerificationToken
+   */
+  omit?: Prisma.EmailVerificationTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EmailVerificationTokenInclude<ExtArgs> | null
+  where?: Prisma.EmailVerificationTokenWhereInput
+  orderBy?: Prisma.EmailVerificationTokenOrderByWithRelationInput | Prisma.EmailVerificationTokenOrderByWithRelationInput[]
+  cursor?: Prisma.EmailVerificationTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EmailVerificationTokenScalarFieldEnum | Prisma.EmailVerificationTokenScalarFieldEnum[]
 }
 
 /**

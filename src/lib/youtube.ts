@@ -2,7 +2,7 @@ import 'server-only'
 import { db } from './db'
 import { sealSecret, openSecret } from './crypto-seal'
 import { dollarsToCents } from './utils'
-import type { YouTubeConnection } from '@/generated/prisma/models'
+import type { YouTubeConnectionModel as YouTubeConnection } from '@/generated/prisma/models'
 
 export const YOUTUBE_SCOPES = [
   'https://www.googleapis.com/auth/youtube.readonly',

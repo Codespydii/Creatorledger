@@ -4,6 +4,7 @@ import { verifySession } from '@/lib/session'
 import { scanReceipt, type ReceiptData } from '@/lib/receipt-ocr'
 import { GeminiConfigError, isGeminiConfigured } from '@/lib/gemini'
 import { verifyFileMatchesMime } from '@/lib/file-validation'
+import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 
 const MAX_FILE_BYTES = 10 * 1024 * 1024
 const ALLOWED_MIME = new Set([
@@ -18,7 +19,10 @@ export type ScanReceiptResult =
   | { success: false; error: string }
 
 export async function scanReceiptAction(formData: FormData): Promise<ScanReceiptResult> {
-  await verifySession()
+  const session = await verifySession()
+
+  const limited = await rateLimit(LIMITS.ai, session.userId)
+  if (!limited.ok) return { success: false, error: rateLimitErrorMessage(limited) }
 
   if (!isGeminiConfigured()) {
     return { success: false, error: 'AI scanning is not configured. Set GEMINI_API_KEY first.' }

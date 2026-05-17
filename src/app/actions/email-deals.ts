@@ -3,6 +3,7 @@
 import { verifySession } from '@/lib/session'
 import { extractDealFromEmail, type DealExtraction } from '@/lib/deal-extractor'
 import { GeminiConfigError, isGeminiConfigured } from '@/lib/gemini'
+import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 
 const MAX_TEXT_LEN = 10_000
 const MIN_TEXT_LEN = 30
@@ -12,7 +13,10 @@ export type ExtractDealResult =
   | { success: false; error: string }
 
 export async function extractDealFromEmailAction(text: string): Promise<ExtractDealResult> {
-  await verifySession()
+  const session = await verifySession()
+
+  const limited = await rateLimit(LIMITS.ai, session.userId)
+  if (!limited.ok) return { success: false, error: rateLimitErrorMessage(limited) }
 
   if (!isGeminiConfigured()) {
     return { success: false, error: 'AI features are not configured. Set GEMINI_API_KEY first.' }

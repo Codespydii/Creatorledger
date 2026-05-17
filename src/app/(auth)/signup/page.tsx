@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { Suspense, useActionState, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signup } from '@/app/actions/auth'
@@ -15,6 +15,14 @@ const ERRORS: Record<string, string> = {
 }
 
 export default function SignupPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignupInner />
+    </Suspense>
+  )
+}
+
+function SignupInner() {
   const [state, action, pending] = useActionState(signup, undefined)
   const [password, setPassword] = useState('')
   const sp = useSearchParams()

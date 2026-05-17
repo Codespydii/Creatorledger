@@ -1,6 +1,6 @@
 import { Mail, MapPin, Users, Eye, TrendingUp, BarChart3 } from 'lucide-react'
 import { PrintButton } from './print-button'
-import type { MediaKit, User } from '@/generated/prisma/models'
+import type { MediaKitModel as MediaKit, UserModel as User } from '@/generated/prisma/models'
 
 type MediaKitWithUser = MediaKit & {
   user: Pick<User, 'id' | 'name' | 'channelName' | 'avatarUrl'>

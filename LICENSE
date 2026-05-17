@@ -1,0 +1,44 @@
+Copyright (c) 2026 Creator Ledger. All rights reserved.
+
+The source code in this repository is made available for reference and
+private evaluation only. No license is granted to use, copy, modify,
+merge, publish, distribute, sublicense, or sell copies of the software,
+in source or binary form, except by written permission from the
+copyright holder.
+
+Without limiting the foregoing, you may NOT:
+
+1. Run this software, in modified or unmodified form, to provide a
+   commercial or non-commercial service to third parties.
+2. Distribute this software, in modified or unmodified form, to
+   third parties.
+3. Use any portion of this software in another project, commercial
+   or otherwise, without prior written consent.
+4. Remove or alter any copyright, attribution, or license notices
+   contained in this software.
+
+You MAY:
+
+1. View, read, and clone this repository for the purpose of personal
+   evaluation, learning, or contributing back via pull requests.
+2. Run the software locally on your own machine for private
+   evaluation purposes.
+
+Contributions submitted via pull request are assumed to be offered
+under the same terms as this license, and grant the copyright holder
+a perpetual, irrevocable, worldwide, royalty-free license to use,
+modify, sublicense, and relicense the contribution.
+
+This license will be replaced with a more permissive open-source
+license before the product exits beta. The applicable license at
+the time of use is the one present in this repository at that time.
+
+For licensing inquiries, contact: mahipalsinghrajput476@gmail.com
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
