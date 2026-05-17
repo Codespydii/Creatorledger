@@ -1,3 +1,4 @@
+
 // Sentry server-side initialization.
 // Only initializes if SENTRY_DSN is set — otherwise this is a silent no-op.
 // Loaded automatically by @sentry/nextjs.
