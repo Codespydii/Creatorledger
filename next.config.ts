@@ -14,7 +14,8 @@ const config = process.env.SENTRY_DSN
       authToken: process.env.SENTRY_AUTH_TOKEN,
       errorHandler: () => {},
       widenClientFileUpload: true,
-      disableLogger: true,
+      // disableLogger was deprecated; the replacement (webpack.treeshake.removeDebugLogging)
+      // is not supported with Turbopack. Sentry's build-time logger output is harmless.
     })
   : nextConfig
 
