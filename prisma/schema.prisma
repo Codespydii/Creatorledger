@@ -1,0 +1,276 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  name            String
+  passwordHash    String?   @map("password_hash")
+  googleId        String?   @unique @map("google_id")
+  avatarUrl       String?   @map("avatar_url")
+  channelName     String?   @map("channel_name")
+  platform        String?
+  defaultCurrency String    @default("USD") @map("default_currency")
+  primaryPlatform String?   @map("primary_platform")
+  audienceTier    String?   @map("audience_tier")
+  primaryPain     String?   @map("primary_pain")
+  onboardedAt     DateTime? @map("onboarded_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  stripeKey       String?   @map("stripe_key")
+
+  revenues     RevenueEntry[]
+  invoices     Invoice[]
+  expenses     Expense[]
+  deals        Deal[]
+  teamMembers       TeamMember[]
+  mediaKit          MediaKit?
+  contracts         Contract[]
+  youtubeConnection YouTubeConnection?
+  passwordResetTokens PasswordResetToken[]
+
+  @@map("users")
+}
+
+model PasswordResetToken {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  tokenHash  String    @unique @map("token_hash")
+  expiresAt  DateTime  @map("expires_at")
+  usedAt     DateTime? @map("used_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("password_reset_tokens")
+}
+
+model YouTubeConnection {
+  id              String    @id @default(cuid())
+  userId          String    @unique @map("user_id")
+  channelId       String    @map("channel_id")
+  channelTitle    String    @map("channel_title")
+  channelThumb    String?   @map("channel_thumb")
+  subscriberCount Int?      @map("subscriber_count")
+  totalViews      BigInt?   @map("total_views")
+  scope           String
+  accessToken     String    @map("access_token")
+  refreshToken    String    @map("refresh_token")
+  tokenExpiresAt  DateTime  @map("token_expires_at")
+  connectedAt     DateTime  @default(now()) @map("connected_at")
+  lastSyncedAt    DateTime? @map("last_synced_at")
+  lastSyncStatus  String?   @map("last_sync_status")
+  lastSyncError   String?   @map("last_sync_error")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("youtube_connections")
+}
+
+model Contract {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  title         String
+  brandName     String?  @map("brand_name")
+  sourceKind    String   @map("source_kind")
+  sourceText    String?  @map("source_text")
+  fileName      String?  @map("file_name")
+  fileMimeType  String?  @map("file_mime_type")
+  fileSizeBytes Int?     @map("file_size_bytes")
+  analysisJson  String   @map("analysis_json")
+  overallScore  String?  @map("overall_score")
+  status        String   @default("completed")
+  errorMessage  String?  @map("error_message")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("contracts")
+}
+
+model MediaKit {
+  id              String   @id @default(cuid())
+  userId          String   @unique @map("user_id")
+  slug            String   @unique
+  isPublic        Boolean  @default(false) @map("is_public")
+
+  displayName     String?  @map("display_name")
+  tagline         String?
+  bio             String?
+  niche           String?
+  location        String?
+
+  subscriberCount Int?     @map("subscriber_count")
+  avgViews        Int?     @map("avg_views")
+  totalViews      BigInt?  @map("total_views")
+  engagementRate  Float?   @map("engagement_rate")
+
+  audienceAge     String?  @map("audience_age")
+  audienceGender  String?  @map("audience_gender")
+  topCountries    String?  @map("top_countries")
+
+  rateIntegratedCents Int? @map("rate_integrated_cents")
+  rateDedicatedCents  Int? @map("rate_dedicated_cents")
+  rateShortsCents     Int? @map("rate_shorts_cents")
+
+  sampleWorkUrls  String?  @map("sample_work_urls")
+  socialLinks     String?  @map("social_links")
+  contactEmail    String?  @map("contact_email")
+  accentColor     String?  @default("#7c3aed") @map("accent_color")
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("media_kits")
+}
+
+model RevenueEntry {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  source      String
+  amountCents Int      @map("amount_cents")
+  currency    String   @default("USD")
+  description String
+  platform    String?
+  date        DateTime
+  dealId      String?  @map("deal_id")
+  externalRef String?  @map("external_ref")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deal Deal? @relation(fields: [dealId], references: [id])
+
+  @@unique([userId, externalRef], name: "userId_externalRef")
+  @@map("revenue_entries")
+}
+
+model Invoice {
+  id            String    @id @default(cuid())
+  userId        String    @map("user_id")
+  invoiceNumber String    @unique @map("invoice_number")
+  clientName    String    @map("client_name")
+  clientEmail   String    @map("client_email")
+  status        String    @default("draft")
+  subtotalCents Int       @map("subtotal_cents")
+  taxCents      Int       @default(0) @map("tax_cents")
+  totalCents    Int       @map("total_cents")
+  dueDate       DateTime  @map("due_date")
+  issuedDate    DateTime  @default(now()) @map("issued_date")
+  paidDate      DateTime? @map("paid_date")
+  notes          String?
+  createdAt      DateTime  @default(now()) @map("created_at")
+  paymentLinkUrl String?   @map("payment_link_url")
+
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items        InvoiceLineItem[]
+  reminderLogs ReminderLog[]
+
+  @@map("invoices")
+}
+
+model InvoiceLineItem {
+  id            String @id @default(cuid())
+  invoiceId     String @map("invoice_id")
+  description   String
+  quantity      Int    @default(1)
+  unitPriceCents Int   @map("unit_price_cents")
+  totalCents    Int    @map("total_cents")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_line_items")
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  category    String
+  amountCents Int      @map("amount_cents")
+  currency    String   @default("USD")
+  description String
+  vendor      String?
+  date        DateTime
+  receiptUrl  String?  @map("receipt_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("expenses")
+}
+
+model Deal {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  brandName    String    @map("brand_name")
+  contactName  String?   @map("contact_name")
+  contactEmail String?   @map("contact_email")
+  stage        String    @default("prospect")
+  valueCents   Int       @map("value_cents")
+  currency     String    @default("USD")
+  description  String?
+  deliverables String?
+  startDate    DateTime? @map("start_date")
+  endDate      DateTime? @map("end_date")
+  notes        String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revenues RevenueEntry[]
+
+  @@map("deals")
+}
+
+model ReminderLog {
+  id          String   @id @default(cuid())
+  invoiceId   String   @map("invoice_id")
+  sentAt      DateTime @default(now()) @map("sent_at")
+  daysOverdue Int      @map("days_overdue")
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("reminder_logs")
+}
+
+model RateBenchmark {
+  id             String   @id @default(cuid())
+  userId         String?  @map("user_id")
+  niche          String
+  platform       String
+  format         String
+  subscriberTier String   @map("subscriber_tier")
+  amountCents    Int      @map("amount_cents")
+  currency       String   @default("USD")
+  exclusivity    Boolean  @default(false)
+  usageRights    String?  @map("usage_rights")
+  source         String   @default("user")
+  reportedAt     DateTime @default(now()) @map("reported_at")
+
+  @@index([niche, platform, format, subscriberTier])
+  @@index([source, reportedAt])
+  @@map("rate_benchmarks")
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  email     String
+  name      String
+  role      String   @default("viewer")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, email])
+  @@map("team_members")
+}
