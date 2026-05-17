@@ -1,37 +1,206 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Creator Ledger
 
-## Getting Started
+**The financial OS for creators.** Track sponsorships, send invoices, scan receipts, forecast cash flow, and analyze contracts with AI — built for creators on every platform.
 
-First, run the development server:
+> Status: **beta**. Free during beta, no credit card. Built solo, in public.
+
+---
+
+## What it does
+
+| Area | What you can do |
+|---|---|
+| **Income** | Log AdSense, sponsorships, affiliate, brand deals, merch. Auto-sync YouTube AdSense daily once you connect your channel. |
+| **Expenses** | Manual entry or snap a receipt photo — AI extracts vendor, amount, date, and tax category in seconds. |
+| **Invoices** | Branded printable invoices with auto-reminders. Stripe payment links optional. |
+| **Brand Deals** | Drag-and-drop pipeline from prospect to paid. Paste a sponsorship email — AI drafts the deal for you. |
+| **Contracts** | Drop a PDF — AI flags risky clauses, missing protections, and below-market rates in ~15 seconds. |
+| **Forecast** | 90-day cash flow projection based on confirmed deals + recurring revenue. |
+| **Rate Benchmarks** | Anonymized rates from other creators in your niche & size. Score every offer before you respond. |
+| **Media Kit** | Auto-filled from your YouTube channel stats. Public shareable page at `/m/your-slug`. |
+| **Reports** | Period filter (month / quarter / year / custom) with CSV export. |
+
+### Currency support
+
+Pick from **USD, GBP, EUR, CAD, AUD, INR** in Settings. Every monetary display flips to your chosen symbol. No FX conversion in v1 — display layer only.
+
+---
+
+## Tech stack
+
+- **Framework:** Next.js 16.2 (App Router, Turbopack), React 19, TypeScript
+- **Database:** PostgreSQL via Supabase, Prisma 7 with `@prisma/adapter-pg`
+- **Auth:** JWT sessions (`jose`) in HttpOnly cookies, bcrypt password hashing, Google Sign-In OAuth
+- **AI:** Google Gemini 2.5 Flash for contract analysis, receipt OCR, email-to-deal extraction
+- **Email:** Resend (transactional + reminders)
+- **Payments:** Stripe payment links (per-creator key, Connect deferred)
+- **Styling:** Tailwind CSS v4, Lucide icons, Recharts
+- **Crypto:** AES-256-GCM at-rest encryption for OAuth refresh tokens and Stripe keys
+
+---
+
+## Local setup
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/Codespydii/Creatorledger.git
+cd Creatorledger
+npm install
+```
+
+### 2. Environment variables
+
+Create `.env.local` in the project root:
+
+```env
+# Required
+DATABASE_URL="postgresql://user:pass@host:5432/dbname"
+SESSION_SECRET="<at least 32 random characters>"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# AI features (free tier at https://aistudio.google.com/apikey)
+GEMINI_API_KEY="<your gemini key>"
+GEMINI_MODEL="gemini-2.5-flash"  # optional, defaults to flash
+
+# Google OAuth — for Sign-in and YouTube sync
+GOOGLE_OAUTH_CLIENT_ID=""
+GOOGLE_OAUTH_CLIENT_SECRET=""
+GOOGLE_OAUTH_REDIRECT_URI="http://localhost:3000/api/oauth/youtube/callback"
+GOOGLE_SIGNIN_REDIRECT_URI="http://localhost:3000/api/oauth/google/callback"
+
+# Email (https://resend.com)
+RESEND_API_KEY=""
+RESEND_FROM_EMAIL="hello@yourdomain.com"
+
+# Cron auth (any random string; required by Vercel cron routes)
+CRON_SECRET="<random string>"
+```
+
+### 3. Database
+
+```bash
+npm run db:push      # creates tables in your Supabase Postgres
+npm run db:generate  # generates the Prisma client
+```
+
+### 4. Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── (auth)/              login, signup, onboarding, password reset
+│   ├── (dashboard)/         all authenticated app routes
+│   ├── actions/             server actions (auth, revenue, invoices, …)
+│   ├── api/
+│   │   ├── cron/            reminders, youtube-sync (called by Vercel cron)
+│   │   └── oauth/           google/start, google/callback, youtube/start, youtube/callback
+│   ├── invoices/[id]/       printable invoice view
+│   ├── legal/               terms, privacy
+│   ├── m/[slug]/            public media-kit pages
+│   └── page.tsx             landing
+├── components/
+│   ├── features/            feature-specific UI (deals, invoices, contracts, …)
+│   ├── shared/              sidebar, topbar, theme toggle, banners
+│   └── ui/                  primitives (Button, Input, Card, Select)
+├── lib/
+│   ├── currencies.ts        supported currencies + symbol lookup
+│   ├── db.ts                Prisma client
+│   ├── session.ts           JWT session helpers
+│   ├── crypto-seal.ts       AES-256-GCM for tokens at rest
+│   ├── gemini.ts            Gemini API client
+│   ├── google-signin.ts     id_token verification via JWKS
+│   ├── youtube.ts           OAuth + Analytics API + monthly revenue sync
+│   ├── stripe.ts            Stripe payment link generation
+│   ├── forecast.ts          90-day cash flow projection
+│   ├── benchmarks-*.ts      rate benchmark seeding + stats
+│   └── …
+└── generated/prisma/        Prisma client output (committed for convenience)
 
-To learn more about Next.js, take a look at the following resources:
+prisma/
+└── schema.prisma            data model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+scripts/
+├── e2e-signup.ts            end-to-end signup flow test
+└── e2e-currency.ts          end-to-end currency switching test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Available scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run dev          # start dev server (port 3000)
+npm run build        # production build
+npm run start        # run production build
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit
+npm run db:push      # push schema changes (no migration files)
+npm run db:generate  # regenerate Prisma client
+npm run db:migrate   # create a migration (if you switch off db:push)
+npm run db:studio    # open Prisma Studio at localhost:5555
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Creatorledger
+### End-to-end tests
+
+```bash
+# Both require the dev server to be running on localhost:3000.
+npx tsx scripts/e2e-signup.ts    # signup → onboarding → dashboard flow
+npx tsx scripts/e2e-currency.ts  # currency switching across all pages
+```
+
+---
+
+## Cron jobs (Vercel)
+
+Defined in `vercel.json`:
+
+- `0 9 * * *` UTC → `/api/cron/reminders` — sends overdue-invoice reminder emails
+- `0 4 * * *` UTC → `/api/cron/youtube-sync` — syncs AdSense revenue for every connected channel
+
+Both routes require `Authorization: Bearer ${CRON_SECRET}` header.
+
+---
+
+## Roadmap
+
+What's shipped is genuinely usable for solo creators in any of the 6 supported currencies. What's **not** in v1:
+
+- **Multi-currency per row** — currently every display follows the user's single setting, no FX
+- **EU VAT / Indian GST compliance** — flat tax % only
+- **Stripe Connect** — payment links use the creator's own Stripe account key, not full Connect onboarding
+- **Public invoice share links** — invoice page requires login
+- **Server-rendered PDF download** — currently uses browser print-to-PDF
+- **CSV bulk import** — for catching up months of historical data
+- **Mobile-native experience** — responsive web only, no PWA install
+
+See [persona walkthrough findings] in commit history for the full list of known gaps.
+
+---
+
+## Security notes
+
+- Passwords are bcrypt-hashed (cost 12).
+- Sessions are JWT-signed (HS256) and stored in HttpOnly cookies.
+- OAuth refresh tokens and Stripe keys are encrypted at rest with AES-256-GCM (key derived from `SESSION_SECRET`).
+- Gemini API key is sent in the `x-goog-api-key` header — never in URLs or access logs.
+- Cron endpoints require a header-only bearer secret (no query-string variant).
+- File uploads (contract PDFs, receipts) are validated by magic bytes, not just MIME type.
+
+## License
+
+Currently unlicensed. Will pick a license before public launch. Don't redistribute yet.
+
+## Contact
+
+Solo-built. Reply to the welcome email after signup and you'll reach the founder directly.
