@@ -13,6 +13,24 @@ const ERRORS: Record<string, string> = {
   google_failed: 'Google sign-in failed. Please try again.',
 }
 
+const ERROR_DETAILS: Record<string, string> = {
+  missing_params: 'Google sent us back without a code. Try again.',
+  bad_state: 'Sign-in request expired (>10 minutes). Try again.',
+  exchange_failed: 'Could not exchange the code with Google. Check server logs.',
+  id_token_invalid: 'Google returned a malformed identity token.',
+  email_unverified: 'Your Google account email is not verified.',
+  invalid_credentials: 'Server credentials rejected by Google — Client ID or Secret is wrong.',
+  wrong_client_id: 'Token audience does not match. Server has the wrong Client ID.',
+  bad_signature: 'Could not verify Google\'s signature. Try again.',
+  wrong_issuer: 'Token issuer mismatch.',
+  db_or_session: 'Signed in with Google but failed to create the session.',
+  google_redirect_uri_mismatch: 'Redirect URI is not registered in Google Console.',
+  google_invalid_client: 'Client ID is not recognized by Google.',
+  google_invalid_request: 'Google rejected the request shape.',
+  google_unauthorized_client: 'Client is not authorized for this grant type.',
+  google_access_denied: 'Access was denied.',
+}
+
 export default function LoginPage() {
   return (
     <Suspense fallback={null}>
@@ -25,7 +43,12 @@ function LoginInner() {
   const [state, action, pending] = useActionState(login, undefined)
   const sp = useSearchParams()
   const oauthError = sp.get('error')
-  const oauthMessage = oauthError ? ERRORS[oauthError] : null
+  const oauthDetail = sp.get('detail')
+  const baseMessage = oauthError ? ERRORS[oauthError] : null
+  const detailMessage = oauthDetail ? ERROR_DETAILS[oauthDetail] ?? oauthDetail : null
+  const oauthMessage = baseMessage && detailMessage
+    ? `${baseMessage} (${detailMessage})`
+    : baseMessage
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-muted px-4">
