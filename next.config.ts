@@ -2,7 +2,10 @@ import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs'
 
 const nextConfig: NextConfig = {
-  // Add real config here as needed.
+  // @react-pdf/renderer ships native-ish bindings (fontkit, pdfkit) that
+  // Vercel's serverless bundler can't tree-shake correctly. Keeping it
+  // external means Node loads it normally at runtime instead of bundling.
+  serverExternalPackages: ['@react-pdf/renderer'],
 }
 
 // Only wrap with Sentry when a DSN is set; otherwise export the bare config.
