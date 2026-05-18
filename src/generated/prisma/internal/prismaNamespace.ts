@@ -1632,10 +1632,12 @@ export const InvoiceScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   invoiceNumber: 'invoiceNumber',
+  publicId: 'publicId',
   clientName: 'clientName',
   clientEmail: 'clientEmail',
   status: 'status',
   subtotalCents: 'subtotalCents',
+  taxPercent: 'taxPercent',
   taxCents: 'taxCents',
   totalCents: 'totalCents',
   dueDate: 'dueDate',
@@ -1842,6 +1844,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 /**

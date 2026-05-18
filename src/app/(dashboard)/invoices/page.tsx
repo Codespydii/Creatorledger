@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { Download } from 'lucide-react'
+import { Download, FileText } from 'lucide-react'
 import { Topbar } from '@/components/shared/topbar'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AddInvoiceForm } from '@/components/features/invoices/add-invoice-form'
 import { InvoiceStatusAction } from '@/components/features/invoices/invoice-status-action'
 import { PayLinkButton } from '@/components/features/invoices/pay-link-button'
+import { ShareLinkButton } from '@/components/features/invoices/share-link-button'
 import { verifySession } from '@/lib/session'
 import { db } from '@/lib/db'
 import { formatCurrency, formatDate } from '@/lib/utils'
@@ -95,13 +96,22 @@ export default async function InvoicesPage() {
                             {inv.status !== 'draft' && inv.status !== 'cancelled' && (
                               <PayLinkButton invoiceId={inv.id} existingUrl={inv.paymentLinkUrl} />
                             )}
+                            <ShareLinkButton publicId={inv.publicId} />
                             <Link
-                              href={`/invoices/${inv.id}`}
+                              href={`/api/invoices/${inv.id}/pdf`}
                               target="_blank"
-                              title="Download / Print invoice"
+                              title="Download PDF"
                               className="inline-flex items-center justify-center rounded-full border border-border p-1.5 text-muted-foreground hover:border-violet-300 hover:text-violet-600 transition-colors"
                             >
                               <Download className="h-3.5 w-3.5" />
+                            </Link>
+                            <Link
+                              href={`/invoices/${inv.id}`}
+                              target="_blank"
+                              title="Open printable view"
+                              className="inline-flex items-center justify-center rounded-full border border-border p-1.5 text-muted-foreground hover:border-violet-300 hover:text-violet-600 transition-colors"
+                            >
+                              <FileText className="h-3.5 w-3.5" />
                             </Link>
                           </div>
                         </td>

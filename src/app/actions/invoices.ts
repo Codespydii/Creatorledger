@@ -56,6 +56,7 @@ export async function createInvoice(
       clientEmail,
       status: 'draft',
       subtotalCents,
+      taxPercent: parseFloat(taxPercent),
       taxCents,
       totalCents,
       dueDate: new Date(dueDate),

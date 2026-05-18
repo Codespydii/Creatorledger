@@ -147,6 +147,23 @@ export default async function SettingsPage({ searchParams }: Props) {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <CardTitle>Export your data</CardTitle>
+            <CardDescription>
+              Download a JSON file containing every row you own — revenues, expenses, invoices, deals, contracts, media kit, rate benchmarks. Sensitive credentials are excluded.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <a
+              href="/api/me/export"
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-4 text-sm font-medium text-foreground hover:bg-accent transition-colors"
+            >
+              Download my data (JSON)
+            </a>
+          </CardContent>
+        </Card>
+
         <Card className="border-destructive/40">
           <CardHeader>
             <CardTitle className="text-destructive">Danger Zone</CardTitle>

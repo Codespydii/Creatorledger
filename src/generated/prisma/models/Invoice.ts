@@ -28,12 +28,14 @@ export type AggregateInvoice = {
 
 export type InvoiceAvgAggregateOutputType = {
   subtotalCents: number | null
+  taxPercent: runtime.Decimal | null
   taxCents: number | null
   totalCents: number | null
 }
 
 export type InvoiceSumAggregateOutputType = {
   subtotalCents: number | null
+  taxPercent: runtime.Decimal | null
   taxCents: number | null
   totalCents: number | null
 }
@@ -42,10 +44,12 @@ export type InvoiceMinAggregateOutputType = {
   id: string | null
   userId: string | null
   invoiceNumber: string | null
+  publicId: string | null
   clientName: string | null
   clientEmail: string | null
   status: string | null
   subtotalCents: number | null
+  taxPercent: runtime.Decimal | null
   taxCents: number | null
   totalCents: number | null
   dueDate: Date | null
@@ -60,10 +64,12 @@ export type InvoiceMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   invoiceNumber: string | null
+  publicId: string | null
   clientName: string | null
   clientEmail: string | null
   status: string | null
   subtotalCents: number | null
+  taxPercent: runtime.Decimal | null
   taxCents: number | null
   totalCents: number | null
   dueDate: Date | null
@@ -78,10 +84,12 @@ export type InvoiceCountAggregateOutputType = {
   id: number
   userId: number
   invoiceNumber: number
+  publicId: number
   clientName: number
   clientEmail: number
   status: number
   subtotalCents: number
+  taxPercent: number
   taxCents: number
   totalCents: number
   dueDate: number
@@ -96,12 +104,14 @@ export type InvoiceCountAggregateOutputType = {
 
 export type InvoiceAvgAggregateInputType = {
   subtotalCents?: true
+  taxPercent?: true
   taxCents?: true
   totalCents?: true
 }
 
 export type InvoiceSumAggregateInputType = {
   subtotalCents?: true
+  taxPercent?: true
   taxCents?: true
   totalCents?: true
 }
@@ -110,10 +120,12 @@ export type InvoiceMinAggregateInputType = {
   id?: true
   userId?: true
   invoiceNumber?: true
+  publicId?: true
   clientName?: true
   clientEmail?: true
   status?: true
   subtotalCents?: true
+  taxPercent?: true
   taxCents?: true
   totalCents?: true
   dueDate?: true
@@ -128,10 +140,12 @@ export type InvoiceMaxAggregateInputType = {
   id?: true
   userId?: true
   invoiceNumber?: true
+  publicId?: true
   clientName?: true
   clientEmail?: true
   status?: true
   subtotalCents?: true
+  taxPercent?: true
   taxCents?: true
   totalCents?: true
   dueDate?: true
@@ -146,10 +160,12 @@ export type InvoiceCountAggregateInputType = {
   id?: true
   userId?: true
   invoiceNumber?: true
+  publicId?: true
   clientName?: true
   clientEmail?: true
   status?: true
   subtotalCents?: true
+  taxPercent?: true
   taxCents?: true
   totalCents?: true
   dueDate?: true
@@ -251,10 +267,12 @@ export type InvoiceGroupByOutputType = {
   id: string
   userId: string
   invoiceNumber: string
+  publicId: string | null
   clientName: string
   clientEmail: string
   status: string
   subtotalCents: number
+  taxPercent: runtime.Decimal
   taxCents: number
   totalCents: number
   dueDate: Date
@@ -292,10 +310,12 @@ export type InvoiceWhereInput = {
   id?: Prisma.StringFilter<"Invoice"> | string
   userId?: Prisma.StringFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
+  publicId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   clientName?: Prisma.StringFilter<"Invoice"> | string
   clientEmail?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
   subtotalCents?: Prisma.IntFilter<"Invoice"> | number
+  taxPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFilter<"Invoice"> | number
   totalCents?: Prisma.IntFilter<"Invoice"> | number
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -313,10 +333,12 @@ export type InvoiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
+  publicId?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrder
   clientEmail?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -333,6 +355,7 @@ export type InvoiceOrderByWithRelationInput = {
 export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   invoiceNumber?: string
+  publicId?: string
   AND?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   OR?: Prisma.InvoiceWhereInput[]
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
@@ -341,6 +364,7 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   clientEmail?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
   subtotalCents?: Prisma.IntFilter<"Invoice"> | number
+  taxPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFilter<"Invoice"> | number
   totalCents?: Prisma.IntFilter<"Invoice"> | number
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -352,16 +376,18 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.InvoiceLineItemListRelationFilter
   reminderLogs?: Prisma.ReminderLogListRelationFilter
-}, "id" | "invoiceNumber">
+}, "id" | "invoiceNumber" | "publicId">
 
 export type InvoiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
+  publicId?: Prisma.SortOrderInput | Prisma.SortOrder
   clientName?: Prisma.SortOrder
   clientEmail?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -384,10 +410,12 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
+  publicId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   clientName?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   clientEmail?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   status?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   subtotalCents?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
+  taxPercent?: Prisma.DecimalWithAggregatesFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
   totalCents?: Prisma.IntWithAggregatesFilter<"Invoice"> | number
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -401,10 +429,12 @@ export type InvoiceScalarWhereWithAggregatesInput = {
 export type InvoiceCreateInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -422,10 +452,12 @@ export type InvoiceUncheckedCreateInput = {
   id?: string
   userId: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -441,10 +473,12 @@ export type InvoiceUncheckedCreateInput = {
 export type InvoiceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,10 +496,12 @@ export type InvoiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -482,10 +518,12 @@ export type InvoiceCreateManyInput = {
   id?: string
   userId: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -499,10 +537,12 @@ export type InvoiceCreateManyInput = {
 export type InvoiceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -517,10 +557,12 @@ export type InvoiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -545,10 +587,12 @@ export type InvoiceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
   clientEmail?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -561,6 +605,7 @@ export type InvoiceCountOrderByAggregateInput = {
 
 export type InvoiceAvgOrderByAggregateInput = {
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
 }
@@ -569,10 +614,12 @@ export type InvoiceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
   clientEmail?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -587,10 +634,12 @@ export type InvoiceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   invoiceNumber?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   clientName?: Prisma.SortOrder
   clientEmail?: Prisma.SortOrder
   status?: Prisma.SortOrder
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -603,6 +652,7 @@ export type InvoiceMinOrderByAggregateInput = {
 
 export type InvoiceSumOrderByAggregateInput = {
   subtotalCents?: Prisma.SortOrder
+  taxPercent?: Prisma.SortOrder
   taxCents?: Prisma.SortOrder
   totalCents?: Prisma.SortOrder
 }
@@ -654,6 +704,14 @@ export type InvoiceUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.InvoiceScalarWhereInput | Prisma.InvoiceScalarWhereInput[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type InvoiceCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.InvoiceCreateWithoutItemsInput, Prisma.InvoiceUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutItemsInput
@@ -685,10 +743,12 @@ export type InvoiceUpdateOneRequiredWithoutReminderLogsNestedInput = {
 export type InvoiceCreateWithoutUserInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -704,10 +764,12 @@ export type InvoiceCreateWithoutUserInput = {
 export type InvoiceUncheckedCreateWithoutUserInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -753,10 +815,12 @@ export type InvoiceScalarWhereInput = {
   id?: Prisma.StringFilter<"Invoice"> | string
   userId?: Prisma.StringFilter<"Invoice"> | string
   invoiceNumber?: Prisma.StringFilter<"Invoice"> | string
+  publicId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   clientName?: Prisma.StringFilter<"Invoice"> | string
   clientEmail?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.StringFilter<"Invoice"> | string
   subtotalCents?: Prisma.IntFilter<"Invoice"> | number
+  taxPercent?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFilter<"Invoice"> | number
   totalCents?: Prisma.IntFilter<"Invoice"> | number
   dueDate?: Prisma.DateTimeFilter<"Invoice"> | Date | string
@@ -770,10 +834,12 @@ export type InvoiceScalarWhereInput = {
 export type InvoiceCreateWithoutItemsInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -790,10 +856,12 @@ export type InvoiceUncheckedCreateWithoutItemsInput = {
   id?: string
   userId: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -824,10 +892,12 @@ export type InvoiceUpdateToOneWithWhereWithoutItemsInput = {
 export type InvoiceUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -844,10 +914,12 @@ export type InvoiceUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -862,10 +934,12 @@ export type InvoiceUncheckedUpdateWithoutItemsInput = {
 export type InvoiceCreateWithoutReminderLogsInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -882,10 +956,12 @@ export type InvoiceUncheckedCreateWithoutReminderLogsInput = {
   id?: string
   userId: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -916,10 +992,12 @@ export type InvoiceUpdateToOneWithWhereWithoutReminderLogsInput = {
 export type InvoiceUpdateWithoutReminderLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -936,10 +1014,12 @@ export type InvoiceUncheckedUpdateWithoutReminderLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -954,10 +1034,12 @@ export type InvoiceUncheckedUpdateWithoutReminderLogsInput = {
 export type InvoiceCreateManyUserInput = {
   id?: string
   invoiceNumber: string
+  publicId?: string | null
   clientName: string
   clientEmail: string
   status?: string
   subtotalCents: number
+  taxPercent?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: number
   totalCents: number
   dueDate: Date | string
@@ -971,10 +1053,12 @@ export type InvoiceCreateManyUserInput = {
 export type InvoiceUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -990,10 +1074,12 @@ export type InvoiceUpdateWithoutUserInput = {
 export type InvoiceUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1009,10 +1095,12 @@ export type InvoiceUncheckedUpdateWithoutUserInput = {
 export type InvoiceUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  publicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientName?: Prisma.StringFieldUpdateOperationsInput | string
   clientEmail?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotalCents?: Prisma.IntFieldUpdateOperationsInput | number
+  taxPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxCents?: Prisma.IntFieldUpdateOperationsInput | number
   totalCents?: Prisma.IntFieldUpdateOperationsInput | number
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1067,10 +1155,12 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   userId?: boolean
   invoiceNumber?: boolean
+  publicId?: boolean
   clientName?: boolean
   clientEmail?: boolean
   status?: boolean
   subtotalCents?: boolean
+  taxPercent?: boolean
   taxCents?: boolean
   totalCents?: boolean
   dueDate?: boolean
@@ -1089,10 +1179,12 @@ export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   invoiceNumber?: boolean
+  publicId?: boolean
   clientName?: boolean
   clientEmail?: boolean
   status?: boolean
   subtotalCents?: boolean
+  taxPercent?: boolean
   taxCents?: boolean
   totalCents?: boolean
   dueDate?: boolean
@@ -1108,10 +1200,12 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   userId?: boolean
   invoiceNumber?: boolean
+  publicId?: boolean
   clientName?: boolean
   clientEmail?: boolean
   status?: boolean
   subtotalCents?: boolean
+  taxPercent?: boolean
   taxCents?: boolean
   totalCents?: boolean
   dueDate?: boolean
@@ -1127,10 +1221,12 @@ export type InvoiceSelectScalar = {
   id?: boolean
   userId?: boolean
   invoiceNumber?: boolean
+  publicId?: boolean
   clientName?: boolean
   clientEmail?: boolean
   status?: boolean
   subtotalCents?: boolean
+  taxPercent?: boolean
   taxCents?: boolean
   totalCents?: boolean
   dueDate?: boolean
@@ -1141,7 +1237,7 @@ export type InvoiceSelectScalar = {
   paymentLinkUrl?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "invoiceNumber" | "clientName" | "clientEmail" | "status" | "subtotalCents" | "taxCents" | "totalCents" | "dueDate" | "issuedDate" | "paidDate" | "notes" | "createdAt" | "paymentLinkUrl", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "invoiceNumber" | "publicId" | "clientName" | "clientEmail" | "status" | "subtotalCents" | "taxPercent" | "taxCents" | "totalCents" | "dueDate" | "issuedDate" | "paidDate" | "notes" | "createdAt" | "paymentLinkUrl", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Invoice$itemsArgs<ExtArgs>
@@ -1166,10 +1262,12 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     userId: string
     invoiceNumber: string
+    publicId: string | null
     clientName: string
     clientEmail: string
     status: string
     subtotalCents: number
+    taxPercent: runtime.Decimal
     taxCents: number
     totalCents: number
     dueDate: Date
@@ -1607,10 +1705,12 @@ export interface InvoiceFieldRefs {
   readonly id: Prisma.FieldRef<"Invoice", 'String'>
   readonly userId: Prisma.FieldRef<"Invoice", 'String'>
   readonly invoiceNumber: Prisma.FieldRef<"Invoice", 'String'>
+  readonly publicId: Prisma.FieldRef<"Invoice", 'String'>
   readonly clientName: Prisma.FieldRef<"Invoice", 'String'>
   readonly clientEmail: Prisma.FieldRef<"Invoice", 'String'>
   readonly status: Prisma.FieldRef<"Invoice", 'String'>
   readonly subtotalCents: Prisma.FieldRef<"Invoice", 'Int'>
+  readonly taxPercent: Prisma.FieldRef<"Invoice", 'Decimal'>
   readonly taxCents: Prisma.FieldRef<"Invoice", 'Int'>
   readonly totalCents: Prisma.FieldRef<"Invoice", 'Int'>
   readonly dueDate: Prisma.FieldRef<"Invoice", 'DateTime'>
