@@ -68,12 +68,12 @@ export function YoutubeSettings(props: Props) {
 
   if (!configured) {
     return (
-      <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+      <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800 dark:bg-amber-950/30 dark:border-amber-900 dark:text-amber-200">
         <div className="flex items-start gap-2">
           <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
           <div>
             <p className="font-medium">YouTube sync is not configured</p>
-            <p className="mt-1 text-amber-700">
+            <p className="mt-1 text-amber-700 dark:text-amber-300">
               Add <code className="font-mono text-xs">GOOGLE_OAUTH_CLIENT_ID</code> and <code className="font-mono text-xs">GOOGLE_OAUTH_CLIENT_SECRET</code> to your <code className="font-mono text-xs">.env.local</code>, then restart the dev server. See Google Cloud Console → Credentials → OAuth Client ID (Web application) and add{' '}
               <code className="font-mono text-xs">http://localhost:3000/api/oauth/youtube/callback</code> as an authorized redirect URI.
             </p>
@@ -86,7 +86,7 @@ export function YoutubeSettings(props: Props) {
   if (!connected) {
     return (
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 shrink-0">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/40 shrink-0">
           <Video className="h-6 w-6 text-red-600" />
         </div>
         <div className="flex-1 min-w-0">
@@ -130,13 +130,13 @@ export function YoutubeSettings(props: Props) {
   return (
     <div className="space-y-4">
       {syncState?.success && syncState.data && (
-        <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-700 flex items-center gap-2">
+        <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-700 flex items-center gap-2 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300">
           <CheckCircle2 className="h-4 w-4" />
           Synced — {syncState.data.inserted} added, {syncState.data.updated} updated, {syncState.data.skipped} skipped.
         </div>
       )}
       {syncState && !syncState.success && (
-        <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 flex items-start gap-2">
+        <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 flex items-start gap-2 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
           <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
           <span>{syncState.error}</span>
         </div>
@@ -153,8 +153,8 @@ export function YoutubeSettings(props: Props) {
             unoptimized
           />
         ) : (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 shrink-0">
-            <Video className="h-6 w-6 text-red-600" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/40 shrink-0">
+            <Video className="h-6 w-6 text-red-600 dark:text-red-400" />
           </div>
         )}
         <div className="flex-1 min-w-0">

@@ -56,7 +56,7 @@ function buildTiles(opts: {
     cta: 'Connect',
     href: '/api/oauth/youtube/start',
     Icon: Video,
-    accent: 'bg-red-50 text-red-600',
+    accent: 'bg-red-50 text-red-600 dark:bg-red-950/40 dark:text-red-400',
   }
   const dealsTile: Tile = {
     title: 'Log your first deal',
@@ -64,7 +64,7 @@ function buildTiles(opts: {
     cta: 'Add a deal',
     href: '/deals',
     Icon: Handshake,
-    accent: 'bg-violet-50 text-violet-600',
+    accent: 'bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400',
   }
   const contractTile: Tile = {
     title: 'Analyze a contract',
@@ -72,7 +72,7 @@ function buildTiles(opts: {
     cta: 'Try it free',
     href: '/contracts',
     Icon: ShieldCheck,
-    accent: 'bg-emerald-50 text-emerald-600',
+    accent: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400',
   }
   const benchmarksTile: Tile = {
     title: 'See sponsorship rates',
@@ -80,7 +80,7 @@ function buildTiles(opts: {
     cta: 'View benchmarks',
     href: '/benchmarks',
     Icon: BarChart2,
-    accent: 'bg-blue-50 text-blue-600',
+    accent: 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400',
   }
   const expensesTile: Tile = {
     title: 'Log an expense',
@@ -88,7 +88,7 @@ function buildTiles(opts: {
     cta: 'Add expense',
     href: '/expenses',
     Icon: Receipt,
-    accent: 'bg-amber-50 text-amber-600',
+    accent: 'bg-amber-50 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400',
   }
   const forecastTile: Tile = {
     title: 'See your forecast',
@@ -96,7 +96,7 @@ function buildTiles(opts: {
     cta: 'View forecast',
     href: '/forecast',
     Icon: LineChart,
-    accent: 'bg-cyan-50 text-cyan-600',
+    accent: 'bg-cyan-50 text-cyan-600 dark:bg-cyan-950/40 dark:text-cyan-400',
   }
 
   const tiles: Tile[] = []

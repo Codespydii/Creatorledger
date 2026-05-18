@@ -14,9 +14,9 @@ interface Props {
 }
 
 const VERDICT_STYLE = {
-  below: { bg: 'bg-red-50 border-red-200 text-red-700', icon: TrendingDown },
-  within: { bg: 'bg-emerald-50 border-emerald-200 text-emerald-700', icon: Minus },
-  above: { bg: 'bg-violet-50 border-violet-200 text-violet-700', icon: TrendingUp },
+  below: { bg: 'bg-red-50 border-red-200 text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300', icon: TrendingDown },
+  within: { bg: 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300', icon: Minus },
+  above: { bg: 'bg-violet-50 border-violet-200 text-violet-700 dark:bg-violet-950/30 dark:border-violet-900 dark:text-violet-300', icon: TrendingUp },
   unknown: { bg: 'bg-muted/40 border-border text-muted-foreground', icon: Calculator },
 } as const
 

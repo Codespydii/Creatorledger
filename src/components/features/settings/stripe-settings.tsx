@@ -33,12 +33,12 @@ export function StripeSettings({ hasKey }: { hasKey: boolean }) {
 
   if (connected) {
     return (
-      <div className="flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50/50 px-4 py-3">
+      <div className="flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50/50 px-4 py-3 dark:border-emerald-900 dark:bg-emerald-950/30">
         <div className="flex items-center gap-2.5">
-          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+          <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <div>
-            <p className="text-sm font-medium text-emerald-700">Stripe connected</p>
-            <p className="text-xs text-emerald-600/80">Pay links will be generated using your account</p>
+            <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Stripe connected</p>
+            <p className="text-xs text-emerald-600/80 dark:text-emerald-400/80">Pay links will be generated using your account</p>
           </div>
         </div>
         <button

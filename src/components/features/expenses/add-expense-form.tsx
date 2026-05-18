@@ -151,13 +151,13 @@ export function AddExpenseForm({ scanEnabled = true, currency = 'USD' }: Props) 
                   )}
                 </button>
                 {scanInfo && (
-                  <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-700">
+                  <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300">
                     <Sparkles className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                     <span>{scanInfo}</span>
                   </div>
                 )}
                 {scanError && (
-                  <div className="mt-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700">
+                  <div className="mt-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-xs text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     {scanError}
                   </div>
                 )}
@@ -170,7 +170,7 @@ export function AddExpenseForm({ scanEnabled = true, currency = 'USD' }: Props) 
             )}
 
             {state && !state.success && (
-              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                 {state.error}
               </div>
             )}

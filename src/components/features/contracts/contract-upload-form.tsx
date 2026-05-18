@@ -55,7 +55,7 @@ export function ContractUploadForm({ geminiConfigured }: Props) {
       </CardHeader>
       <CardContent>
         {!geminiConfigured && (
-          <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-3 text-sm text-amber-800">
+          <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-3 text-sm text-amber-800 dark:bg-amber-950/30 dark:border-amber-900 dark:text-amber-200">
             AI analysis is not configured yet. Get a free key at{' '}
             <a href="https://aistudio.google.com/apikey" target="_blank" className="underline font-medium">
               aistudio.google.com/apikey
@@ -64,7 +64,7 @@ export function ContractUploadForm({ geminiConfigured }: Props) {
           </div>
         )}
         {state && !state.success && (
-          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
             {state.error}
           </div>
         )}

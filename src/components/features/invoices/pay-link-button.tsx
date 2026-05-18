@@ -36,7 +36,7 @@ export function PayLinkButton({ invoiceId, existingUrl }: Props) {
       <button
         onClick={handleCopy}
         title={copied ? 'Copied!' : 'Copy payment link'}
-        className="inline-flex items-center justify-center rounded-full border border-emerald-200 p-1.5 text-emerald-600 hover:border-emerald-400 hover:bg-emerald-50 transition-colors"
+        className="inline-flex items-center justify-center rounded-full border border-emerald-200 p-1.5 text-emerald-600 hover:border-emerald-400 hover:bg-emerald-50 dark:border-emerald-900 dark:text-emerald-400 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/30 transition-colors"
       >
         {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
       </button>
@@ -49,7 +49,7 @@ export function PayLinkButton({ invoiceId, existingUrl }: Props) {
         onClick={handleGenerate}
         disabled={isPending}
         title="Generate Stripe pay link"
-        className="inline-flex items-center justify-center rounded-full border border-violet-200 p-1.5 text-violet-600 hover:border-violet-400 hover:bg-violet-50 transition-colors disabled:opacity-50"
+        className="inline-flex items-center justify-center rounded-full border border-violet-200 p-1.5 text-violet-600 hover:border-violet-400 hover:bg-violet-50 dark:border-violet-900 dark:text-violet-400 dark:hover:border-violet-700 dark:hover:bg-violet-950/30 transition-colors disabled:opacity-50"
       >
         {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Link2 className="h-3.5 w-3.5" />}
       </button>

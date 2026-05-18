@@ -93,7 +93,7 @@ export default async function RevenuePage() {
                   </thead>
                   <tbody>
                     {entries.map((entry) => (
-                      <tr key={entry.id} className={`border-b border-border last:border-0 hover:bg-muted/50 ${entry.isRefund ? 'bg-amber-50/40' : ''}`}>
+                      <tr key={entry.id} className={`border-b border-border last:border-0 hover:bg-muted/50 ${entry.isRefund ? 'bg-amber-50/40 dark:bg-amber-950/20' : ''}`}>
                         <td className="py-3 text-muted-foreground">{formatDate(entry.date.toISOString())}</td>
                         <td className="py-3">
                           {entry.isRefund ? (

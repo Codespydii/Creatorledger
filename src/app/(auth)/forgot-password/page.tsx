@@ -26,8 +26,8 @@ export default function ForgotPasswordPage() {
         <div className="bg-card rounded-2xl border border-border shadow-sm p-6">
           {state?.success ? (
             <div className="text-center py-2">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 mb-3">
-                <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40 mb-3">
+                <CheckCircle2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
               </div>
               <h2 className="text-base font-semibold text-foreground">Check your inbox</h2>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
           ) : (
             <>
               {state && !state.success && (
-                <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+                <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                   {state.error}
                 </div>
               )}

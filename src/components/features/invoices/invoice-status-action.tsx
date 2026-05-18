@@ -9,14 +9,14 @@ interface InvoiceStatusActionProps {
 
 const nextActions: Record<string, { label: string; status: string; style: string }[]> = {
   draft: [
-    { label: 'Mark Sent', status: 'sent', style: 'border-blue-300 text-blue-700 hover:bg-blue-50' },
+    { label: 'Mark Sent', status: 'sent', style: 'border-blue-300 text-blue-700 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-300 dark:hover:bg-blue-950/30' },
   ],
   sent: [
-    { label: 'Mark Paid', status: 'paid', style: 'border-emerald-300 text-emerald-700 hover:bg-emerald-50' },
-    { label: 'Mark Overdue', status: 'overdue', style: 'border-red-300 text-red-700 hover:bg-red-50' },
+    { label: 'Mark Paid', status: 'paid', style: 'border-emerald-300 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/30' },
+    { label: 'Mark Overdue', status: 'overdue', style: 'border-red-300 text-red-700 hover:bg-red-50 dark:border-red-800 dark:text-red-300 dark:hover:bg-red-950/30' },
   ],
   overdue: [
-    { label: 'Mark Paid', status: 'paid', style: 'border-emerald-300 text-emerald-700 hover:bg-emerald-50' },
+    { label: 'Mark Paid', status: 'paid', style: 'border-emerald-300 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-950/30' },
   ],
   paid: [],
   cancelled: [],

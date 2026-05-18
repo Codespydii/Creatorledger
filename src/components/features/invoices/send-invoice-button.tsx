@@ -54,7 +54,7 @@ export function SendInvoiceButton({ invoiceId, invoiceNumber, clientName, client
             </div>
 
             {state?.success ? (
-              <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 text-sm text-emerald-700">
+              <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 text-sm text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300">
                 <Check className="h-4 w-4 mt-0.5 shrink-0" />
                 <span>Sent to <strong>{clientName}</strong>. Invoice marked as &ldquo;sent.&rdquo;</span>
               </div>
@@ -62,7 +62,7 @@ export function SendInvoiceButton({ invoiceId, invoiceNumber, clientName, client
               <form action={action} className="space-y-4">
                 <input type="hidden" name="invoiceId" value={invoiceId} />
                 {state && !state.success && (
-                  <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+                  <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     {state.error}
                   </div>
                 )}

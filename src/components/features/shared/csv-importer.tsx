@@ -129,7 +129,7 @@ export function CsvImporter({ type }: Props) {
             </div>
 
             {state?.success && state.data ? (
-              <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 text-sm text-emerald-700">
+              <div className="flex items-start gap-2 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 text-sm text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300">
                 <Check className="h-4 w-4 mt-0.5 shrink-0" />
                 <span>
                   Imported {state.data.inserted} row{state.data.inserted === 1 ? '' : 's'}.
@@ -139,13 +139,13 @@ export function CsvImporter({ type }: Props) {
             ) : (
               <>
                 {parseError && (
-                  <div className="mb-4 flex items-start gap-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+                  <div className="mb-4 flex items-start gap-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                     <span>{parseError}</span>
                   </div>
                 )}
                 {state && !state.success && (
-                  <div className="mb-4 flex items-start gap-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 whitespace-pre-wrap">
+                  <div className="mb-4 flex items-start gap-2 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 whitespace-pre-wrap dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
                     <span>{state.error}</span>
                   </div>

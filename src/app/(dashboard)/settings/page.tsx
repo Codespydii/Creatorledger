@@ -72,8 +72,8 @@ export default async function SettingsPage({ searchParams }: Props) {
           <div
             className={`rounded-lg border px-4 py-3 text-sm ${
               banner.tone === 'success'
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                : 'bg-red-50 border-red-200 text-red-700'
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300'
+                : 'bg-red-50 border-red-200 text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300'
             }`}
           >
             {banner.message}

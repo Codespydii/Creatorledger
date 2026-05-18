@@ -88,7 +88,7 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
             </div>
 
             {!geminiConfigured && (
-              <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-sm text-amber-800">
+              <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-sm text-amber-800 dark:bg-amber-950/30 dark:border-amber-900 dark:text-amber-200">
                 AI is not configured. Add <code className="font-mono text-xs">GEMINI_API_KEY</code> to <code className="font-mono text-xs">.env.local</code>.
               </div>
             )}
@@ -100,7 +100,7 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
                 </p>
 
                 {extractError && (
-                  <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+                  <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     {extractError}
                   </div>
                 )}
@@ -137,10 +137,10 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
                 {confidence && (
                   <div className={`mb-4 rounded-lg border px-3 py-2 text-xs flex items-start gap-2 ${
                     confidence === 'high'
-                      ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                      ? 'bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300'
                       : confidence === 'medium'
-                      ? 'bg-blue-50 border-blue-200 text-blue-700'
-                      : 'bg-amber-50 border-amber-200 text-amber-700'
+                      ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-950/30 dark:border-blue-900 dark:text-blue-300'
+                      : 'bg-amber-50 border-amber-200 text-amber-700 dark:bg-amber-950/30 dark:border-amber-900 dark:text-amber-300'
                   }`}>
                     <Sparkles className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                     <span>
@@ -152,7 +152,7 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
                 )}
 
                 {saveState && !saveState.success && (
-                  <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+                  <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                     {saveState.error}
                   </div>
                 )}

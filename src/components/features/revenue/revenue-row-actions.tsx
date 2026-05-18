@@ -68,7 +68,7 @@ export function RevenueRowActions({ id, source, amountCents, description, platfo
         {!isRefund && amountCents > 0 && (
           <button
             onClick={() => setModal('refund')}
-            className="p-1.5 rounded-lg text-muted-foreground hover:text-amber-600 hover:bg-amber-50 transition-colors"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-amber-600 hover:bg-amber-50 dark:hover:text-amber-400 dark:hover:bg-amber-950/30 transition-colors"
             title="Log a refund against this entry"
           >
             <Undo2 className="h-3.5 w-3.5" />
@@ -76,7 +76,7 @@ export function RevenueRowActions({ id, source, amountCents, description, platfo
         )}
         <button
           onClick={() => setModal('delete')}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 transition-colors"
+          className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
           title="Delete"
         >
           <Trash2 className="h-3.5 w-3.5" />
@@ -94,7 +94,7 @@ export function RevenueRowActions({ id, source, amountCents, description, platfo
               </button>
             </div>
             {editState && !editState.success && (
-              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                 {editState.error}
               </div>
             )}
@@ -134,7 +134,7 @@ export function RevenueRowActions({ id, source, amountCents, description, platfo
               </button>
             </div>
             {refundState && !refundState.success && (
-              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+              <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
                 {refundState.error}
               </div>
             )}

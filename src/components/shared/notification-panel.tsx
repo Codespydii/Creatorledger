@@ -6,10 +6,10 @@ import { Bell, AlertCircle, AlertTriangle, CheckCircle2, Info, X } from 'lucide-
 import { getNotifications, type Notification, type NotifSeverity } from '@/app/actions/notifications'
 
 const severityConfig: Record<NotifSeverity, { icon: typeof AlertCircle; color: string; bg: string }> = {
-  error:   { icon: AlertCircle,   color: 'text-red-600',     bg: 'bg-red-50' },
-  warning: { icon: AlertTriangle, color: 'text-amber-600',   bg: 'bg-amber-50' },
-  success: { icon: CheckCircle2,  color: 'text-emerald-600', bg: 'bg-emerald-50' },
-  info:    { icon: Info,          color: 'text-blue-600',    bg: 'bg-blue-50' },
+  error:   { icon: AlertCircle,   color: 'text-red-600 dark:text-red-400',         bg: 'bg-red-50 dark:bg-red-950/30' },
+  warning: { icon: AlertTriangle, color: 'text-amber-600 dark:text-amber-400',     bg: 'bg-amber-50 dark:bg-amber-950/30' },
+  success: { icon: CheckCircle2,  color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/30' },
+  info:    { icon: Info,          color: 'text-blue-600 dark:text-blue-400',       bg: 'bg-blue-50 dark:bg-blue-950/30' },
 }
 
 export function NotificationPanel() {

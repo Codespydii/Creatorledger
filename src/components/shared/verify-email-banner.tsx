@@ -29,7 +29,7 @@ export function VerifyEmailBanner({ email }: Props) {
   }
 
   return (
-    <div className="border-b border-amber-200 bg-amber-50">
+    <div className="border-b border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30">
       <div className="mx-auto flex max-w-7xl items-start justify-between gap-3 px-6 py-2.5">
         <div className="flex items-start gap-2.5">
           {sent ? (
@@ -37,7 +37,7 @@ export function VerifyEmailBanner({ email }: Props) {
           ) : (
             <MailWarning className="h-4 w-4 mt-0.5 shrink-0 text-amber-600" />
           )}
-          <p className="text-sm text-amber-900">
+          <p className="text-sm text-amber-900 dark:text-amber-100">
             {sent ? (
               <>
                 Verification email sent to <strong className="font-semibold">{email}</strong>. Check your inbox.
@@ -48,11 +48,11 @@ export function VerifyEmailBanner({ email }: Props) {
                 <button
                   onClick={handleResend}
                   disabled={pending}
-                  className="underline font-medium hover:text-amber-950 disabled:opacity-60"
+                  className="underline font-medium hover:text-amber-950 dark:hover:text-amber-50 disabled:opacity-60"
                 >
                   {pending ? 'Sending…' : 'Resend'}
                 </button>
-                {error && <span className="ml-2 text-red-700">· {error}</span>}
+                {error && <span className="ml-2 text-red-700 dark:text-red-300">· {error}</span>}
               </>
             )}
           </p>
@@ -60,7 +60,7 @@ export function VerifyEmailBanner({ email }: Props) {
         <button
           onClick={() => setDismissed(true)}
           aria-label="Dismiss"
-          className="text-amber-600 hover:text-amber-900 shrink-0"
+          className="text-amber-600 hover:text-amber-900 dark:text-amber-400 dark:hover:text-amber-200 shrink-0"
         >
           <X className="h-4 w-4" />
         </button>

@@ -20,12 +20,12 @@ export function ProfileForm({ name, channelName, platform, defaultCurrency }: Pr
   return (
     <form action={action} className="space-y-4">
       {state && !state.success && (
-        <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+        <div className="rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:border-red-900 dark:text-red-300">
           {state.error}
         </div>
       )}
       {state?.success && (
-        <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-700">
+        <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300">
           Profile updated successfully.
         </div>
       )}
