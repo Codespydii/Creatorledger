@@ -7,22 +7,38 @@ interface Props {
 }
 
 const SCORE_META: Record<string, { label: string; tone: string; icon: typeof Shield }> = {
-  good: { label: 'Looks good', tone: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: CheckCircle2 },
-  fair: { label: 'Fair — minor concerns', tone: 'bg-amber-50 text-amber-700 border-amber-200', icon: Shield },
-  risky: { label: 'Risky — negotiate before signing', tone: 'bg-orange-50 text-orange-700 border-orange-200', icon: ShieldAlert },
-  predatory: { label: 'Predatory — push back hard', tone: 'bg-red-50 text-red-700 border-red-200', icon: FileWarning },
+  good: {
+    label: 'Looks good',
+    tone: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-900',
+    icon: CheckCircle2,
+  },
+  fair: {
+    label: 'Fair — minor concerns',
+    tone: 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-900',
+    icon: Shield,
+  },
+  risky: {
+    label: 'Risky — negotiate before signing',
+    tone: 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-900',
+    icon: ShieldAlert,
+  },
+  predatory: {
+    label: 'Predatory — push back hard',
+    tone: 'bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900',
+    icon: FileWarning,
+  },
 }
 
 const SEVERITY_TONES: Record<string, string> = {
-  high: 'border-red-200 bg-red-50',
-  medium: 'border-orange-200 bg-orange-50',
-  low: 'border-amber-200 bg-amber-50',
+  high: 'border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/40',
+  medium: 'border-orange-200 bg-orange-50 dark:border-orange-900 dark:bg-orange-950/40',
+  low: 'border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/40',
 }
 
 const SEVERITY_BADGE: Record<string, string> = {
-  high: 'bg-red-100 text-red-700',
-  medium: 'bg-orange-100 text-orange-700',
-  low: 'bg-amber-100 text-amber-700',
+  high: 'bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-200',
+  medium: 'bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-200',
+  low: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-200',
 }
 
 export function ContractAnalysisView({ analysis }: Props) {
@@ -32,7 +48,7 @@ export function ContractAnalysisView({ analysis }: Props) {
   return (
     <div className="space-y-6">
       <div className={`rounded-2xl border p-5 flex items-start gap-4 ${scoreMeta.tone}`}>
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/60 shrink-0">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/60 dark:bg-white/10 shrink-0">
           <ScoreIcon className="h-5 w-5" />
         </div>
         <div className="flex-1 min-w-0">
