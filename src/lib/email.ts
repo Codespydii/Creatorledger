@@ -143,6 +143,66 @@ export async function sendWelcomeEmail(p: WelcomeEmailParams) {
   })
 }
 
+interface InvoiceSendParams {
+  toEmail: string
+  toName: string
+  fromName: string
+  fromEmail: string
+  invoiceNumber: string
+  totalDisplay: string
+  dueDate: string
+  publicUrl: string
+  message?: string
+  pdfBuffer: Buffer
+}
+
+export async function sendInvoiceToClient(p: InvoiceSendParams) {
+  if (!isEmailConfigured()) throw new Error('Email service is not configured')
+
+  await getResend().emails.send({
+    from: `${p.fromName} <${FROM}>`,
+    replyTo: p.fromEmail,
+    to: p.toEmail,
+    subject: `Invoice ${p.invoiceNumber} from ${p.fromName}`,
+    html: `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:32px 16px;">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+    <div style="background:#7c3aed;padding:32px 40px;">
+      <h1 style="color:#ffffff;margin:0;font-size:20px;font-weight:600;">Invoice ${p.invoiceNumber}</h1>
+    </div>
+    <div style="padding:40px;">
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:0;">Hi ${p.toName},</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;">${
+        p.message ? p.message.replace(/\n/g, '<br>') : `Please find attached invoice <strong>${p.invoiceNumber}</strong> for <strong>${p.totalDisplay}</strong>, due by ${p.dueDate}.`
+      }</p>
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:16px 20px;margin:24px 0;">
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="color:#64748b;font-size:13px;padding-bottom:6px;">Invoice</td><td style="color:#0f172a;font-size:13px;font-weight:600;text-align:right;padding-bottom:6px;">${p.invoiceNumber}</td></tr>
+          <tr><td style="color:#64748b;font-size:13px;padding-bottom:6px;">Amount Due</td><td style="color:#7c3aed;font-size:13px;font-weight:700;text-align:right;padding-bottom:6px;">${p.totalDisplay}</td></tr>
+          <tr><td style="color:#64748b;font-size:13px;">Due By</td><td style="color:#0f172a;font-size:13px;text-align:right;">${p.dueDate}</td></tr>
+        </table>
+      </div>
+      <div style="text-align:center;margin:28px 0;">
+        <a href="${p.publicUrl}" style="display:inline-block;background:#7c3aed;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:12px 32px;border-radius:8px;">View invoice online</a>
+      </div>
+      <p style="color:#64748b;font-size:13px;line-height:1.6;">The PDF is attached to this email for your records.</p>
+      <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.fromName}</strong></p>
+    </div>
+    <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+    </div>
+  </div>
+</body></html>`,
+    attachments: [
+      {
+        filename: `${p.invoiceNumber}.pdf`,
+        content: p.pdfBuffer,
+      },
+    ],
+  })
+}
+
 interface OverdueReminderParams {
   creatorName: string
   creatorEmail: string

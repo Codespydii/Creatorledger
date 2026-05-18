@@ -154,17 +154,21 @@ model RevenueEntry {
   id          String   @id @default(cuid())
   userId      String   @map("user_id")
   source      String
-  amountCents Int      @map("amount_cents")
+  amountCents Int      @map("amount_cents")  // negative when isRefund=true
   currency    String   @default("USD")
   description String
   platform    String?
   date        DateTime
   dealId      String?  @map("deal_id")
   externalRef String?  @map("external_ref")
+  isRefund    Boolean  @default(false) @map("is_refund")
+  refundsId   String?  @map("refunds_id")
   createdAt   DateTime @default(now()) @map("created_at")
 
-  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  deal Deal? @relation(fields: [dealId], references: [id])
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deal     Deal?          @relation(fields: [dealId], references: [id])
+  refunds  RevenueEntry?  @relation("RevenueRefund", fields: [refundsId], references: [id])
+  refunded RevenueEntry[] @relation("RevenueRefund")
 
   @@unique([userId, externalRef], name: "userId_externalRef")
   @@map("revenue_entries")

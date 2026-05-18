@@ -103,6 +103,57 @@ export async function deleteRevenueEntry(id: string): Promise<ActionState> {
   return { success: true, data: undefined }
 }
 
+export async function createRefund(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const session = await verifySession()
+  const originalId = formData.get('originalId') as string
+  const amountRaw = (formData.get('amount') as string | null)?.trim() ?? ''
+  const reason = (formData.get('reason') as string | null)?.trim() ?? ''
+
+  const amountNum = parseFloat(amountRaw)
+  if (!isFinite(amountNum) || amountNum <= 0) {
+    return { success: false, error: 'Refund amount must be a positive number' }
+  }
+  if (!reason || reason.length < 3) {
+    return { success: false, error: 'Reason is required' }
+  }
+
+  const original = await db.revenueEntry.findUnique({ where: { id: originalId } })
+  if (!original || original.userId !== session.userId) {
+    return { success: false, error: 'Original revenue entry not found' }
+  }
+  if (original.isRefund) {
+    return { success: false, error: 'Cannot refund a refund' }
+  }
+  const refundCents = Math.round(amountNum * 100)
+  if (refundCents > original.amountCents) {
+    return { success: false, error: `Refund cannot exceed the original ${original.amountCents / 100} amount` }
+  }
+
+  await db.revenueEntry.create({
+    data: {
+      userId: session.userId,
+      source: original.source,
+      amountCents: -refundCents,
+      currency: original.currency,
+      description: `Refund: ${reason} (was: ${original.description})`,
+      platform: original.platform,
+      date: new Date(),
+      dealId: original.dealId,
+      isRefund: true,
+      refundsId: original.id,
+    },
+  })
+
+  revalidatePath('/revenue')
+  revalidatePath('/dashboard')
+  revalidatePath('/forecast')
+  revalidatePath('/reports')
+  return { success: true, data: undefined }
+}
+
 export async function getRevenueEntries() {
   const session = await verifySession()
   return db.revenueEntry.findMany({

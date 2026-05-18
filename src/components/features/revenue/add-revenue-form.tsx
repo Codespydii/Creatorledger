@@ -10,12 +10,17 @@ import { useEscapeKey } from '@/hooks/use-escape-key'
 import { currencySymbol } from '@/lib/currencies'
 
 const sourceOptions = [
-  { value: 'adsense', label: 'AdSense' },
-  { value: 'sponsorship', label: 'Sponsorship' },
-  { value: 'affiliate', label: 'Affiliate' },
-  { value: 'brand_deal', label: 'Brand Deal' },
-  { value: 'merchandise', label: 'Merchandise' },
-  { value: 'other', label: 'Other' },
+  { value: 'sponsorship',  label: 'Sponsorship / Brand Deal' },
+  { value: 'adsense',      label: 'AdSense (YouTube)' },
+  { value: 'tiktok_fund',  label: 'TikTok Creator Fund' },
+  { value: 'memberships',  label: 'Memberships' },
+  { value: 'patreon',      label: 'Patreon' },
+  { value: 'substack',     label: 'Substack' },
+  { value: 'podcast',      label: 'Podcast sponsorship' },
+  { value: 'affiliate',    label: 'Affiliate' },
+  { value: 'merchandise',  label: 'Merch / Products' },
+  { value: 'tips',         label: 'Tips / Super Thanks' },
+  { value: 'other',        label: 'Other' },
 ]
 
 interface AddRevenueFormProps {

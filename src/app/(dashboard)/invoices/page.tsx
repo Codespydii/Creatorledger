@@ -7,6 +7,7 @@ import { AddInvoiceForm } from '@/components/features/invoices/add-invoice-form'
 import { InvoiceStatusAction } from '@/components/features/invoices/invoice-status-action'
 import { PayLinkButton } from '@/components/features/invoices/pay-link-button'
 import { ShareLinkButton } from '@/components/features/invoices/share-link-button'
+import { SendInvoiceButton } from '@/components/features/invoices/send-invoice-button'
 import { verifySession } from '@/lib/session'
 import { db } from '@/lib/db'
 import { formatCurrency, formatDate } from '@/lib/utils'
@@ -96,6 +97,12 @@ export default async function InvoicesPage() {
                             {inv.status !== 'draft' && inv.status !== 'cancelled' && (
                               <PayLinkButton invoiceId={inv.id} existingUrl={inv.paymentLinkUrl} />
                             )}
+                            <SendInvoiceButton
+                              invoiceId={inv.id}
+                              invoiceNumber={inv.invoiceNumber}
+                              clientName={inv.clientName}
+                              clientEmail={inv.clientEmail}
+                            />
                             <ShareLinkButton publicId={inv.publicId} />
                             <Link
                               href={`/api/invoices/${inv.id}/pdf`}

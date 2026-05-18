@@ -45,6 +45,8 @@ export type RevenueEntryMinAggregateOutputType = {
   date: Date | null
   dealId: string | null
   externalRef: string | null
+  isRefund: boolean | null
+  refundsId: string | null
   createdAt: Date | null
 }
 
@@ -59,6 +61,8 @@ export type RevenueEntryMaxAggregateOutputType = {
   date: Date | null
   dealId: string | null
   externalRef: string | null
+  isRefund: boolean | null
+  refundsId: string | null
   createdAt: Date | null
 }
 
@@ -73,6 +77,8 @@ export type RevenueEntryCountAggregateOutputType = {
   date: number
   dealId: number
   externalRef: number
+  isRefund: number
+  refundsId: number
   createdAt: number
   _all: number
 }
@@ -97,6 +103,8 @@ export type RevenueEntryMinAggregateInputType = {
   date?: true
   dealId?: true
   externalRef?: true
+  isRefund?: true
+  refundsId?: true
   createdAt?: true
 }
 
@@ -111,6 +119,8 @@ export type RevenueEntryMaxAggregateInputType = {
   date?: true
   dealId?: true
   externalRef?: true
+  isRefund?: true
+  refundsId?: true
   createdAt?: true
 }
 
@@ -125,6 +135,8 @@ export type RevenueEntryCountAggregateInputType = {
   date?: true
   dealId?: true
   externalRef?: true
+  isRefund?: true
+  refundsId?: true
   createdAt?: true
   _all?: true
 }
@@ -226,6 +238,8 @@ export type RevenueEntryGroupByOutputType = {
   date: Date
   dealId: string | null
   externalRef: string | null
+  isRefund: boolean
+  refundsId: string | null
   createdAt: Date
   _count: RevenueEntryCountAggregateOutputType | null
   _avg: RevenueEntryAvgAggregateOutputType | null
@@ -263,9 +277,13 @@ export type RevenueEntryWhereInput = {
   date?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
   dealId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   externalRef?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
+  isRefund?: Prisma.BoolFilter<"RevenueEntry"> | boolean
+  refundsId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
+  refunds?: Prisma.XOR<Prisma.RevenueEntryNullableScalarRelationFilter, Prisma.RevenueEntryWhereInput> | null
+  refunded?: Prisma.RevenueEntryListRelationFilter
 }
 
 export type RevenueEntryOrderByWithRelationInput = {
@@ -279,9 +297,13 @@ export type RevenueEntryOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   dealId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRefund?: Prisma.SortOrder
+  refundsId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   deal?: Prisma.DealOrderByWithRelationInput
+  refunds?: Prisma.RevenueEntryOrderByWithRelationInput
+  refunded?: Prisma.RevenueEntryOrderByRelationAggregateInput
 }
 
 export type RevenueEntryWhereUniqueInput = Prisma.AtLeast<{
@@ -299,9 +321,13 @@ export type RevenueEntryWhereUniqueInput = Prisma.AtLeast<{
   date?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
   dealId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   externalRef?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
+  isRefund?: Prisma.BoolFilter<"RevenueEntry"> | boolean
+  refundsId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
+  refunds?: Prisma.XOR<Prisma.RevenueEntryNullableScalarRelationFilter, Prisma.RevenueEntryWhereInput> | null
+  refunded?: Prisma.RevenueEntryListRelationFilter
 }, "id" | "userId_externalRef">
 
 export type RevenueEntryOrderByWithAggregationInput = {
@@ -315,6 +341,8 @@ export type RevenueEntryOrderByWithAggregationInput = {
   date?: Prisma.SortOrder
   dealId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalRef?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRefund?: Prisma.SortOrder
+  refundsId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.RevenueEntryCountOrderByAggregateInput
   _avg?: Prisma.RevenueEntryAvgOrderByAggregateInput
@@ -337,6 +365,8 @@ export type RevenueEntryScalarWhereWithAggregatesInput = {
   date?: Prisma.DateTimeWithAggregatesFilter<"RevenueEntry"> | Date | string
   dealId?: Prisma.StringNullableWithAggregatesFilter<"RevenueEntry"> | string | null
   externalRef?: Prisma.StringNullableWithAggregatesFilter<"RevenueEntry"> | string | null
+  isRefund?: Prisma.BoolWithAggregatesFilter<"RevenueEntry"> | boolean
+  refundsId?: Prisma.StringNullableWithAggregatesFilter<"RevenueEntry"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RevenueEntry"> | Date | string
 }
 
@@ -349,9 +379,12 @@ export type RevenueEntryCreateInput = {
   platform?: string | null
   date: Date | string
   externalRef?: string | null
+  isRefund?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRevenuesInput
   deal?: Prisma.DealCreateNestedOneWithoutRevenuesInput
+  refunds?: Prisma.RevenueEntryCreateNestedOneWithoutRefundedInput
+  refunded?: Prisma.RevenueEntryCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryUncheckedCreateInput = {
@@ -365,7 +398,10 @@ export type RevenueEntryUncheckedCreateInput = {
   date: Date | string
   dealId?: string | null
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
+  refunded?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryUpdateInput = {
@@ -377,9 +413,12 @@ export type RevenueEntryUpdateInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRevenuesNestedInput
   deal?: Prisma.DealUpdateOneWithoutRevenuesNestedInput
+  refunds?: Prisma.RevenueEntryUpdateOneWithoutRefundedNestedInput
+  refunded?: Prisma.RevenueEntryUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryUncheckedUpdateInput = {
@@ -393,7 +432,10 @@ export type RevenueEntryUncheckedUpdateInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refunded?: Prisma.RevenueEntryUncheckedUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryCreateManyInput = {
@@ -407,6 +449,8 @@ export type RevenueEntryCreateManyInput = {
   date: Date | string
   dealId?: string | null
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
 }
 
@@ -419,6 +463,7 @@ export type RevenueEntryUpdateManyMutationInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -433,6 +478,8 @@ export type RevenueEntryUncheckedUpdateManyInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -444,6 +491,11 @@ export type RevenueEntryListRelationFilter = {
 
 export type RevenueEntryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type RevenueEntryNullableScalarRelationFilter = {
+  is?: Prisma.RevenueEntryWhereInput | null
+  isNot?: Prisma.RevenueEntryWhereInput | null
 }
 
 export type RevenueEntryUserId_externalRefCompoundUniqueInput = {
@@ -462,6 +514,8 @@ export type RevenueEntryCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   dealId?: Prisma.SortOrder
   externalRef?: Prisma.SortOrder
+  isRefund?: Prisma.SortOrder
+  refundsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -480,6 +534,8 @@ export type RevenueEntryMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   dealId?: Prisma.SortOrder
   externalRef?: Prisma.SortOrder
+  isRefund?: Prisma.SortOrder
+  refundsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -494,6 +550,8 @@ export type RevenueEntryMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   dealId?: Prisma.SortOrder
   externalRef?: Prisma.SortOrder
+  isRefund?: Prisma.SortOrder
+  refundsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -543,12 +601,70 @@ export type RevenueEntryUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.RevenueEntryScalarWhereInput | Prisma.RevenueEntryScalarWhereInput[]
 }
 
+export type RevenueEntryCreateNestedOneWithoutRefundedInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundedInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundedInput>
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundedInput
+  connect?: Prisma.RevenueEntryWhereUniqueInput
+}
+
+export type RevenueEntryCreateNestedManyWithoutRefundsInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput> | Prisma.RevenueEntryCreateWithoutRefundsInput[] | Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput[]
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput | Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput[]
+  createMany?: Prisma.RevenueEntryCreateManyRefundsInputEnvelope
+  connect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+}
+
+export type RevenueEntryUncheckedCreateNestedManyWithoutRefundsInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput> | Prisma.RevenueEntryCreateWithoutRefundsInput[] | Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput[]
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput | Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput[]
+  createMany?: Prisma.RevenueEntryCreateManyRefundsInputEnvelope
+  connect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type RevenueEntryUpdateOneWithoutRefundedNestedInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundedInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundedInput>
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundedInput
+  upsert?: Prisma.RevenueEntryUpsertWithoutRefundedInput
+  disconnect?: Prisma.RevenueEntryWhereInput | boolean
+  delete?: Prisma.RevenueEntryWhereInput | boolean
+  connect?: Prisma.RevenueEntryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RevenueEntryUpdateToOneWithWhereWithoutRefundedInput, Prisma.RevenueEntryUpdateWithoutRefundedInput>, Prisma.RevenueEntryUncheckedUpdateWithoutRefundedInput>
+}
+
+export type RevenueEntryUpdateManyWithoutRefundsNestedInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput> | Prisma.RevenueEntryCreateWithoutRefundsInput[] | Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput[]
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput | Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput[]
+  upsert?: Prisma.RevenueEntryUpsertWithWhereUniqueWithoutRefundsInput | Prisma.RevenueEntryUpsertWithWhereUniqueWithoutRefundsInput[]
+  createMany?: Prisma.RevenueEntryCreateManyRefundsInputEnvelope
+  set?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  disconnect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  delete?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  connect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  update?: Prisma.RevenueEntryUpdateWithWhereUniqueWithoutRefundsInput | Prisma.RevenueEntryUpdateWithWhereUniqueWithoutRefundsInput[]
+  updateMany?: Prisma.RevenueEntryUpdateManyWithWhereWithoutRefundsInput | Prisma.RevenueEntryUpdateManyWithWhereWithoutRefundsInput[]
+  deleteMany?: Prisma.RevenueEntryScalarWhereInput | Prisma.RevenueEntryScalarWhereInput[]
+}
+
+export type RevenueEntryUncheckedUpdateManyWithoutRefundsNestedInput = {
+  create?: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput> | Prisma.RevenueEntryCreateWithoutRefundsInput[] | Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput[]
+  connectOrCreate?: Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput | Prisma.RevenueEntryCreateOrConnectWithoutRefundsInput[]
+  upsert?: Prisma.RevenueEntryUpsertWithWhereUniqueWithoutRefundsInput | Prisma.RevenueEntryUpsertWithWhereUniqueWithoutRefundsInput[]
+  createMany?: Prisma.RevenueEntryCreateManyRefundsInputEnvelope
+  set?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  disconnect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  delete?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  connect?: Prisma.RevenueEntryWhereUniqueInput | Prisma.RevenueEntryWhereUniqueInput[]
+  update?: Prisma.RevenueEntryUpdateWithWhereUniqueWithoutRefundsInput | Prisma.RevenueEntryUpdateWithWhereUniqueWithoutRefundsInput[]
+  updateMany?: Prisma.RevenueEntryUpdateManyWithWhereWithoutRefundsInput | Prisma.RevenueEntryUpdateManyWithWhereWithoutRefundsInput[]
+  deleteMany?: Prisma.RevenueEntryScalarWhereInput | Prisma.RevenueEntryScalarWhereInput[]
 }
 
 export type RevenueEntryCreateNestedManyWithoutDealInput = {
@@ -602,8 +718,11 @@ export type RevenueEntryCreateWithoutUserInput = {
   platform?: string | null
   date: Date | string
   externalRef?: string | null
+  isRefund?: boolean
   createdAt?: Date | string
   deal?: Prisma.DealCreateNestedOneWithoutRevenuesInput
+  refunds?: Prisma.RevenueEntryCreateNestedOneWithoutRefundedInput
+  refunded?: Prisma.RevenueEntryCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryUncheckedCreateWithoutUserInput = {
@@ -616,7 +735,10 @@ export type RevenueEntryUncheckedCreateWithoutUserInput = {
   date: Date | string
   dealId?: string | null
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
+  refunded?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryCreateOrConnectWithoutUserInput = {
@@ -659,7 +781,147 @@ export type RevenueEntryScalarWhereInput = {
   date?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
   dealId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   externalRef?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
+  isRefund?: Prisma.BoolFilter<"RevenueEntry"> | boolean
+  refundsId?: Prisma.StringNullableFilter<"RevenueEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RevenueEntry"> | Date | string
+}
+
+export type RevenueEntryCreateWithoutRefundedInput = {
+  id?: string
+  source: string
+  amountCents: number
+  currency?: string
+  description: string
+  platform?: string | null
+  date: Date | string
+  externalRef?: string | null
+  isRefund?: boolean
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutRevenuesInput
+  deal?: Prisma.DealCreateNestedOneWithoutRevenuesInput
+  refunds?: Prisma.RevenueEntryCreateNestedOneWithoutRefundedInput
+}
+
+export type RevenueEntryUncheckedCreateWithoutRefundedInput = {
+  id?: string
+  userId: string
+  source: string
+  amountCents: number
+  currency?: string
+  description: string
+  platform?: string | null
+  date: Date | string
+  dealId?: string | null
+  externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
+  createdAt?: Date | string
+}
+
+export type RevenueEntryCreateOrConnectWithoutRefundedInput = {
+  where: Prisma.RevenueEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundedInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundedInput>
+}
+
+export type RevenueEntryCreateWithoutRefundsInput = {
+  id?: string
+  source: string
+  amountCents: number
+  currency?: string
+  description: string
+  platform?: string | null
+  date: Date | string
+  externalRef?: string | null
+  isRefund?: boolean
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutRevenuesInput
+  deal?: Prisma.DealCreateNestedOneWithoutRevenuesInput
+  refunded?: Prisma.RevenueEntryCreateNestedManyWithoutRefundsInput
+}
+
+export type RevenueEntryUncheckedCreateWithoutRefundsInput = {
+  id?: string
+  userId: string
+  source: string
+  amountCents: number
+  currency?: string
+  description: string
+  platform?: string | null
+  date: Date | string
+  dealId?: string | null
+  externalRef?: string | null
+  isRefund?: boolean
+  createdAt?: Date | string
+  refunded?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutRefundsInput
+}
+
+export type RevenueEntryCreateOrConnectWithoutRefundsInput = {
+  where: Prisma.RevenueEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput>
+}
+
+export type RevenueEntryCreateManyRefundsInputEnvelope = {
+  data: Prisma.RevenueEntryCreateManyRefundsInput | Prisma.RevenueEntryCreateManyRefundsInput[]
+  skipDuplicates?: boolean
+}
+
+export type RevenueEntryUpsertWithoutRefundedInput = {
+  update: Prisma.XOR<Prisma.RevenueEntryUpdateWithoutRefundedInput, Prisma.RevenueEntryUncheckedUpdateWithoutRefundedInput>
+  create: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundedInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundedInput>
+  where?: Prisma.RevenueEntryWhereInput
+}
+
+export type RevenueEntryUpdateToOneWithWhereWithoutRefundedInput = {
+  where?: Prisma.RevenueEntryWhereInput
+  data: Prisma.XOR<Prisma.RevenueEntryUpdateWithoutRefundedInput, Prisma.RevenueEntryUncheckedUpdateWithoutRefundedInput>
+}
+
+export type RevenueEntryUpdateWithoutRefundedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutRevenuesNestedInput
+  deal?: Prisma.DealUpdateOneWithoutRevenuesNestedInput
+  refunds?: Prisma.RevenueEntryUpdateOneWithoutRefundedNestedInput
+}
+
+export type RevenueEntryUncheckedUpdateWithoutRefundedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RevenueEntryUpsertWithWhereUniqueWithoutRefundsInput = {
+  where: Prisma.RevenueEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.RevenueEntryUpdateWithoutRefundsInput, Prisma.RevenueEntryUncheckedUpdateWithoutRefundsInput>
+  create: Prisma.XOR<Prisma.RevenueEntryCreateWithoutRefundsInput, Prisma.RevenueEntryUncheckedCreateWithoutRefundsInput>
+}
+
+export type RevenueEntryUpdateWithWhereUniqueWithoutRefundsInput = {
+  where: Prisma.RevenueEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.RevenueEntryUpdateWithoutRefundsInput, Prisma.RevenueEntryUncheckedUpdateWithoutRefundsInput>
+}
+
+export type RevenueEntryUpdateManyWithWhereWithoutRefundsInput = {
+  where: Prisma.RevenueEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.RevenueEntryUpdateManyMutationInput, Prisma.RevenueEntryUncheckedUpdateManyWithoutRefundsInput>
 }
 
 export type RevenueEntryCreateWithoutDealInput = {
@@ -671,8 +933,11 @@ export type RevenueEntryCreateWithoutDealInput = {
   platform?: string | null
   date: Date | string
   externalRef?: string | null
+  isRefund?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutRevenuesInput
+  refunds?: Prisma.RevenueEntryCreateNestedOneWithoutRefundedInput
+  refunded?: Prisma.RevenueEntryCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryUncheckedCreateWithoutDealInput = {
@@ -685,7 +950,10 @@ export type RevenueEntryUncheckedCreateWithoutDealInput = {
   platform?: string | null
   date: Date | string
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
+  refunded?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutRefundsInput
 }
 
 export type RevenueEntryCreateOrConnectWithoutDealInput = {
@@ -724,6 +992,8 @@ export type RevenueEntryCreateManyUserInput = {
   date: Date | string
   dealId?: string | null
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
 }
 
@@ -736,8 +1006,11 @@ export type RevenueEntryUpdateWithoutUserInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deal?: Prisma.DealUpdateOneWithoutRevenuesNestedInput
+  refunds?: Prisma.RevenueEntryUpdateOneWithoutRefundedNestedInput
+  refunded?: Prisma.RevenueEntryUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryUncheckedUpdateWithoutUserInput = {
@@ -750,7 +1023,10 @@ export type RevenueEntryUncheckedUpdateWithoutUserInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refunded?: Prisma.RevenueEntryUncheckedUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryUncheckedUpdateManyWithoutUserInput = {
@@ -763,6 +1039,70 @@ export type RevenueEntryUncheckedUpdateManyWithoutUserInput = {
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RevenueEntryCreateManyRefundsInput = {
+  id?: string
+  userId: string
+  source: string
+  amountCents: number
+  currency?: string
+  description: string
+  platform?: string | null
+  date: Date | string
+  dealId?: string | null
+  externalRef?: string | null
+  isRefund?: boolean
+  createdAt?: Date | string
+}
+
+export type RevenueEntryUpdateWithoutRefundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutRevenuesNestedInput
+  deal?: Prisma.DealUpdateOneWithoutRevenuesNestedInput
+  refunded?: Prisma.RevenueEntryUpdateManyWithoutRefundsNestedInput
+}
+
+export type RevenueEntryUncheckedUpdateWithoutRefundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refunded?: Prisma.RevenueEntryUncheckedUpdateManyWithoutRefundsNestedInput
+}
+
+export type RevenueEntryUncheckedUpdateManyWithoutRefundsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -776,6 +1116,8 @@ export type RevenueEntryCreateManyDealInput = {
   platform?: string | null
   date: Date | string
   externalRef?: string | null
+  isRefund?: boolean
+  refundsId?: string | null
   createdAt?: Date | string
 }
 
@@ -788,8 +1130,11 @@ export type RevenueEntryUpdateWithoutDealInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutRevenuesNestedInput
+  refunds?: Prisma.RevenueEntryUpdateOneWithoutRefundedNestedInput
+  refunded?: Prisma.RevenueEntryUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryUncheckedUpdateWithoutDealInput = {
@@ -802,7 +1147,10 @@ export type RevenueEntryUncheckedUpdateWithoutDealInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refunded?: Prisma.RevenueEntryUncheckedUpdateManyWithoutRefundsNestedInput
 }
 
 export type RevenueEntryUncheckedUpdateManyWithoutDealInput = {
@@ -815,9 +1163,40 @@ export type RevenueEntryUncheckedUpdateManyWithoutDealInput = {
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   externalRef?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRefund?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  refundsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type RevenueEntryCountOutputType
+ */
+
+export type RevenueEntryCountOutputType = {
+  refunded: number
+}
+
+export type RevenueEntryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  refunded?: boolean | RevenueEntryCountOutputTypeCountRefundedArgs
+}
+
+/**
+ * RevenueEntryCountOutputType without action
+ */
+export type RevenueEntryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RevenueEntryCountOutputType
+   */
+  select?: Prisma.RevenueEntryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * RevenueEntryCountOutputType without action
+ */
+export type RevenueEntryCountOutputTypeCountRefundedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RevenueEntryWhereInput
+}
 
 
 export type RevenueEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -831,9 +1210,14 @@ export type RevenueEntrySelect<ExtArgs extends runtime.Types.Extensions.Internal
   date?: boolean
   dealId?: boolean
   externalRef?: boolean
+  isRefund?: boolean
+  refundsId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
+  refunded?: boolean | Prisma.RevenueEntry$refundedArgs<ExtArgs>
+  _count?: boolean | Prisma.RevenueEntryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["revenueEntry"]>
 
 export type RevenueEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -847,9 +1231,12 @@ export type RevenueEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   date?: boolean
   dealId?: boolean
   externalRef?: boolean
+  isRefund?: boolean
+  refundsId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
 }, ExtArgs["result"]["revenueEntry"]>
 
 export type RevenueEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -863,9 +1250,12 @@ export type RevenueEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   date?: boolean
   dealId?: boolean
   externalRef?: boolean
+  isRefund?: boolean
+  refundsId?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
 }, ExtArgs["result"]["revenueEntry"]>
 
 export type RevenueEntrySelectScalar = {
@@ -879,21 +1269,28 @@ export type RevenueEntrySelectScalar = {
   date?: boolean
   dealId?: boolean
   externalRef?: boolean
+  isRefund?: boolean
+  refundsId?: boolean
   createdAt?: boolean
 }
 
-export type RevenueEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "source" | "amountCents" | "currency" | "description" | "platform" | "date" | "dealId" | "externalRef" | "createdAt", ExtArgs["result"]["revenueEntry"]>
+export type RevenueEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "source" | "amountCents" | "currency" | "description" | "platform" | "date" | "dealId" | "externalRef" | "isRefund" | "refundsId" | "createdAt", ExtArgs["result"]["revenueEntry"]>
 export type RevenueEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
+  refunded?: boolean | Prisma.RevenueEntry$refundedArgs<ExtArgs>
+  _count?: boolean | Prisma.RevenueEntryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RevenueEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
 }
 export type RevenueEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   deal?: boolean | Prisma.RevenueEntry$dealArgs<ExtArgs>
+  refunds?: boolean | Prisma.RevenueEntry$refundsArgs<ExtArgs>
 }
 
 export type $RevenueEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -901,6 +1298,8 @@ export type $RevenueEntryPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     deal: Prisma.$DealPayload<ExtArgs> | null
+    refunds: Prisma.$RevenueEntryPayload<ExtArgs> | null
+    refunded: Prisma.$RevenueEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -913,6 +1312,8 @@ export type $RevenueEntryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     date: Date
     dealId: string | null
     externalRef: string | null
+    isRefund: boolean
+    refundsId: string | null
     createdAt: Date
   }, ExtArgs["result"]["revenueEntry"]>
   composites: {}
@@ -1310,6 +1711,8 @@ export interface Prisma__RevenueEntryClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   deal<T extends Prisma.RevenueEntry$dealArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RevenueEntry$dealArgs<ExtArgs>>): Prisma.Prisma__DealClient<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  refunds<T extends Prisma.RevenueEntry$refundsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RevenueEntry$refundsArgs<ExtArgs>>): Prisma.Prisma__RevenueEntryClient<runtime.Types.Result.GetResult<Prisma.$RevenueEntryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  refunded<T extends Prisma.RevenueEntry$refundedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RevenueEntry$refundedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenueEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1349,6 +1752,8 @@ export interface RevenueEntryFieldRefs {
   readonly date: Prisma.FieldRef<"RevenueEntry", 'DateTime'>
   readonly dealId: Prisma.FieldRef<"RevenueEntry", 'String'>
   readonly externalRef: Prisma.FieldRef<"RevenueEntry", 'String'>
+  readonly isRefund: Prisma.FieldRef<"RevenueEntry", 'Boolean'>
+  readonly refundsId: Prisma.FieldRef<"RevenueEntry", 'String'>
   readonly createdAt: Prisma.FieldRef<"RevenueEntry", 'DateTime'>
 }
     
@@ -1767,6 +2172,49 @@ export type RevenueEntry$dealArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.DealInclude<ExtArgs> | null
   where?: Prisma.DealWhereInput
+}
+
+/**
+ * RevenueEntry.refunds
+ */
+export type RevenueEntry$refundsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RevenueEntry
+   */
+  select?: Prisma.RevenueEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RevenueEntry
+   */
+  omit?: Prisma.RevenueEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RevenueEntryInclude<ExtArgs> | null
+  where?: Prisma.RevenueEntryWhereInput
+}
+
+/**
+ * RevenueEntry.refunded
+ */
+export type RevenueEntry$refundedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RevenueEntry
+   */
+  select?: Prisma.RevenueEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RevenueEntry
+   */
+  omit?: Prisma.RevenueEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RevenueEntryInclude<ExtArgs> | null
+  where?: Prisma.RevenueEntryWhereInput
+  orderBy?: Prisma.RevenueEntryOrderByWithRelationInput | Prisma.RevenueEntryOrderByWithRelationInput[]
+  cursor?: Prisma.RevenueEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RevenueEntryScalarFieldEnum | Prisma.RevenueEntryScalarFieldEnum[]
 }
 
 /**

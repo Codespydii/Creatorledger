@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AddRevenueForm } from '@/components/features/revenue/add-revenue-form'
 import { RevenueRowActions } from '@/components/features/revenue/revenue-row-actions'
+import { CsvImporter } from '@/components/features/shared/csv-importer'
 import { verifySession } from '@/lib/session'
 import { db } from '@/lib/db'
 import { formatCurrency, formatDate } from '@/lib/utils'
@@ -10,18 +11,30 @@ import { formatCurrency, formatDate } from '@/lib/utils'
 const sourceLabels: Record<string, string> = {
   adsense: 'AdSense',
   sponsorship: 'Sponsorship',
+  brand_deal: 'Sponsorship',        // legacy → displays as Sponsorship
   affiliate: 'Affiliate',
-  brand_deal: 'Brand Deal',
-  merchandise: 'Merchandise',
+  tiktok_fund: 'TikTok Fund',
+  patreon: 'Patreon',
+  substack: 'Substack',
+  memberships: 'Memberships',
+  podcast: 'Podcast',
+  merchandise: 'Merch',
+  tips: 'Tips',
   other: 'Other',
 }
 
 const sourceBadge: Record<string, 'default' | 'success' | 'warning' | 'secondary'> = {
   adsense: 'success',
   sponsorship: 'default',
-  affiliate: 'warning',
   brand_deal: 'default',
+  affiliate: 'warning',
+  tiktok_fund: 'success',
+  patreon: 'warning',
+  substack: 'warning',
+  memberships: 'default',
+  podcast: 'default',
   merchandise: 'secondary',
+  tips: 'success',
   other: 'secondary',
 }
 
@@ -49,7 +62,10 @@ export default async function RevenuePage() {
             <p className="text-sm text-muted-foreground">Total Revenue</p>
             <p className="text-3xl font-bold text-foreground">{formatCurrency(totalCents, currency)}</p>
           </div>
-          <AddRevenueForm currency={currency} />
+          <div className="flex items-center gap-2">
+            <CsvImporter type="revenue" />
+            <AddRevenueForm currency={currency} />
+          </div>
         </div>
 
         <Card>
@@ -77,12 +93,16 @@ export default async function RevenuePage() {
                   </thead>
                   <tbody>
                     {entries.map((entry) => (
-                      <tr key={entry.id} className="border-b border-border last:border-0 hover:bg-muted/50">
+                      <tr key={entry.id} className={`border-b border-border last:border-0 hover:bg-muted/50 ${entry.isRefund ? 'bg-amber-50/40' : ''}`}>
                         <td className="py-3 text-muted-foreground">{formatDate(entry.date.toISOString())}</td>
                         <td className="py-3">
-                          <Badge variant={sourceBadge[entry.source] || 'secondary'}>
-                            {sourceLabels[entry.source] || entry.source}
-                          </Badge>
+                          {entry.isRefund ? (
+                            <Badge variant="warning">Refund</Badge>
+                          ) : (
+                            <Badge variant={sourceBadge[entry.source] || 'secondary'}>
+                              {sourceLabels[entry.source] || entry.source}
+                            </Badge>
+                          )}
                         </td>
                         <td className="py-3 text-foreground max-w-xs truncate">
                           {entry.description}
@@ -91,8 +111,8 @@ export default async function RevenuePage() {
                           )}
                         </td>
                         <td className="py-3 text-muted-foreground">{entry.platform || '—'}</td>
-                        <td className="py-3 text-right font-semibold text-emerald-600">
-                          {formatCurrency(entry.amountCents, currency)}
+                        <td className={`py-3 text-right font-semibold ${entry.amountCents < 0 ? 'text-amber-600' : 'text-emerald-600'}`}>
+                          {entry.amountCents < 0 ? '−' : ''}{formatCurrency(Math.abs(entry.amountCents), currency)}
                         </td>
                         <td className="py-3">
                           <RevenueRowActions
@@ -102,6 +122,7 @@ export default async function RevenuePage() {
                             description={entry.description}
                             platform={entry.platform}
                             date={entry.date.toISOString().split('T')[0]}
+                            isRefund={entry.isRefund}
                           />
                         </td>
                       </tr>

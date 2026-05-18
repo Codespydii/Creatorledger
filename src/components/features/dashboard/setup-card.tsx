@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Video, Handshake, ShieldCheck, BarChart2, Receipt, LineChart, ArrowRight, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+import { SampleDataButton } from './sample-data-button'
 
 interface Props {
   youtubeConfigured: boolean
@@ -8,6 +9,7 @@ interface Props {
   userName: string
   primaryPlatform?: string | null
   primaryPain?: string | null
+  hasSampleData?: boolean
 }
 
 const PLATFORM_LABEL: Record<string, string> = {
@@ -134,6 +136,7 @@ export function SetupCard({
   userName,
   primaryPlatform,
   primaryPain,
+  hasSampleData = false,
 }: Props) {
   const first = userName.split(' ')[0]
   const platformLabel = primaryPlatform ? PLATFORM_LABEL[primaryPlatform] ?? '' : ''
@@ -179,6 +182,10 @@ export function SetupCard({
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-4 pt-4 border-t border-border">
+          <SampleDataButton hasSample={hasSampleData} variant="inline" />
         </div>
       </CardContent>
     </Card>

@@ -5,6 +5,7 @@ import { PasswordForm } from '@/components/features/settings/password-form'
 import { DeleteAccount } from '@/components/features/settings/delete-account'
 import { StripeSettings } from '@/components/features/settings/stripe-settings'
 import { YoutubeSettings } from '@/components/features/settings/youtube-settings'
+import { SampleDataButton } from '@/components/features/dashboard/sample-data-button'
 import { verifySession } from '@/lib/session'
 import { db } from '@/lib/db'
 import { isYoutubeConfigured } from '@/lib/youtube'
@@ -42,7 +43,7 @@ export default async function SettingsPage({ searchParams }: Props) {
   const session = await verifySession()
   const sp = await searchParams
 
-  const [user, ytConn, importedRowCount] = await Promise.all([
+  const [user, ytConn, importedRowCount, sampleCount] = await Promise.all([
     db.user.findUnique({
       where: { id: session.userId },
       select: { name: true, email: true, channelName: true, platform: true, defaultCurrency: true, createdAt: true, stripeKey: true },
@@ -50,6 +51,9 @@ export default async function SettingsPage({ searchParams }: Props) {
     db.youTubeConnection.findUnique({ where: { userId: session.userId } }),
     db.revenueEntry.count({
       where: { userId: session.userId, externalRef: { startsWith: 'youtube:' } },
+    }),
+    db.revenueEntry.count({
+      where: { userId: session.userId, description: { contains: '[SAMPLE]' } },
     }),
   ])
 
@@ -144,6 +148,18 @@ export default async function SettingsPage({ searchParams }: Props) {
           </CardHeader>
           <CardContent>
             <StripeSettings hasKey={!!user?.stripeKey} />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Sample data</CardTitle>
+            <CardDescription>
+              Load fake revenue, expenses, deals, and invoices to explore the product. Tagged as &ldquo;sample&rdquo; so you can wipe it cleanly at any time. Your real entries are never touched.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SampleDataButton hasSample={sampleCount > 0} variant="button" />
           </CardContent>
         </Card>
 

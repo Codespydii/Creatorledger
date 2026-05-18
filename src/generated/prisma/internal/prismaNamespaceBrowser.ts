@@ -213,6 +213,8 @@ export const RevenueEntryScalarFieldEnum = {
   date: 'date',
   dealId: 'dealId',
   externalRef: 'externalRef',
+  isRefund: 'isRefund',
+  refundsId: 'refundsId',
   createdAt: 'createdAt'
 } as const
 

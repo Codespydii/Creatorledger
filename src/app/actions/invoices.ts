@@ -4,8 +4,14 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/db'
 import { verifySession } from '@/lib/session'
 import { InvoiceSchema } from '@/lib/validations/invoice'
-import { generateInvoiceNumber, dollarsToCents } from '@/lib/utils'
+import { generateInvoiceNumber, dollarsToCents, formatCurrency, formatDate } from '@/lib/utils'
+import { renderInvoicePdf } from '@/lib/invoice-pdf'
+import { sendInvoiceToClient, isEmailConfigured } from '@/lib/email'
 import type { ActionState } from '@/types'
+
+function getAppUrl(): string {
+  return (process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+}
 
 export async function createInvoice(
   _state: ActionState,
@@ -89,6 +95,65 @@ export async function updateInvoiceStatus(id: string, status: string): Promise<A
   revalidatePath('/invoices')
   revalidatePath('/dashboard')
   return { success: true, data: undefined }
+}
+
+export async function sendInvoiceEmail(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const session = await verifySession()
+  if (!isEmailConfigured()) {
+    return { success: false, error: 'Email service is not configured. Add RESEND_API_KEY first.' }
+  }
+
+  const id = formData.get('invoiceId') as string
+  const overrideEmail = (formData.get('toEmail') as string | null)?.trim() || null
+  const message = (formData.get('message') as string | null)?.trim() || undefined
+
+  const invoice = await db.invoice.findUnique({
+    where: { id },
+    include: { items: true, user: true },
+  })
+  if (!invoice || invoice.userId !== session.userId) {
+    return { success: false, error: 'Invoice not found' }
+  }
+
+  const toEmail = overrideEmail ?? invoice.clientEmail
+  if (!toEmail) {
+    return { success: false, error: 'No recipient email — set one on the invoice first' }
+  }
+
+  try {
+    const pdfBuffer = await renderInvoicePdf(invoice)
+    const currency = invoice.user.defaultCurrency ?? 'USD'
+    const publicUrl = invoice.publicId
+      ? `${getAppUrl()}/i/${invoice.publicId}`
+      : `${getAppUrl()}/invoices/${invoice.id}` // fallback, requires login
+
+    await sendInvoiceToClient({
+      toEmail,
+      toName: invoice.clientName,
+      fromName: invoice.user.channelName || invoice.user.name,
+      fromEmail: invoice.user.email,
+      invoiceNumber: invoice.invoiceNumber,
+      totalDisplay: formatCurrency(invoice.totalCents, currency),
+      dueDate: formatDate(invoice.dueDate.toISOString()),
+      publicUrl,
+      message,
+      pdfBuffer,
+    })
+
+    // Auto-mark sent invoices as 'sent' if they were still draft
+    if (invoice.status === 'draft') {
+      await db.invoice.update({ where: { id: invoice.id }, data: { status: 'sent' } })
+    }
+
+    revalidatePath('/invoices')
+    return { success: true, data: undefined }
+  } catch (err) {
+    console.error('sendInvoiceEmail failed:', err instanceof Error ? err.message : err)
+    return { success: false, error: err instanceof Error ? err.message : 'Send failed' }
+  }
 }
 
 export async function getInvoices() {

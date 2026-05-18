@@ -39,7 +39,7 @@ async function getData(userId: string) {
   const endLastMonth   = new Date(now.getFullYear(), now.getMonth(), 0)
   const startOfYear    = new Date(now.getFullYear(), 0, 1)
 
-  const [user, revenues, expenses, invoices, deals, contractCount, youtubeConn] = await Promise.all([
+  const [user, revenues, expenses, invoices, deals, contractCount, youtubeConn, sampleCount] = await Promise.all([
     db.user.findUnique({
       where: { id: userId },
       select: { name: true, onboardedAt: true, primaryPlatform: true, primaryPain: true, defaultCurrency: true },
@@ -50,6 +50,7 @@ async function getData(userId: string) {
     db.deal.findMany({ where: { userId }, orderBy: { updatedAt: 'desc' } }),
     db.contract.count({ where: { userId } }),
     db.youTubeConnection.findUnique({ where: { userId }, select: { id: true } }),
+    db.revenueEntry.count({ where: { userId, description: { contains: '[SAMPLE]' } } }),
   ])
 
   if (user && !user.onboardedAt) redirect('/onboarding')
@@ -124,12 +125,13 @@ async function getData(userId: string) {
     activity,
     isEmpty,
     youtubeConnected: Boolean(youtubeConn),
+    hasSampleData: sampleCount > 0,
   }
 }
 
 export default async function DashboardPage() {
   const session = await verifySession()
-  const { userName, currency, primaryPlatform, primaryPain, stats, chartData, breakdownData, recentInvoices, activeDeals, activity, isEmpty, youtubeConnected } = await getData(session.userId)
+  const { userName, currency, primaryPlatform, primaryPain, stats, chartData, breakdownData, recentInvoices, activeDeals, activity, isEmpty, youtubeConnected, hasSampleData } = await getData(session.userId)
   const hour = new Date().getHours()
   const youtubeReady = isYoutubeConfigured()
 
@@ -162,6 +164,7 @@ export default async function DashboardPage() {
             userName={userName}
             primaryPlatform={primaryPlatform}
             primaryPain={primaryPain}
+            hasSampleData={hasSampleData}
           />
         )}
 

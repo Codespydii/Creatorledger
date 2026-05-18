@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { AddExpenseForm } from '@/components/features/expenses/add-expense-form'
 import { ExpenseRowActions } from '@/components/features/expenses/expense-row-actions'
+import { CsvImporter } from '@/components/features/shared/csv-importer'
 import { verifySession } from '@/lib/session'
 import { db } from '@/lib/db'
 import { formatCurrency, formatDate } from '@/lib/utils'
@@ -46,7 +47,10 @@ export default async function ExpensesPage() {
             <p className="text-sm text-muted-foreground">Total Expenses</p>
             <p className="text-3xl font-bold text-foreground">{formatCurrency(totalCents, currency)}</p>
           </div>
-          <AddExpenseForm currency={currency} />
+          <div className="flex items-center gap-2">
+            <CsvImporter type="expense" />
+            <AddExpenseForm currency={currency} />
+          </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
