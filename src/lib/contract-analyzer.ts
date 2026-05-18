@@ -1,6 +1,6 @@
 import 'server-only'
 import { z } from 'zod'
-import { generate } from './gemini'
+import { generate, GeminiResponseError } from './gemini'
 import { stripJsonCodeFence } from './utils'
 
 const ANALYSIS_PROMPT = `You are a legal analyst specialized in creator-brand sponsorship contracts and briefs.
@@ -109,23 +109,40 @@ export async function analyzeContract(input: {
     ? `${ANALYSIS_PROMPT}\n\n---\nContract / brief text:\n\n${input.text}`
     : ANALYSIS_PROMPT
 
-  const raw = await generate({
-    prompt,
-    attachment: input.file,
-    responseMimeType: 'application/json',
-    temperature: 0.2,
-    maxOutputTokens: 4096,
-  })
+  let raw: string
+  try {
+    raw = await generate({
+      prompt,
+      attachment: input.file,
+      responseMimeType: 'application/json',
+      temperature: 0.2,
+      maxOutputTokens: 8192,
+    })
+  } catch (e) {
+    if (e instanceof GeminiResponseError) {
+      console.error('[contract-analyzer] Gemini stopped early:', e.reason, '— partial:', e.raw.slice(0, 500))
+      if (e.reason === 'MAX_TOKENS') {
+        throw new Error('Contract is too long for the AI to process in one pass. Paste just the key sections (payment, deliverables, usage rights, exclusivity) and try again.')
+      }
+      if (e.reason === 'SAFETY') {
+        throw new Error('The contract was flagged by AI safety filters. Paste it as plain text without signatures or personal details and retry.')
+      }
+      throw new Error('AI did not return a complete analysis. Try again.')
+    }
+    throw e
+  }
 
   let parsed: unknown
   try {
     parsed = JSON.parse(stripJsonCodeFence(raw))
   } catch {
+    console.error('[contract-analyzer] JSON.parse failed. Raw (first 500 chars):', raw.slice(0, 500))
     throw new Error('AI returned a malformed response. Try again or paste the contract as plain text.')
   }
 
   const result = ContractAnalysisSchema.safeParse(parsed)
   if (!result.success) {
+    console.error('[contract-analyzer] Schema mismatch:', result.error.issues, '— raw:', raw.slice(0, 500))
     throw new Error('AI response did not match expected structure. Try simplifying the input.')
   }
 

@@ -1,6 +1,6 @@
 import 'server-only'
 import { z } from 'zod'
-import { generate } from './gemini'
+import { generate, GeminiResponseError } from './gemini'
 import { stripJsonCodeFence } from './utils'
 
 const EXTRACTION_PROMPT = `You are an assistant that extracts structured sponsorship deal information from raw emails sent to creators.
@@ -51,22 +51,39 @@ export const DealExtractionSchema = z.object({
 export type DealExtraction = z.infer<typeof DealExtractionSchema>
 
 export async function extractDealFromEmail(text: string): Promise<DealExtraction> {
-  const raw = await generate({
-    prompt: `${EXTRACTION_PROMPT}\n\n---\nEmail content:\n\n${text}`,
-    responseMimeType: 'application/json',
-    temperature: 0.2,
-    maxOutputTokens: 1024,
-  })
+  let raw: string
+  try {
+    raw = await generate({
+      prompt: `${EXTRACTION_PROMPT}\n\n---\nEmail content:\n\n${text}`,
+      responseMimeType: 'application/json',
+      temperature: 0.2,
+      maxOutputTokens: 2048,
+    })
+  } catch (e) {
+    if (e instanceof GeminiResponseError) {
+      console.error('[deal-extractor] Gemini stopped early:', e.reason, '— partial:', e.raw.slice(0, 500))
+      if (e.reason === 'MAX_TOKENS') {
+        throw new Error('Email is too long for the AI to process. Trim it to the key paragraphs and try again.')
+      }
+      if (e.reason === 'SAFETY') {
+        throw new Error('The email was flagged by AI safety filters. Paste only the offer details (remove signatures, links, attachments) and retry.')
+      }
+      throw new Error('AI did not return a complete response. Try again.')
+    }
+    throw e
+  }
 
   let parsed: unknown
   try {
     parsed = JSON.parse(stripJsonCodeFence(raw))
   } catch {
+    console.error('[deal-extractor] JSON.parse failed. Raw (first 500 chars):', raw.slice(0, 500))
     throw new Error('AI returned a malformed response. Try again or simplify the email.')
   }
 
   const result = DealExtractionSchema.safeParse(parsed)
   if (!result.success) {
+    console.error('[deal-extractor] Schema mismatch:', result.error.issues, '— raw:', raw.slice(0, 500))
     throw new Error('AI response did not match expected structure.')
   }
   return result.data

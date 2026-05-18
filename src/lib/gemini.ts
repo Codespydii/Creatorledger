@@ -18,6 +18,19 @@ export class GeminiApiError extends Error {
   }
 }
 
+export type GeminiFinishReason = 'STOP' | 'MAX_TOKENS' | 'SAFETY' | 'RECITATION' | 'OTHER'
+
+export class GeminiResponseError extends Error {
+  reason: GeminiFinishReason
+  raw: string
+  constructor(reason: GeminiFinishReason, raw: string) {
+    super(`Gemini response did not complete: ${reason}`)
+    this.name = 'GeminiResponseError'
+    this.reason = reason
+    this.raw = raw
+  }
+}
+
 interface GenerateOptions {
   prompt: string
   attachment?: {
@@ -74,7 +87,10 @@ export async function generate(options: GenerateOptions): Promise<string> {
   }
 
   const json = (await res.json()) as {
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+    candidates?: Array<{
+      content?: { parts?: Array<{ text?: string }> }
+      finishReason?: string
+    }>
     promptFeedback?: { blockReason?: string }
   }
 
@@ -82,7 +98,18 @@ export async function generate(options: GenerateOptions): Promise<string> {
     throw new GeminiApiError(400, `Request blocked: ${json.promptFeedback.blockReason}`)
   }
 
-  const text = json.candidates?.[0]?.content?.parts?.map((p) => p.text ?? '').join('') ?? ''
+  const candidate = json.candidates?.[0]
+  const text = candidate?.content?.parts?.map((p) => p.text ?? '').join('') ?? ''
+  const finishReason = (candidate?.finishReason ?? 'OTHER') as GeminiFinishReason
+
+  if (finishReason !== 'STOP' && finishReason !== 'MAX_TOKENS') {
+    // SAFETY, RECITATION, OTHER — anything other than a clean stop or token cap
+    throw new GeminiResponseError(finishReason, text)
+  }
+  if (finishReason === 'MAX_TOKENS') {
+    // Output was cut off mid-stream; surface so callers can advise the user
+    throw new GeminiResponseError('MAX_TOKENS', text)
+  }
   if (!text) throw new GeminiApiError(500, 'Empty response from Gemini')
   return text
 }
