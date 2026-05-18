@@ -18,8 +18,24 @@ const YOUTUBE_STATUS_BANNERS: Record<string, { tone: 'success' | 'error'; messag
   error: { tone: 'error', message: 'Something went wrong connecting YouTube. Please try again.' },
 }
 
+const YOUTUBE_ERROR_DETAILS: Record<string, string> = {
+  missing_params: 'Google sent us back without an authorization code.',
+  bad_state: 'Sign-in request expired (>10 minutes). Try again.',
+  user_mismatch: 'Session user does not match the OAuth state. Sign out and try again.',
+  exchange_failed: 'Could not exchange the code with Google. Check server logs.',
+  invalid_credentials: 'Server OAuth credentials were rejected by Google.',
+  channel_fetch_failed: 'Could not fetch channel info from YouTube.',
+  api_not_enabled: 'YouTube Data API v3 is not enabled in your Google Cloud project.',
+  no_channel: 'This Google account does not have a YouTube channel.',
+  token_rejected: 'The access token was rejected when fetching channel info.',
+  db_or_seal: 'Could not save the connection to the database.',
+  google_redirect_uri_mismatch: 'YouTube redirect URI is not registered in Google Console.',
+  google_invalid_client: 'Client ID is not recognized by Google.',
+  google_access_denied: 'Access was denied.',
+}
+
 interface Props {
-  searchParams: Promise<{ youtube?: string }>
+  searchParams: Promise<{ youtube?: string; detail?: string }>
 }
 
 export default async function SettingsPage({ searchParams }: Props) {
@@ -37,7 +53,11 @@ export default async function SettingsPage({ searchParams }: Props) {
     }),
   ])
 
-  const banner = sp.youtube ? YOUTUBE_STATUS_BANNERS[sp.youtube] : null
+  const baseBanner = sp.youtube ? YOUTUBE_STATUS_BANNERS[sp.youtube] : null
+  const detailNote = sp.detail ? YOUTUBE_ERROR_DETAILS[sp.detail] ?? sp.detail : null
+  const banner = baseBanner && detailNote
+    ? { ...baseBanner, message: `${baseBanner.message} (${detailNote})` }
+    : baseBanner
 
   return (
     <div className="flex flex-col flex-1 overflow-auto">
