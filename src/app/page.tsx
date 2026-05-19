@@ -249,7 +249,7 @@ export default function LandingPage() {
                 <div className="h-3 w-3 rounded-full bg-emerald-400/70" />
               </div>
               <div className="mx-auto rounded-md bg-background px-3 py-1 text-xs text-muted-foreground font-mono">
-                creatorledger.app/dashboard
+                creatorledgerapp.vercel.app/dashboard
               </div>
             </div>
             {/* Fake dashboard */}

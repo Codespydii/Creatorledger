@@ -11,7 +11,7 @@ function getResend(): Resend {
   return _resend
 }
 
-const FROM = process.env.RESEND_FROM_EMAIL ?? 'invoices@creatorledger.app'
+const FROM = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
 
 export function isEmailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY)
@@ -57,7 +57,7 @@ function buildResetEmailHtml(p: PasswordResetParams): string {
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">Didn&apos;t request this? You can safely ignore this email — your password won&apos;t change.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledger.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
     </div>
   </div>
 </body>
@@ -136,7 +136,7 @@ export async function sendWelcomeEmail(p: WelcomeEmailParams) {
       <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-bottom:0;">— Mahipal</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">You&apos;re receiving this because you signed up at <a href="https://creatorledger.app" style="color:#7c3aed;text-decoration:none;">creatorledger.app</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">You&apos;re receiving this because you signed up at <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">creatorledgerapp.vercel.app</a></p>
     </div>
   </div>
 </body></html>`,
@@ -278,7 +278,7 @@ function buildEmailHtml(p: OverdueReminderParams, amount: string, due: string): 
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.creatorName}</strong></p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledger.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
     </div>
   </div>
 </body>
