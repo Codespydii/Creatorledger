@@ -22,14 +22,14 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/contracts', label: 'Contracts', icon: ShieldCheck },
-  { href: '/media-kit', label: 'Media Kit', icon: Sparkles },
-  { href: '/deals', label: 'Brand Deals', icon: Handshake },
   { href: '/revenue', label: 'Revenue', icon: TrendingUp },
-  { href: '/invoices', label: 'Invoices', icon: FileText },
   { href: '/expenses', label: 'Expenses', icon: Receipt },
+  { href: '/invoices', label: 'Invoices', icon: FileText },
+  { href: '/deals', label: 'Brand Deals', icon: Handshake },
+  { href: '/contracts', label: 'Contracts', icon: ShieldCheck },
   { href: '/forecast', label: 'Forecast', icon: LineChart },
   { href: '/benchmarks', label: 'Benchmarks', icon: Scale },
+  { href: '/media-kit', label: 'Media Kit', icon: Sparkles },
   { href: '/reports', label: 'Reports', icon: BarChart2 },
 ]
 
