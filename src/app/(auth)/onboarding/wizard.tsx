@@ -52,8 +52,9 @@ export function OnboardingWizard({ userName }: Props) {
     <div className="min-h-screen bg-muted px-4 py-12">
       <div className="mx-auto max-w-2xl">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary mb-4">
-            <span className="text-white font-bold text-lg">CL</span>
+          <div className="mb-4 flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/caelo-logo.png" alt="Caelo" className="h-8 w-auto" />
           </div>
           <h1 className="text-3xl font-bold text-foreground">Hey {firstName} 👋</h1>
           <p className="text-base text-muted-foreground mt-2">

@@ -1,6 +1,6 @@
 'use client'
 
-import { Download } from 'lucide-react'
+import { Upload } from 'lucide-react'
 
 interface Row {
   month: string
@@ -35,7 +35,7 @@ export function ExportButton({ rows, period }: { rows: Row[]; period: string }) 
       onClick={download}
       className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-foreground hover:bg-accent transition-colors"
     >
-      <Download className="h-4 w-4" />
+      <Upload className="h-4 w-4" />
       Export CSV
     </button>
   )

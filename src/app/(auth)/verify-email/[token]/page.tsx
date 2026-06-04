@@ -21,7 +21,7 @@ export default async function VerifyEmailPage({ params }: Props) {
               </div>
               <h1 className="text-xl font-bold text-foreground mb-1">Email confirmed</h1>
               <p className="text-sm text-muted-foreground mb-6">
-                Your email is now verified. You can keep using Creator Ledger.
+                Your email is now verified. You can keep using Caelo.
               </p>
               <Link
                 href="/dashboard"

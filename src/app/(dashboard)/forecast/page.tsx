@@ -19,7 +19,7 @@ export default async function ForecastPage() {
   ])
   const currency = user?.defaultCurrency ?? 'USD'
 
-  const forecast = computeForecast({ revenues, expenses, invoices, deals })
+  const forecast = computeForecast({ revenues, expenses, invoices, deals, currency })
 
   return (
     <div className="flex flex-col flex-1 overflow-auto">
@@ -27,7 +27,7 @@ export default async function ForecastPage() {
         title="Cash Flow Forecast"
         subtitle="Where your money is headed over the next 90 days"
       />
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-4 sm:p-6 space-y-6">
         <ForecastStats forecast={forecast} currency={currency} />
         <ForecastChart days={forecast.days} currency={currency} />
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

@@ -44,14 +44,14 @@ export default async function BenchmarksPage({ searchParams }: Props) {
   return (
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Rate Benchmarks" subtitle="What creators like you actually charge" />
-      <main className="flex-1 p-6 space-y-6 max-w-5xl">
+      <main className="flex-1 p-4 sm:p-6 space-y-6 max-w-5xl">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div className="min-w-0">
             <h2 className="text-base font-semibold text-foreground">
               {filterDescription || 'All categories'}
             </h2>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Anonymized rates from creator contributions + curated industry data.
+              Modeled from industry CPMs, then refined by anonymized creator-reported deals.
             </p>
           </div>
           <ContributeForm />

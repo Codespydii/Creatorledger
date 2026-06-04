@@ -17,9 +17,13 @@ model User {
   channelName     String?   @map("channel_name")
   platform        String?
   defaultCurrency String    @default("USD") @map("default_currency")
+  businessAddress String?   @map("business_address")
+  ein             String?   @map("ein")
+  website         String?
   primaryPlatform String?   @map("primary_platform")
   audienceTier    String?   @map("audience_tier")
   primaryPain     String?   @map("primary_pain")
+  niche           String?
   onboardedAt     DateTime? @map("onboarded_at")
   emailVerifiedAt DateTime? @map("email_verified_at")
   createdAt       DateTime  @default(now()) @map("created_at")
@@ -30,6 +34,7 @@ model User {
   invoices     Invoice[]
   expenses     Expense[]
   deals        Deal[]
+  rateBenchmarks    RateBenchmark[]
   teamMembers       TeamMember[]
   mediaKit          MediaKit?
   contracts         Contract[]
@@ -171,6 +176,7 @@ model RevenueEntry {
   refunded RevenueEntry[] @relation("RevenueRefund")
 
   @@unique([userId, externalRef], name: "userId_externalRef")
+  @@index([userId, date])
   @@map("revenue_entries")
 }
 
@@ -197,6 +203,7 @@ model Invoice {
   items        InvoiceLineItem[]
   reminderLogs ReminderLog[]
 
+  @@index([userId, createdAt])
   @@map("invoices")
 }
 
@@ -227,6 +234,7 @@ model Expense {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId, date])
   @@map("expenses")
 }
 
@@ -244,12 +252,15 @@ model Deal {
   startDate    DateTime? @map("start_date")
   endDate      DateTime? @map("end_date")
   notes        String?
+  closedAt     DateTime? @map("closed_at")
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
-  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  revenues RevenueEntry[]
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revenues  RevenueEntry[]
+  benchmark RateBenchmark?
 
+  @@index([userId])
   @@map("deals")
 }
 
@@ -276,10 +287,15 @@ model RateBenchmark {
   exclusivity    Boolean  @default(false)
   usageRights    String?  @map("usage_rights")
   source         String   @default("user")
+  dealId         String?  @unique @map("deal_id")
   reportedAt     DateTime @default(now()) @map("reported_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  deal Deal? @relation(fields: [dealId], references: [id], onDelete: SetNull)
 
   @@index([niche, platform, format, subscriberTier])
   @@index([source, reportedAt])
+  @@index([userId])
   @@map("rate_benchmarks")
 }
 

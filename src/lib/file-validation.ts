@@ -5,6 +5,8 @@ const PNG_MAGIC = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]
 const JPEG_MAGIC = [0xff, 0xd8, 0xff]
 const RIFF_MAGIC = [0x52, 0x49, 0x46, 0x46]
 const WEBP_FOURCC = [0x57, 0x45, 0x42, 0x50]
+// .docx is an Office Open XML package — a ZIP archive ("PK\x03\x04")
+const ZIP_MAGIC = [0x50, 0x4b, 0x03, 0x04]
 
 function startsWith(buf: Buffer, prefix: number[]): boolean {
   if (buf.length < prefix.length) return false
@@ -34,11 +36,12 @@ function isLikelyPlainText(buf: Buffer): boolean {
   return sample.length === 0 || printable / sample.length > 0.9
 }
 
-export function detectFileKind(buf: Buffer): 'pdf' | 'png' | 'jpeg' | 'webp' | 'text' | 'unknown' {
+export function detectFileKind(buf: Buffer): 'pdf' | 'png' | 'jpeg' | 'webp' | 'text' | 'zip' | 'unknown' {
   if (startsWith(buf, PDF_MAGIC)) return 'pdf'
   if (startsWith(buf, PNG_MAGIC)) return 'png'
   if (startsWith(buf, JPEG_MAGIC)) return 'jpeg'
   if (startsWith(buf, RIFF_MAGIC) && matchesAtOffset(buf, 8, WEBP_FOURCC)) return 'webp'
+  if (startsWith(buf, ZIP_MAGIC)) return 'zip'
   if (isLikelyPlainText(buf)) return 'text'
   return 'unknown'
 }
@@ -49,6 +52,8 @@ const MIME_TO_KIND: Record<string, ReturnType<typeof detectFileKind>> = {
   'image/jpeg': 'jpeg',
   'image/webp': 'webp',
   'text/plain': 'text',
+  // .docx — verified as a ZIP container here; mammoth confirms it's real Word XML downstream
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'zip',
 }
 
 export function verifyFileMatchesMime(buf: Buffer, claimedMime: string): boolean {

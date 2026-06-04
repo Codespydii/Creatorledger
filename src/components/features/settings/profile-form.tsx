@@ -6,15 +6,20 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { CURRENCY_OPTIONS } from '@/lib/currencies'
+import { NICHES } from '@/lib/benchmarks-constants'
 
 interface Props {
   name: string
   channelName: string
   platform: string
   defaultCurrency: string
+  niche: string
+  businessAddress: string
+  ein: string
+  website: string
 }
 
-export function ProfileForm({ name, channelName, platform, defaultCurrency }: Props) {
+export function ProfileForm({ name, channelName, platform, defaultCurrency, niche, businessAddress, ein, website }: Props) {
   const [state, action, pending] = useActionState(updateProfile, undefined)
 
   return (
@@ -54,6 +59,46 @@ export function ProfileForm({ name, channelName, platform, defaultCurrency }: Pr
         />
         <p className="text-xs text-muted-foreground">Used everywhere amounts appear. You can change this anytime.</p>
       </div>
+      <div className="flex flex-col gap-1.5">
+        <Select
+          id="niche"
+          name="niche"
+          label="Content niche"
+          placeholder="Not set"
+          options={NICHES.map((n) => ({ value: n.value, label: n.label }))}
+          defaultValue={niche}
+        />
+        <p className="text-xs text-muted-foreground">Used to pre-fill rate-benchmark contributions and tailor comparisons.</p>
+      </div>
+
+      <div className="border-t border-border pt-4 space-y-4">
+        <div>
+          <h3 className="text-sm font-medium text-foreground">Invoice details</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">Shown in the &ldquo;From&rdquo; block on every invoice PDF you send.</p>
+        </div>
+        <Input
+          id="businessAddress"
+          name="businessAddress"
+          label="Business address"
+          defaultValue={businessAddress}
+          placeholder="123 Main St, City, State ZIP"
+        />
+        <Input
+          id="ein"
+          name="ein"
+          label="EIN / Tax ID"
+          defaultValue={ein}
+          placeholder="88-1234567"
+        />
+        <Input
+          id="website"
+          name="website"
+          label="Website"
+          defaultValue={website}
+          placeholder="yourdomain.com"
+        />
+      </div>
+
       <Button type="submit" disabled={pending}>
         {pending ? 'Saving…' : 'Save Changes'}
       </Button>

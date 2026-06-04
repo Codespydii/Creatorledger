@@ -1,4 +1,4 @@
-import { Mail, MapPin, Users, Eye, TrendingUp, BarChart3 } from 'lucide-react'
+import { Mail, MapPin, Users, Eye, TrendingUp, BarChart3, PlayCircle } from 'lucide-react'
 import { PrintButton } from './print-button'
 import type { MediaKitModel as MediaKit, UserModel as User } from '@/generated/prisma/models'
 
@@ -86,10 +86,36 @@ export function MediaKitView({ mediaKit }: Props) {
     <>
       <style>{`
         @media print {
+          @page { size: A4 portrait; margin: 8mm; }
           body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: white !important; }
           .no-print { display: none !important; }
-          .page-break { page-break-before: always; }
+          /* Render the whole kit as one rounded card, auto-scaled to fit a single page. */
+          #mk-article {
+            width: 733px !important;          /* A4 content width @96dpi (8mm margins) */
+            margin: 0 auto !important;
+            zoom: var(--mk-zoom, 1);          /* set by the Download button to fit one page */
+            box-shadow: none !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 18px !important;
+            overflow: hidden !important;
+          }
+          #mk-article * { break-inside: avoid; }
+          .mk-embed { display: none !important; }
+          .mk-print-link { display: flex !important; }
         }
+
+        /* Compact, print-optimized layout. Toggled on (by the Download/print flow)
+           via .mk-pdf so the page is laid out FOR paper, not just shrunk. */
+        #mk-article.mk-pdf .mk-hero { padding: 1.5rem 2.25rem !important; }
+        #mk-article.mk-pdf .mk-hero h1 { font-size: 1.75rem !important; line-height: 1.15 !important; }
+        #mk-article.mk-pdf .mk-hero p { font-size: 0.9rem !important; margin-top: 0.4rem !important; }
+        #mk-article.mk-pdf .mk-stat { padding: 0.85rem 1.1rem !important; }
+        #mk-article.mk-pdf .mk-stat-value { font-size: 1.4rem !important; margin-top: 0.15rem !important; }
+        #mk-article.mk-pdf .mk-body { padding: 1.4rem 2.25rem !important; }
+        #mk-article.mk-pdf .mk-body > * + * { margin-top: 1.1rem !important; }
+        #mk-article.mk-pdf .mk-section-gap { margin-top: 0.6rem !important; }
+        #mk-article.mk-pdf .mk-embed { display: none !important; }
+        #mk-article.mk-pdf .mk-print-link { display: flex !important; }
       `}</style>
 
       <div className="min-h-screen bg-slate-50">
@@ -100,10 +126,10 @@ export function MediaKitView({ mediaKit }: Props) {
           </div>
         </div>
 
-        <article className="mx-auto max-w-4xl bg-white shadow-sm print:shadow-none">
+        <article id="mk-article" className="mx-auto max-w-4xl overflow-hidden rounded-2xl bg-white shadow-sm print:shadow-none">
           {/* Hero */}
           <header
-            className="px-10 py-12 text-white"
+            className="mk-hero px-10 py-12 text-white"
             style={{ background: `linear-gradient(135deg, ${accent} 0%, ${accent}dd 100%)` }}
           >
             <div className="flex items-start justify-between gap-6 flex-wrap">
@@ -130,19 +156,19 @@ export function MediaKitView({ mediaKit }: Props) {
               {stats.map((stat) => {
                 const Icon = stat.icon
                 return (
-                  <div key={stat.label} className="bg-white p-6">
+                  <div key={stat.label} className="mk-stat bg-white p-6">
                     <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-slate-500">
                       <Icon className="h-3.5 w-3.5" />
                       {stat.label}
                     </div>
-                    <div className="mt-2 text-3xl font-bold text-slate-900">{stat.value}</div>
+                    <div className="mk-stat-value mt-2 text-3xl font-bold text-slate-900">{stat.value}</div>
                   </div>
                 )
               })}
             </section>
           )}
 
-          <div className="px-10 py-10 space-y-10">
+          <div className="mk-body px-10 py-10 space-y-10">
             {/* Bio */}
             {mediaKit.bio && (
               <section>
@@ -206,21 +232,29 @@ export function MediaKitView({ mediaKit }: Props) {
                     const embed = youtubeEmbed(url)
                     return (
                       <div key={url} className="overflow-hidden rounded-xl border border-slate-200">
-                        {embed ? (
-                          <div className="aspect-video bg-slate-100">
-                            <iframe
-                              src={embed}
-                              className="h-full w-full"
-                              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              loading="lazy"
-                              title="Sample video"
-                            />
-                          </div>
-                        ) : (
-                          <div className="aspect-video bg-slate-100 flex items-center justify-center text-xs text-slate-500 p-2 text-center break-all">
-                            {url}
-                          </div>
-                        )}
+                        {/* On screen: live embed. In the PDF, iframes render blank, so we
+                            swap to a clean link card via .mk-embed / .mk-print-link. */}
+                        <div className="mk-embed">
+                          {embed ? (
+                            <div className="aspect-video bg-slate-100">
+                              <iframe
+                                src={embed}
+                                className="h-full w-full"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                loading="lazy"
+                                title="Sample video"
+                              />
+                            </div>
+                          ) : (
+                            <div className="aspect-video bg-slate-100 flex items-center justify-center text-xs text-slate-500 p-2 text-center break-all">
+                              {url}
+                            </div>
+                          )}
+                        </div>
+                        <div className="mk-print-link hidden items-center gap-2 p-3 text-xs text-slate-600">
+                          <PlayCircle className="h-4 w-4 shrink-0 text-slate-400" />
+                          <span className="truncate">{url.replace(/^https?:\/\//, '')}</span>
+                        </div>
                       </div>
                     )
                   })}
@@ -260,9 +294,17 @@ export function MediaKitView({ mediaKit }: Props) {
             </section>
           </div>
 
-          <footer className="border-t border-slate-200 px-10 py-5 text-xs text-slate-400 flex items-center justify-between flex-wrap gap-2">
-            <span>Updated {mediaKit.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
-            <span>Powered by Creator Ledger</span>
+          <footer className="border-t border-slate-200 px-10 py-5 flex items-center justify-between flex-wrap gap-3">
+            <span className="text-xs text-slate-400">
+              Updated {mediaKit.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-slate-400">Powered by</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/caelo-icon.png" alt="" className="h-4 w-4" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/caelo-logo.png" alt="Caelo" className="h-3.5 w-auto" />
+            </div>
           </footer>
         </article>
       </div>

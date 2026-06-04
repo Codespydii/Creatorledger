@@ -19,7 +19,7 @@ interface Props {
   geminiConfigured: boolean
 }
 
-const ACCEPT = '.pdf,.txt,.png,.jpg,.jpeg,.webp,application/pdf,text/plain,image/png,image/jpeg,image/webp'
+const ACCEPT = '.pdf,.txt,.docx,.png,.jpg,.jpeg,.webp,application/pdf,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg,image/webp'
 
 export function ContractUploadForm({ geminiConfigured }: Props) {
   const [state, action, pending] = useActionState(analyzeContractAction, undefined)
@@ -50,7 +50,7 @@ export function ContractUploadForm({ geminiConfigured }: Props) {
       <CardHeader>
         <CardTitle>Analyze a contract or brief</CardTitle>
         <CardDescription>
-          Upload a PDF, image of a contract, or paste the text. The AI reviews it from your side and flags risky terms.
+          Upload a PDF, Word document, image of a contract, or paste the text. The AI reviews it from your side and flags risky terms.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -72,7 +72,7 @@ export function ContractUploadForm({ geminiConfigured }: Props) {
         <form action={action} className="space-y-4">
           <div>
             <label className="text-sm font-medium text-foreground">Upload file</label>
-            <p className="text-xs text-muted-foreground mt-1 mb-2">PDF, text, or image. Max 10MB.</p>
+            <p className="text-xs text-muted-foreground mt-1 mb-2">PDF, Word (.docx), text, or image. Max 10MB.</p>
             {file ? (
               <div className="flex items-center justify-between rounded-lg border border-border bg-muted/40 px-3 py-2.5">
                 <div className="flex items-center gap-2 min-w-0">

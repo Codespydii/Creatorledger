@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from 'react'
 import Link from 'next/link'
+import { HexColorPicker } from 'react-colorful'
 import { ExternalLink, Eye, EyeOff } from 'lucide-react'
 import { saveMediaKit, togglePublish } from '@/app/actions/media-kit'
 import { Button } from '@/components/ui/button'
@@ -34,6 +35,13 @@ interface Props {
     accentColor: string
   }
   publicUrl: string | null
+}
+
+const ACCENT_PRESETS = ['#7c3aed', '#2563eb', '#0891b2', '#059669', '#d97706', '#e11d48', '#db2777', '#0f172a']
+const HEX_RE = /^#[0-9a-fA-F]{6}$/
+/** The native <input type="color"> needs a valid #rrggbb; fall back while typing. */
+function safeHex(v: string): string {
+  return HEX_RE.test(v) ? v : '#7c3aed'
 }
 
 export function MediaKitForm({ initial, publicUrl }: Props) {
@@ -142,9 +150,9 @@ export function MediaKitForm({ initial, publicUrl }: Props) {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              <Input id="rateIntegrated" name="rateIntegrated" label="Integrated mid-roll ($)" type="number" min={0} step="50" defaultValue={initial.rateIntegrated} placeholder="3500" />
-              <Input id="rateDedicated" name="rateDedicated" label="Dedicated video ($)" type="number" min={0} step="100" defaultValue={initial.rateDedicated} placeholder="8000" />
-              <Input id="rateShorts" name="rateShorts" label="YouTube Short ($)" type="number" min={0} step="50" defaultValue={initial.rateShorts} placeholder="1200" />
+              <Input id="rateIntegrated" name="rateIntegrated" label="Integrated mid-roll ($)" type="number" min={0} step="1" defaultValue={initial.rateIntegrated} placeholder="3500" />
+              <Input id="rateDedicated" name="rateDedicated" label="Dedicated video ($)" type="number" min={0} step="1" defaultValue={initial.rateDedicated} placeholder="8000" />
+              <Input id="rateShorts" name="rateShorts" label="YouTube Short ($)" type="number" min={0} step="1" defaultValue={initial.rateShorts} placeholder="1200" />
             </div>
           </CardContent>
         </Card>
@@ -166,9 +174,51 @@ export function MediaKitForm({ initial, publicUrl }: Props) {
           </CardHeader>
           <CardContent className="space-y-4">
             <Input id="contactEmail" name="contactEmail" label="Contact email" type="email" defaultValue={initial.contactEmail} placeholder="brands@yourchannel.com" />
-            <div className="flex items-end gap-3">
-              <Input id="accentColor" name="accentColor" label="Accent color" defaultValue={accentColor} placeholder="#7c3aed" onChange={(e) => setAccentColor(e.currentTarget.value)} className="font-mono" />
-              <div className="h-10 w-10 rounded-lg border border-border shrink-0" style={{ backgroundColor: accentColor }} />
+            <div>
+              <label htmlFor="accentColorText" className="text-sm font-medium text-foreground">Accent color</label>
+              <p className="text-xs text-muted-foreground mt-0.5 mb-3">
+                Sets the header banner, rate prices, and contact highlight on your public kit. Drag the palette, type a hex, or pick a preset.
+              </p>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                <HexColorPicker
+                  color={safeHex(accentColor)}
+                  onChange={setAccentColor}
+                  style={{ width: '100%', maxWidth: 240, height: 170 }}
+                />
+                <div className="flex flex-1 flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <span
+                      aria-hidden="true"
+                      className="h-9 w-9 shrink-0 rounded-lg border border-border"
+                      style={{ backgroundColor: safeHex(accentColor) }}
+                    />
+                    <Input
+                      id="accentColorText"
+                      name="accentColor"
+                      value={accentColor}
+                      onChange={(e) => setAccentColor(e.currentTarget.value)}
+                      placeholder="#7c3aed"
+                      className="font-mono w-32"
+                      maxLength={7}
+                    />
+                  </div>
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {ACCENT_PRESETS.map((c) => (
+                      <button
+                        key={c}
+                        type="button"
+                        onClick={() => setAccentColor(c)}
+                        aria-label={`Use ${c}`}
+                        title={c}
+                        className={`h-7 w-7 rounded-full border transition-transform hover:scale-110 ${
+                          accentColor.toLowerCase() === c ? 'border-foreground ring-2 ring-offset-1 ring-foreground/30' : 'border-border'
+                        }`}
+                        style={{ backgroundColor: c }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

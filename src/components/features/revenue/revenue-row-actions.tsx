@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition, useActionState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { Pencil, Trash2, X, Undo2 } from 'lucide-react'
 import { updateRevenueEntry, deleteRevenueEntry, createRefund } from '@/app/actions/revenue'
 import { Button } from '@/components/ui/button'
@@ -30,26 +31,47 @@ interface Props {
   platform: string | null
   date: string
   isRefund?: boolean
+  labeled?: boolean
+  onDone?: () => void
 }
 
-export function RevenueRowActions({ id, source, amountCents, description, platform, date, isRefund }: Props) {
+export function RevenueRowActions({ id, source, amountCents, description, platform, date, isRefund, labeled = false, onDone }: Props) {
   const [modal, setModal] = useState<'edit' | 'delete' | 'refund' | null>(null)
   const [editState, editAction, editPending] = useActionState(updateRevenueEntry, undefined)
   const [refundState, refundAction, refundPending] = useActionState(createRefund, undefined)
   const [deletePending, startDelete] = useTransition()
 
   useEffect(() => {
-    if (editState?.success) setModal(null)
+    if (editState?.success) {
+      toast.success('Revenue entry updated')
+      setModal(null)
+      onDone?.()
+    } else if (editState && !editState.success && editState.error) {
+      toast.error(editState.error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState])
 
   useEffect(() => {
-    if (refundState?.success) setModal(null)
+    if (refundState?.success) {
+      toast.success('Refund logged')
+      setModal(null)
+    } else if (refundState && !refundState.success && refundState.error) {
+      toast.error(refundState.error)
+    }
   }, [refundState])
 
   const handleDelete = () => {
     startDelete(async () => {
-      await deleteRevenueEntry(id)
-      setModal(null)
+      const r = await deleteRevenueEntry(id)
+      if (r?.success) {
+        toast.success('Revenue entry deleted')
+        setModal(null)
+        onDone?.()
+      } else {
+        toast.error(r?.error ?? 'Could not delete entry')
+        setModal(null)
+      }
     })
   }
 
@@ -57,31 +79,53 @@ export function RevenueRowActions({ id, source, amountCents, description, platfo
 
   return (
     <>
-      <div className="flex items-center justify-end gap-1">
-        <button
-          onClick={() => setModal('edit')}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-          title="Edit"
-        >
-          <Pencil className="h-3.5 w-3.5" />
-        </button>
-        {!isRefund && amountCents > 0 && (
+      {labeled ? (
+        <div className="flex gap-2">
+          {!isRefund && amountCents > 0 && (
+            <Button type="button" variant="outline" onClick={() => setModal('refund')}>
+              <Undo2 className="h-4 w-4" aria-hidden="true" /> Refund
+            </Button>
+          )}
+          <Button type="button" variant="outline" className="flex-1 text-destructive hover:bg-red-50 dark:hover:bg-red-950/30" onClick={() => setModal('delete')}>
+            <Trash2 className="h-4 w-4" aria-hidden="true" /> Delete
+          </Button>
+          <Button type="button" className="flex-1" onClick={() => setModal('edit')}>
+            <Pencil className="h-4 w-4" aria-hidden="true" /> Edit
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-end gap-1">
           <button
-            onClick={() => setModal('refund')}
-            className="p-1.5 rounded-lg text-muted-foreground hover:text-amber-600 hover:bg-amber-50 dark:hover:text-amber-400 dark:hover:bg-amber-950/30 transition-colors"
-            title="Log a refund against this entry"
+            type="button"
+            onClick={() => setModal('edit')}
+            aria-label={`Edit revenue: ${description}`}
+            title="Edit"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
-            <Undo2 className="h-3.5 w-3.5" />
+            <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
           </button>
-        )}
-        <button
-          onClick={() => setModal('delete')}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-          title="Delete"
-        >
-          <Trash2 className="h-3.5 w-3.5" />
-        </button>
-      </div>
+          {!isRefund && amountCents > 0 && (
+            <button
+              type="button"
+              onClick={() => setModal('refund')}
+              aria-label={`Log a refund against ${description}`}
+              title="Log a refund against this entry"
+              className="p-1.5 rounded-lg text-muted-foreground hover:text-amber-600 hover:bg-amber-50 dark:hover:text-amber-400 dark:hover:bg-amber-950/30 transition-colors"
+            >
+              <Undo2 className="h-3.5 w-3.5" aria-hidden="true" />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setModal('delete')}
+            aria-label={`Delete revenue: ${description}`}
+            title="Delete"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+          >
+            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
 
       {/* Edit modal */}
       {modal === 'edit' && (

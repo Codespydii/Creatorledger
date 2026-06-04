@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useEffect, useActionState } from 'react'
-import { Plus, X, Trash2 } from 'lucide-react'
-import { createInvoice } from '@/app/actions/invoices'
+import { toast } from 'sonner'
+import { Plus, X, Trash2, Pencil } from 'lucide-react'
+import { createInvoice, updateInvoice } from '@/app/actions/invoices'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useEscapeKey } from '@/hooks/use-escape-key'
+import { useDeepLinkOpen } from '@/hooks/use-deep-link-open'
 import { currencySymbol } from '@/lib/currencies'
 
 interface LineItem {
@@ -15,23 +17,47 @@ interface LineItem {
   unitPrice: string
 }
 
-interface AddInvoiceFormProps {
-  currency?: string
+export interface EditInvoiceData {
+  id: string
+  clientName: string
+  clientEmail: string
+  dueDate: string // yyyy-mm-dd
+  taxPercent: string | number
+  notes: string | null
+  items: LineItem[]
 }
 
-export function AddInvoiceForm({ currency = 'USD' }: AddInvoiceFormProps = {}) {
-  const [open, setOpen] = useState(false)
-  const [items, setItems] = useState<LineItem[]>([{ description: '', quantity: 1, unitPrice: '' }])
-  const [state, action, pending] = useActionState(createInvoice, undefined)
+interface AddInvoiceFormProps {
+  currency?: string
+  autoOpen?: boolean
+  editInvoice?: EditInvoiceData
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  hideTrigger?: boolean
+}
+
+const emptyItem = (): LineItem => ({ description: '', quantity: 1, unitPrice: '' })
+
+export function AddInvoiceForm({ currency = 'USD', autoOpen = false, editInvoice, open: controlledOpen, onOpenChange, hideTrigger = false }: AddInvoiceFormProps = {}) {
+  const isEdit = !!editInvoice
+  const [internalOpen, setInternalOpen] = useState(false)
+  const open = controlledOpen ?? internalOpen
+  const setOpen = onOpenChange ?? setInternalOpen
+  const [items, setItems] = useState<LineItem[]>(editInvoice?.items?.length ? editInvoice.items : [emptyItem()])
+  const [state, action, pending] = useActionState(isEdit ? updateInvoice : createInvoice, undefined)
+  useDeepLinkOpen(autoOpen, () => setOpen(true))
 
   useEffect(() => {
     if (state?.success) {
+      toast.success(isEdit ? 'Invoice updated' : 'Invoice created')
       setOpen(false)
-      setItems([{ description: '', quantity: 1, unitPrice: '' }])
+      if (!isEdit) setItems([emptyItem()])
+    } else if (state && !state.success && state.error) {
+      toast.error(state.error)
     }
-  }, [state])
+  }, [state, isEdit])
 
-  const addItem = () => setItems([...items, { description: '', quantity: 1, unitPrice: '' }])
+  const addItem = () => setItems([...items, emptyItem()])
   const removeItem = (i: number) => setItems(items.filter((_, idx) => idx !== i))
   const updateItem = (i: number, field: keyof LineItem, value: string | number) => {
     setItems(items.map((item, idx) => idx === i ? { ...item, [field]: value } : item))
@@ -46,20 +72,36 @@ export function AddInvoiceForm({ currency = 'USD' }: AddInvoiceFormProps = {}) {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
-        <Plus className="h-4 w-4" />
-        New Invoice
-      </Button>
+      {!hideTrigger && (
+        isEdit ? (
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label={`Edit invoice for ${editInvoice!.clientName}`}
+            title="Edit invoice"
+            className="inline-flex items-center justify-center rounded-full border border-border p-1.5 text-muted-foreground hover:border-violet-300 hover:text-violet-600 transition-colors"
+          >
+            <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        ) : (
+          <Button onClick={() => setOpen(true)}>
+            <Plus className="h-4 w-4" />
+            New Invoice
+          </Button>
+        )
+      )}
 
       {open && (
-        <div role="dialog" aria-modal="true" aria-labelledby="add-invoice-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 overflow-y-auto py-8">
+        <div role="dialog" aria-modal="true" aria-labelledby="add-invoice-title" className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 overflow-y-auto py-8">
           <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-lg p-6">
             <div className="flex items-start justify-between mb-5">
               <div>
-                <h2 id="add-invoice-title" className="text-lg font-semibold text-foreground">New Invoice</h2>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  A polished bill you can send to a client. Use <strong className="font-medium">Revenue</strong> to log money you&apos;ve already received without invoicing.
-                </p>
+                <h2 id="add-invoice-title" className="text-lg font-semibold text-foreground">{isEdit ? 'Edit Invoice' : 'New Invoice'}</h2>
+                {!isEdit && (
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    A polished bill you can send to a client. Use <strong className="font-medium">Revenue</strong> to log money you've already received without invoicing.
+                  </p>
+                )}
               </div>
               <button onClick={() => setOpen(false)} aria-label="Close dialog" className="text-muted-foreground hover:text-foreground shrink-0 ml-2">
                 <X className="h-5 w-5" />
@@ -79,13 +121,14 @@ export function AddInvoiceForm({ currency = 'USD' }: AddInvoiceFormProps = {}) {
               }}
               className="space-y-4"
             >
+              {isEdit && <input type="hidden" name="id" value={editInvoice!.id} />}
               <div className="grid grid-cols-2 gap-3">
-                <Input id="clientName" name="clientName" label="Client Name" placeholder="Acme Corp" required />
-                <Input id="clientEmail" name="clientEmail" type="email" label="Client Email" placeholder="billing@acme.com" required />
+                <Input id="clientName" name="clientName" label="Client Name" placeholder="Acme Corp" defaultValue={editInvoice?.clientName} required />
+                <Input id="clientEmail" name="clientEmail" type="email" label="Client Email" placeholder="billing@acme.com" defaultValue={editInvoice?.clientEmail} required />
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <Input id="dueDate" name="dueDate" type="date" label="Due Date" required />
-                <Input id="taxPercent" name="taxPercent" type="number" min="0" max="100" step="0.1" label="Tax (%)" defaultValue="0" />
+                <Input id="dueDate" name="dueDate" type="date" label="Due Date" defaultValue={editInvoice?.dueDate} required />
+                <Input id="taxPercent" name="taxPercent" type="number" min="0" max="100" step="0.1" label="Tax (%)" defaultValue={editInvoice ? String(editInvoice.taxPercent) : '0'} />
               </div>
 
               <div>
@@ -136,14 +179,21 @@ export function AddInvoiceForm({ currency = 'USD' }: AddInvoiceFormProps = {}) {
                 </span>
               </div>
 
-              <Textarea id="notes" name="notes" label="Notes (optional)" placeholder="Payment terms, bank details…" />
+              <Textarea
+                id="notes"
+                name="notes"
+                label="Notes & Terms (optional)"
+                rows={4}
+                defaultValue={editInvoice?.notes ?? ''}
+                placeholder="Your payment terms, late-fee policy, bank/remit details, or a thank-you note. Shown in the Notes & Terms block on the invoice."
+              />
 
               <div className="flex gap-3 pt-2">
                 <Button type="button" variant="outline" className="flex-1" onClick={() => setOpen(false)}>
                   Cancel
                 </Button>
                 <Button type="submit" className="flex-1" disabled={pending}>
-                  {pending ? 'Creating…' : 'Create Invoice'}
+                  {pending ? (isEdit ? 'Saving…' : 'Creating…') : (isEdit ? 'Save Changes' : 'Create Invoice')}
                 </Button>
               </div>
             </form>

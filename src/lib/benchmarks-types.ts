@@ -1,3 +1,5 @@
+export type BenchmarkConfidence = 'estimate' | 'emerging' | 'community' | 'verified'
+
 export interface BenchmarkStats {
   count: number
   totalCount: number
@@ -7,8 +9,27 @@ export interface BenchmarkStats {
   median: number
   p75: number
   mean: number
+  /** Self-reported (unverified) creator contributions. */
   userSamples: number
+  /** Contributions linked to a real, paid, completed deal — highest trust. */
+  verifiedSamples: number
   seedSamples: number
+  /** How much of this slice is real creator-reported data vs modeled estimate. */
+  confidence: BenchmarkConfidence
+  /** Number of extreme values dropped from the tails before computing the stats. */
+  trimmedOutliers: number
+}
+
+/**
+ * Trust tier for a slice. A single verified (paid-deal-linked) contribution
+ * promotes the slice to the top tier; otherwise it scales with how many real
+ * self-reported deals back it. Seed/estimate data alone never reads as real.
+ */
+export function benchmarkConfidence(userSamples: number, verifiedSamples = 0): BenchmarkConfidence {
+  if (verifiedSamples > 0) return 'verified'
+  if (userSamples === 0) return 'estimate'
+  if (userSamples < 10) return 'emerging'
+  return 'community'
 }
 
 export function scoreOffer(offerCents: number, stats: BenchmarkStats): {

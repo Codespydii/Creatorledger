@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
 import { verifySession } from '@/lib/session'
 import { analyzeContract } from '@/lib/contract-analyzer'
+import { extractDocxText } from '@/lib/docx'
 import { GeminiConfigError } from '@/lib/gemini'
 import { verifyFileMatchesMime } from '@/lib/file-validation'
 import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
@@ -14,12 +15,15 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024
 const MAX_TEXT_LEN = 20_000
 const MIN_TEXT_LEN = 50
 
+const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
 const ALLOWED_MIME = new Set([
   'application/pdf',
   'text/plain',
   'image/png',
   'image/jpeg',
   'image/webp',
+  DOCX_MIME,
 ])
 
 export async function analyzeContractAction(
@@ -55,6 +59,10 @@ export async function analyzeContractAction(
     }
   }
 
+  // For .docx we extract text on the server (Gemini can't read the binary),
+  // then feed it through the same text path. Stored back so the record keeps the source.
+  let docxText: string | null = null
+
   let analysisData
   try {
     if (hasFile) {
@@ -66,10 +74,32 @@ export async function analyzeContractAction(
           error: 'File contents do not match its declared type. Re-export and try again.',
         }
       }
-      analysisData = await analyzeContract({
-        file: { mimeType: file.type, base64Data: buf.toString('base64') },
-        text: pastedText || undefined,
-      })
+
+      if (file.type === DOCX_MIME) {
+        let extracted: string
+        try {
+          extracted = await extractDocxText(buf)
+        } catch {
+          return {
+            success: false,
+            error: 'Could not read that Word document. Re-save it as a PDF or paste the text instead.',
+          }
+        }
+        const combined = [pastedText, extracted].filter(Boolean).join('\n\n').trim()
+        if (combined.length < MIN_TEXT_LEN) {
+          return {
+            success: false,
+            error: "That Word document didn't contain enough readable text. Paste the contract text instead.",
+          }
+        }
+        docxText = combined.slice(0, MAX_TEXT_LEN)
+        analysisData = await analyzeContract({ text: docxText })
+      } else {
+        analysisData = await analyzeContract({
+          file: { mimeType: file.type, base64Data: buf.toString('base64') },
+          text: pastedText || undefined,
+        })
+      }
     } else {
       analysisData = await analyzeContract({ text: pastedText })
     }
@@ -90,7 +120,7 @@ export async function analyzeContractAction(
       title: analysisData.title || (hasFile ? (file as File).name : 'Untitled contract'),
       brandName: analysisData.brand ?? null,
       sourceKind: hasFile ? 'file' : 'text',
-      sourceText: pastedText || null,
+      sourceText: docxText || pastedText || null,
       fileName: hasFile ? (file as File).name : null,
       fileMimeType: hasFile ? (file as File).type : null,
       fileSizeBytes: hasFile ? (file as File).size : null,

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useActionState } from 'react'
+import { toast } from 'sonner'
 import { Plus, X } from 'lucide-react'
 import { createDeal } from '@/app/actions/deals'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { useEscapeKey } from '@/hooks/use-escape-key'
+import { useDeepLinkOpen } from '@/hooks/use-deep-link-open'
 import { currencySymbol } from '@/lib/currencies'
 
 const stageOptions = [
@@ -21,14 +23,21 @@ const stageOptions = [
 
 interface AddDealFormProps {
   currency?: string
+  autoOpen?: boolean
 }
 
-export function AddDealForm({ currency = 'USD' }: AddDealFormProps = {}) {
+export function AddDealForm({ currency = 'USD', autoOpen = false }: AddDealFormProps = {}) {
   const [open, setOpen] = useState(false)
   const [state, action, pending] = useActionState(createDeal, undefined)
+  useDeepLinkOpen(autoOpen, () => setOpen(true))
 
   useEffect(() => {
-    if (state?.success) setOpen(false)
+    if (state?.success) {
+      toast.success('Deal added')
+      setOpen(false)
+    } else if (state && !state.success && state.error) {
+      toast.error(state.error)
+    }
   }, [state])
 
   useEscapeKey(() => setOpen(false), open)
@@ -41,7 +50,7 @@ export function AddDealForm({ currency = 'USD' }: AddDealFormProps = {}) {
       </Button>
 
       {open && (
-        <div role="dialog" aria-modal="true" aria-labelledby="add-deal-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 overflow-y-auto py-8">
+        <div role="dialog" aria-modal="true" aria-labelledby="add-deal-title" className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 overflow-y-auto py-8">
           <div className="w-full max-w-md rounded-2xl bg-card border border-border shadow-lg p-6">
             <div className="flex items-start justify-between mb-5">
               <div>

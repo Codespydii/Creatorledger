@@ -177,9 +177,11 @@ export async function clearSampleData(): Promise<ActionState> {
   return { success: true, data: undefined }
 }
 
-export async function hasSampleData(userId: string): Promise<boolean> {
+export async function hasSampleData(): Promise<boolean> {
+  // Derive the user from the session — never trust a caller-supplied userId.
+  const session = await verifySession()
   const count = await db.revenueEntry.count({
-    where: { userId, description: { contains: SAMPLE_TAG } },
+    where: { userId: session.userId, description: { contains: SAMPLE_TAG } },
   })
   return count > 0
 }

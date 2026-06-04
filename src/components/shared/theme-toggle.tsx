@@ -28,7 +28,7 @@ export function ThemeToggle() {
   }, [open])
 
   // Avoid hydration mismatch — render a placeholder until mounted
-  if (!mounted) return <div className="h-9 w-9 rounded-xl border border-border" />
+  if (!mounted) return <div className="h-9 w-9 rounded-xl border border-border" aria-hidden="true" />
 
   const current = OPTIONS.find(o => o.value === theme) ?? OPTIONS[2]
   const Icon = current.icon
@@ -36,26 +36,33 @@ export function ThemeToggle() {
   return (
     <div ref={ref} className="relative">
       <button
+        type="button"
         onClick={() => setOpen(v => !v)}
-        className="flex h-9 w-9 items-center justify-center rounded-xl border border-border hover:bg-accent transition-colors"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`Theme: ${current.label}. Click to change`}
         title={`Theme: ${current.label}`}
+        className="flex h-9 w-9 items-center justify-center rounded-xl border border-border hover:bg-accent transition-colors"
       >
-        <Icon className="h-4 w-4 text-muted-foreground" />
+        <Icon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 z-50 flex flex-col w-36 rounded-xl border border-border bg-card shadow-lg overflow-hidden">
+        <div role="menu" className="absolute right-0 top-11 z-50 flex flex-col w-36 rounded-xl border border-border bg-card shadow-lg overflow-hidden">
           {OPTIONS.map(({ value, icon: OptionIcon, label }) => (
             <button
               key={value}
+              type="button"
+              role="menuitemradio"
+              aria-checked={theme === value}
               onClick={() => { setTheme(value); setOpen(false) }}
               className={`flex items-center gap-2.5 px-3 py-2.5 text-sm transition-colors hover:bg-accent ${
                 theme === value ? 'text-primary font-medium' : 'text-foreground'
               }`}
             >
-              <OptionIcon className="h-4 w-4 shrink-0" />
+              <OptionIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
               {label}
-              {theme === value && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />}
+              {theme === value && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />}
             </button>
           ))}
         </div>

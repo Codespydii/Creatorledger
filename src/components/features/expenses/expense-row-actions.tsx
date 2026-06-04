@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition, useActionState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { Pencil, Trash2, X } from 'lucide-react'
 import { updateExpense, deleteExpense } from '@/app/actions/expenses'
 import { Button } from '@/components/ui/button'
@@ -26,21 +27,37 @@ interface Props {
   description: string
   vendor: string | null
   date: string
+  labeled?: boolean
+  onDone?: () => void
 }
 
-export function ExpenseRowActions({ id, category, amountCents, description, vendor, date }: Props) {
+export function ExpenseRowActions({ id, category, amountCents, description, vendor, date, labeled = false, onDone }: Props) {
   const [modal, setModal] = useState<'edit' | 'delete' | null>(null)
   const [editState, editAction, editPending] = useActionState(updateExpense, undefined)
   const [deletePending, startDelete] = useTransition()
 
   useEffect(() => {
-    if (editState?.success) setModal(null)
+    if (editState?.success) {
+      toast.success('Expense updated')
+      setModal(null)
+      onDone?.()
+    } else if (editState && !editState.success && editState.error) {
+      toast.error(editState.error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState])
 
   const handleDelete = () => {
     startDelete(async () => {
-      await deleteExpense(id)
-      setModal(null)
+      const r = await deleteExpense(id)
+      if (r?.success) {
+        toast.success('Expense deleted')
+        setModal(null)
+        onDone?.()
+      } else {
+        toast.error(r?.error ?? 'Could not delete expense')
+        setModal(null)
+      }
     })
   }
 
@@ -48,22 +65,37 @@ export function ExpenseRowActions({ id, category, amountCents, description, vend
 
   return (
     <>
-      <div className="flex items-center justify-end gap-1">
-        <button
-          onClick={() => setModal('edit')}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-          title="Edit"
-        >
-          <Pencil className="h-3.5 w-3.5" />
-        </button>
-        <button
-          onClick={() => setModal('delete')}
-          className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-          title="Delete"
-        >
-          <Trash2 className="h-3.5 w-3.5" />
-        </button>
-      </div>
+      {labeled ? (
+        <div className="flex gap-2">
+          <Button type="button" variant="outline" className="flex-1 text-destructive hover:bg-red-50 dark:hover:bg-red-950/30" onClick={() => setModal('delete')}>
+            <Trash2 className="h-4 w-4" aria-hidden="true" /> Delete
+          </Button>
+          <Button type="button" className="flex-1" onClick={() => setModal('edit')}>
+            <Pencil className="h-4 w-4" aria-hidden="true" /> Edit
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-end gap-1">
+          <button
+            type="button"
+            onClick={() => setModal('edit')}
+            aria-label={`Edit expense: ${description}`}
+            title="Edit"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+          >
+            <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setModal('delete')}
+            aria-label={`Delete expense: ${description}`}
+            title="Delete"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+          >
+            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
 
       {/* Edit modal */}
       {modal === 'edit' && (

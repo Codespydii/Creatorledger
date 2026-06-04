@@ -103,8 +103,10 @@ export function computeForecast(input: {
   deals: Deal[]
   startingBalance?: number
   horizonDays?: number
+  currency?: string
 }): ForecastResult {
   const horizon = input.horizonDays ?? HORIZON_DAYS
+  const currency = input.currency ?? 'USD'
   const today = startOfDay(new Date())
   const horizonEnd = addDays(today, horizon)
   const trailingStart = addDays(today, -TRAILING_DAYS)
@@ -243,14 +245,14 @@ export function computeForecast(input: {
     insights.push('Add a few invoices, deals, or expenses to generate a meaningful forecast.')
   } else {
     if (startingBalance > 0 && lowest.balance < 0) {
-      insights.push(`Cash gap projected on ${lowest.date} — balance dips to ${formatCurrency(lowest.balance)}.`)
+      insights.push(`Cash gap projected on ${lowest.date} — balance dips to ${formatCurrency(lowest.balance, currency)}.`)
     }
 
     if (netChange >= 0) {
-      insights.push(`Projected to gain ${formatCurrency(netChange)} over the next ${horizon} days.`)
+      insights.push(`Projected to gain ${formatCurrency(netChange, currency)} over the next ${horizon} days.`)
     } else {
       insights.push(
-        `Projected net negative of ${formatCurrency(Math.abs(netChange))} over the next ${horizon} days — line up more income or trim expenses.`,
+        `Projected net negative of ${formatCurrency(Math.abs(netChange), currency)} over the next ${horizon} days — line up more income or trim expenses.`,
       )
     }
 

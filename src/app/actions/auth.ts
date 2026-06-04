@@ -247,7 +247,11 @@ export async function requestPasswordReset(
 const ResetPasswordSchema = z
   .object({
     token: z.string().min(32),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
+    password: z
+      .string()
+      .min(10, 'Password must be at least 10 characters')
+      .regex(/[a-zA-Z]/, 'Password must contain at least one letter')
+      .regex(/[0-9]/, 'Password must contain at least one number'),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {

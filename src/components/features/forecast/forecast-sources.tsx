@@ -16,9 +16,9 @@ const ICONS = {
 } as const
 
 const ICON_TONE = {
-  invoice: 'bg-blue-100 text-blue-600',
-  deal: 'bg-violet-100 text-violet-600',
-  recurring: 'bg-emerald-100 text-emerald-600',
+  invoice: 'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300',
+  deal: 'bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-300',
+  recurring: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-300',
 } as const
 
 export function ForecastSources({ sources, totalInflows, currency = 'USD' }: ForecastSourcesProps) {

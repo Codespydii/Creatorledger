@@ -6,10 +6,7 @@ import { StatCard } from '@/components/features/dashboard/stat-card'
 import { RevenueChart } from '@/components/features/dashboard/revenue-chart'
 import { RevenueBreakdown } from '@/components/features/dashboard/revenue-breakdown'
 import { SetupCard } from '@/components/features/dashboard/setup-card'
-import { AddRevenueForm } from '@/components/features/revenue/add-revenue-form'
-import { AddExpenseForm } from '@/components/features/expenses/add-expense-form'
-import { AddInvoiceForm } from '@/components/features/invoices/add-invoice-form'
-import { AddDealForm } from '@/components/features/deals/add-deal-form'
+import { QuickAddMenu } from '@/components/features/dashboard/quick-add-menu'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { verifySession } from '@/lib/session'
@@ -69,11 +66,11 @@ async function getData(userId: string) {
   const lastMonthRev  = revenues.filter(r => r.date >= startLastMonth && r.date <= endLastMonth).reduce((s, r) => s + r.amountCents, 0)
   const lastMonthExp  = expenses.filter(e => e.date >= startLastMonth && e.date <= endLastMonth).reduce((s, e) => s + e.amountCents, 0)
 
-  const revPct  = lastMonthRev  ? ((thisMonthRev - lastMonthRev)   / lastMonthRev)   * 100 : 0
-  const expPct  = lastMonthExp  ? ((thisMonthExp - lastMonthExp)   / lastMonthExp)   * 100 : 0
+  const revPct: number | null  = lastMonthRev  ? ((thisMonthRev - lastMonthRev)   / lastMonthRev)   * 100 : null
+  const expPct: number | null  = lastMonthExp  ? ((thisMonthExp - lastMonthExp)   / lastMonthExp)   * 100 : null
   const netProfit     = thisMonthRev - thisMonthExp
   const lastNetProfit = lastMonthRev - lastMonthExp
-  const profitPct     = lastNetProfit ? ((netProfit - lastNetProfit) / Math.abs(lastNetProfit)) * 100 : 0
+  const profitPct: number | null = lastNetProfit ? ((netProfit - lastNetProfit) / Math.abs(lastNetProfit)) * 100 : null
 
   // YTD
   const ytdRev = revenues.filter(r => r.date >= startOfYear).reduce((s, r) => s + r.amountCents, 0)
@@ -138,7 +135,7 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Dashboard" subtitle="Your creator business at a glance" />
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-4 sm:p-6 space-y-6">
 
         {/* Greeting */}
         <div className="flex items-center justify-between flex-wrap gap-4">
@@ -148,13 +145,7 @@ export default async function DashboardPage() {
               {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
           </div>
-          {/* Quick actions */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <AddRevenueForm currency={currency} />
-            <AddExpenseForm currency={currency} />
-            <AddInvoiceForm currency={currency} />
-            <AddDealForm currency={currency} />
-          </div>
+          <QuickAddMenu />
         </div>
 
         {isEmpty && (
@@ -181,8 +172,8 @@ export default async function DashboardPage() {
                   <span className="text-sm text-muted-foreground">Outstanding</span>
                   <span className="text-2xl font-bold text-foreground">{formatCurrency(stats.outstandingCents, currency)}</span>
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100">
-                  <FileText className="h-5 w-5 text-amber-600" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 dark:bg-amber-900/40">
+                  <FileText className="h-5 w-5 text-amber-600 dark:text-amber-300" />
                 </div>
               </div>
               <div className="mt-4">

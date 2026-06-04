@@ -1,6 +1,7 @@
 'use client'
 
 import { Suspense, useActionState, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signup } from '@/app/actions/auth'
@@ -33,9 +34,7 @@ function SignupInner() {
     <div className="min-h-screen flex items-center justify-center bg-muted px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary mb-4">
-            <span className="text-white font-bold text-lg">CL</span>
-          </div>
+          <Image src="/caelo-logo.png" alt="Caelo" width={139} height={40} priority className="mx-auto h-10 w-auto mb-4" />
           <h1 className="text-2xl font-bold text-foreground">Create your account</h1>
           <p className="text-sm text-muted-foreground mt-1">Free during beta. No credit card.</p>
         </div>

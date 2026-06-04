@@ -13,10 +13,15 @@ interface Props {
   invoiceNumber: string
   clientName: string
   clientEmail: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  hideTrigger?: boolean
 }
 
-export function SendInvoiceButton({ invoiceId, invoiceNumber, clientName, clientEmail }: Props) {
-  const [open, setOpen] = useState(false)
+export function SendInvoiceButton({ invoiceId, invoiceNumber, clientName, clientEmail, open: controlledOpen, onOpenChange, hideTrigger = false }: Props) {
+  const [internalOpen, setInternalOpen] = useState(false)
+  const open = controlledOpen ?? internalOpen
+  const setOpen = onOpenChange ?? setInternalOpen
   const [state, action, pending] = useActionState(sendInvoiceEmail, undefined)
   useEscapeKey(() => setOpen(false), open)
 
@@ -29,14 +34,16 @@ export function SendInvoiceButton({ invoiceId, invoiceNumber, clientName, client
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        title="Send invoice to client by email"
-        className="inline-flex items-center justify-center rounded-full border border-border p-1.5 text-muted-foreground hover:border-violet-300 hover:text-violet-600 transition-colors"
-      >
-        <Send className="h-3.5 w-3.5" />
-      </button>
+      {!hideTrigger && (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          title="Send invoice to client by email"
+          className="inline-flex items-center justify-center rounded-full border border-border p-1.5 text-muted-foreground hover:border-violet-300 hover:text-violet-600 transition-colors"
+        >
+          <Send className="h-3.5 w-3.5" />
+        </button>
+      )}
 
       {open && (
         <div role="dialog" aria-modal="true" aria-labelledby="send-inv-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">

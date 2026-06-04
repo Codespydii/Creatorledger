@@ -26,8 +26,9 @@ export default async function ResetPasswordPage({ params }: Props) {
     <div className="min-h-screen flex items-center justify-center bg-muted px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary mb-4">
-            <span className="text-white font-bold text-lg">CL</span>
+          <div className="mb-4 flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/caelo-logo.png" alt="Caelo" className="h-8 w-auto" />
           </div>
           <h1 className="text-2xl font-bold text-foreground">
             {invalid ? 'Link expired' : 'Choose a new password'}
