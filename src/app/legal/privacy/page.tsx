@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
-  title: 'Privacy Policy — Creator Ledger',
+  title: 'Privacy Policy — Caelo',
   description: 'What we collect, how we use it, and what we don\'t do with it.',
 }
 

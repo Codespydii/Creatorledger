@@ -2,7 +2,7 @@
 
 import { useState, useActionState, useEffect } from 'react'
 import Papa from 'papaparse'
-import { Upload, FileText, X, Check, Loader2, AlertCircle } from 'lucide-react'
+import { Upload, Download, FileText, X, Check, Loader2, AlertCircle } from 'lucide-react'
 import { importCsv } from '@/app/actions/csv-import'
 import { Button } from '@/components/ui/button'
 import { useEscapeKey } from '@/hooks/use-escape-key'
@@ -107,12 +107,12 @@ export function CsvImporter({ type }: Props) {
   return (
     <>
       <Button variant="outline" onClick={() => setOpen(true)}>
-        <Upload className="h-4 w-4" />
+        <Download className="h-4 w-4" />
         Import CSV
       </Button>
 
       {open && (
-        <div role="dialog" aria-modal="true" aria-labelledby="csv-import-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 overflow-y-auto py-8">
+        <div role="dialog" aria-modal="true" aria-labelledby="csv-import-title" className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 overflow-y-auto py-8">
           <div className="w-full max-w-2xl rounded-2xl bg-card border border-border shadow-lg p-6">
             <div className="flex items-start justify-between mb-5">
               <div>

@@ -101,6 +101,21 @@ export async function deleteExpense(id: string): Promise<ActionState> {
   return { success: true, data: undefined }
 }
 
+export async function bulkDeleteExpenses(ids: string[]): Promise<ActionState<{ count: number }>> {
+  if (!Array.isArray(ids) || ids.length === 0) return { success: false, error: 'No expenses selected' }
+  if (ids.length > 500) return { success: false, error: 'Cannot delete more than 500 expenses at once' }
+
+  const session = await verifySession()
+
+  const result = await db.expense.deleteMany({
+    where: { id: { in: ids }, userId: session.userId },
+  })
+
+  revalidatePath('/expenses')
+  revalidatePath('/dashboard')
+  return { success: true, data: { count: result.count } }
+}
+
 export async function getExpenses() {
   const session = await verifySession()
   return db.expense.findMany({

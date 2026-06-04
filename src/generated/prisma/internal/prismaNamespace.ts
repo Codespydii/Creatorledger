@@ -1502,9 +1502,13 @@ export const UserScalarFieldEnum = {
   channelName: 'channelName',
   platform: 'platform',
   defaultCurrency: 'defaultCurrency',
+  businessAddress: 'businessAddress',
+  ein: 'ein',
+  website: 'website',
   primaryPlatform: 'primaryPlatform',
   audienceTier: 'audienceTier',
   primaryPain: 'primaryPain',
+  niche: 'niche',
   onboardedAt: 'onboardedAt',
   emailVerifiedAt: 'emailVerifiedAt',
   createdAt: 'createdAt',
@@ -1695,6 +1699,7 @@ export const DealScalarFieldEnum = {
   startDate: 'startDate',
   endDate: 'endDate',
   notes: 'notes',
+  closedAt: 'closedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1724,6 +1729,7 @@ export const RateBenchmarkScalarFieldEnum = {
   exclusivity: 'exclusivity',
   usageRights: 'usageRights',
   source: 'source',
+  dealId: 'dealId',
   reportedAt: 'reportedAt'
 } as const
 

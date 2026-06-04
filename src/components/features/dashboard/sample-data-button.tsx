@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { toast } from 'sonner'
 import { Sparkles, Loader2, Trash2 } from 'lucide-react'
 import { loadSampleData, clearSampleData } from '@/app/actions/sample-data'
 
@@ -17,7 +18,12 @@ export function SampleDataButton({ hasSample, variant = 'inline' }: Props) {
     setError(null)
     startTransition(async () => {
       const r = await loadSampleData()
-      if (r && !r.success) setError(r.error ?? 'Failed to load sample data')
+      if (r && !r.success) {
+        setError(r.error ?? 'Failed to load sample data')
+        toast.error(r.error ?? 'Failed to load sample data')
+      } else {
+        toast.success('Sample data loaded — explore freely')
+      }
     })
   }
 
@@ -26,7 +32,12 @@ export function SampleDataButton({ hasSample, variant = 'inline' }: Props) {
     if (!confirm('Delete all sample data? This will remove every row tagged as sample. Your real entries are untouched.')) return
     startTransition(async () => {
       const r = await clearSampleData()
-      if (r && !r.success) setError(r.error ?? 'Failed to clear sample data')
+      if (r && !r.success) {
+        setError(r.error ?? 'Failed to clear sample data')
+        toast.error(r.error ?? 'Failed to clear sample data')
+      } else {
+        toast.success('Sample data cleared')
+      }
     })
   }
 

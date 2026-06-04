@@ -49,7 +49,7 @@ const MediaKitSchema = z.object({
   sampleWorkUrls: z.string().max(2000).optional(),
   socialLinks: z.string().max(1000).optional(),
   contactEmail: z.string().email().optional().or(z.literal('')),
-  accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+  accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'Accent color must be a hex code like #7c3aed').optional(),
 })
 
 function cleanString(v: FormDataEntryValue | null): string | undefined {

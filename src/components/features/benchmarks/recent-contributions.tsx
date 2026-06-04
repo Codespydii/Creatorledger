@@ -1,4 +1,4 @@
-import { Users } from 'lucide-react'
+import { Users, ShieldCheck } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
 import { NICHES, PLATFORMS, FORMATS, SUBSCRIBER_TIERS, niceLabel } from '@/lib/benchmarks-constants'
@@ -39,8 +39,16 @@ export function RecentContributions({ contributions, currency = 'USD' }: Props) 
             {contributions.map((c, i) => (
               <div key={i} className="flex items-center justify-between py-2 border-b border-border last:border-0">
                 <div className="flex flex-col min-w-0">
-                  <div className="text-sm font-medium text-foreground">
-                    {niceLabel(c.niche, NICHES)} · {niceLabel(c.platform, PLATFORMS)} · {niceLabel(c.format, FORMATS)}
+                  <div className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+                    <span>{niceLabel(c.niche, NICHES)} · {niceLabel(c.platform, PLATFORMS)} · {niceLabel(c.format, FORMATS)}</span>
+                    {c.source === 'verified' && (
+                      <span
+                        title="Verified from a real, paid deal"
+                        className="inline-flex items-center gap-0.5 rounded-full bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-300 shrink-0"
+                      >
+                        <ShieldCheck className="h-2.5 w-2.5" aria-hidden="true" /> Verified
+                      </span>
+                    )}
                   </div>
                   <div className="text-xs text-muted-foreground">
                     {niceLabel(c.subscriberTier, SUBSCRIBER_TIERS)} subs

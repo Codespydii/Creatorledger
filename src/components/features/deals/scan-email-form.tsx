@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useActionState } from 'react'
+import { toast } from 'sonner'
 import { Mail, Loader2, Sparkles, X, ArrowLeft } from 'lucide-react'
 import { createDeal } from '@/app/actions/deals'
 import { extractDealFromEmailAction } from '@/app/actions/email-deals'
@@ -36,7 +37,10 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
 
   useEffect(() => {
     if (saveState?.success) {
+      toast.success('Deal saved')
       reset()
+    } else if (saveState && !saveState.success && saveState.error) {
+      toast.error(saveState.error)
     }
   }, [saveState])
 
@@ -76,7 +80,7 @@ export function ScanEmailForm({ geminiConfigured }: Props) {
       </Button>
 
       {open && (
-        <div role="dialog" aria-modal="true" aria-labelledby="scan-email-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 overflow-y-auto py-8">
+        <div role="dialog" aria-modal="true" aria-labelledby="scan-email-title" className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 overflow-y-auto py-8">
           <div className="w-full max-w-lg rounded-2xl bg-card border border-border shadow-lg p-6 max-h-[92vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 id="scan-email-title" className="text-lg font-semibold text-foreground">

@@ -1,4 +1,4 @@
-# Creator Ledger
+# Caelo
 
 **The financial OS for creators.** Track sponsorships, send invoices, scan receipts, forecast cash flow, and analyze contracts with AI — built for creators on every platform.
 

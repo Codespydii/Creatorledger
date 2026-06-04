@@ -14,11 +14,19 @@ const ProfileSchema = z.object({
   channelName: z.string().max(100).optional(),
   platform: z.string().max(100).optional(),
   defaultCurrency: z.enum(SUPPORTED_CURRENCIES).optional(),
+  niche: z.string().max(40).optional(),
+  businessAddress: z.string().max(200).optional(),
+  ein: z.string().max(40).optional(),
+  website: z.string().max(200).optional(),
 })
 
 const PasswordSchema = z.object({
   currentPassword: z.string().min(1, 'Current password is required'),
-  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+  newPassword: z
+    .string()
+    .min(10, 'Password must be at least 10 characters')
+    .regex(/[a-zA-Z]/, 'Password must contain at least one letter')
+    .regex(/[0-9]/, 'Password must contain at least one number'),
   confirmPassword: z.string(),
 }).refine((d) => d.newPassword === d.confirmPassword, {
   message: 'Passwords do not match',
@@ -33,6 +41,10 @@ export async function updateProfile(_state: ActionState, formData: FormData): Pr
     channelName: formData.get('channelName') || undefined,
     platform: formData.get('platform') || undefined,
     defaultCurrency: formData.get('defaultCurrency') || undefined,
+    niche: formData.get('niche') || undefined,
+    businessAddress: formData.get('businessAddress') || undefined,
+    ein: formData.get('ein') || undefined,
+    website: formData.get('website') || undefined,
   })
 
   if (!result.success) {
@@ -48,6 +60,10 @@ export async function updateProfile(_state: ActionState, formData: FormData): Pr
       channelName: result.data.channelName ?? null,
       platform: result.data.platform ?? null,
       ...(result.data.defaultCurrency ? { defaultCurrency: result.data.defaultCurrency } : {}),
+      niche: result.data.niche ?? null,
+      businessAddress: result.data.businessAddress ?? null,
+      ein: result.data.ein ?? null,
+      website: result.data.website ?? null,
     },
   })
 

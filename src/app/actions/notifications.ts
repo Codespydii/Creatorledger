@@ -21,7 +21,8 @@ export async function getNotifications(): Promise<Notification[]> {
   const in7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
   const ago7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
 
-  const [overdueInvoices, dueSoonInvoices, recentlyPaid, expiringDeals] = await Promise.all([
+  const [user, overdueInvoices, dueSoonInvoices, recentlyPaid, expiringDeals] = await Promise.all([
+    db.user.findUnique({ where: { id: uid }, select: { defaultCurrency: true } }),
     // Sent invoices whose due date has passed (not yet marked overdue)
     db.invoice.findMany({
       where: { userId: uid, status: 'sent', dueDate: { lt: now } },
@@ -49,6 +50,7 @@ export async function getNotifications(): Promise<Notification[]> {
     }),
   ])
 
+  const currency = user?.defaultCurrency ?? 'USD'
   const notifications: Notification[] = []
 
   for (const inv of overdueInvoices) {
@@ -56,7 +58,7 @@ export async function getNotifications(): Promise<Notification[]> {
       id: `overdue-${inv.id}`,
       severity: 'error',
       title: `Invoice overdue — ${inv.clientName}`,
-      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents)} was due ${formatDate(inv.dueDate.toISOString())}`,
+      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents, currency)} was due ${formatDate(inv.dueDate.toISOString())}`,
       href: '/invoices',
     })
   }
@@ -67,7 +69,7 @@ export async function getNotifications(): Promise<Notification[]> {
       id: `due-soon-${inv.id}`,
       severity: 'warning',
       title: `Invoice due in ${daysLeft} day${daysLeft === 1 ? '' : 's'} — ${inv.clientName}`,
-      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents)}`,
+      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents, currency)}`,
       href: '/invoices',
     })
   }
@@ -78,7 +80,7 @@ export async function getNotifications(): Promise<Notification[]> {
       id: `deal-${deal.id}`,
       severity: 'warning',
       title: `Deal ending in ${daysLeft} day${daysLeft === 1 ? '' : 's'} — ${deal.brandName}`,
-      body: `${formatCurrency(deal.valueCents)} · ${deal.stage}`,
+      body: `${formatCurrency(deal.valueCents, currency)} · ${deal.stage}`,
       href: '/deals',
     })
   }
@@ -88,7 +90,7 @@ export async function getNotifications(): Promise<Notification[]> {
       id: `paid-${inv.id}`,
       severity: 'success',
       title: `Payment received — ${inv.clientName}`,
-      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents)}`,
+      body: `${inv.invoiceNumber} · ${formatCurrency(inv.totalCents, currency)}`,
       href: '/invoices',
     })
   }

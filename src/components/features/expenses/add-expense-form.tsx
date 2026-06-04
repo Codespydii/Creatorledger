@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useActionState, useRef } from 'react'
+import { toast } from 'sonner'
 import { Plus, X, ScanLine, Loader2, Sparkles } from 'lucide-react'
 import { createExpense } from '@/app/actions/expenses'
 import { scanReceiptAction } from '@/app/actions/receipt-scan'
@@ -8,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { useEscapeKey } from '@/hooks/use-escape-key'
+import { useDeepLinkOpen } from '@/hooks/use-deep-link-open'
 import { currencySymbol } from '@/lib/currencies'
 
 const categoryOptions = [
@@ -42,10 +44,12 @@ const emptyValues = (): FormValues => ({
 interface Props {
   scanEnabled?: boolean
   currency?: string
+  autoOpen?: boolean
 }
 
-export function AddExpenseForm({ scanEnabled = true, currency = 'USD' }: Props) {
+export function AddExpenseForm({ scanEnabled = true, currency = 'USD', autoOpen = false }: Props) {
   const [open, setOpen] = useState(false)
+  useDeepLinkOpen(autoOpen, () => setOpen(true))
   const [values, setValues] = useState<FormValues>(emptyValues)
   const [scanning, setScanning] = useState(false)
   const [scanError, setScanError] = useState<string | null>(null)
@@ -56,10 +60,13 @@ export function AddExpenseForm({ scanEnabled = true, currency = 'USD' }: Props) 
 
   useEffect(() => {
     if (state?.success) {
+      toast.success('Expense added')
       setOpen(false)
       setValues(emptyValues())
       setScanInfo(null)
       setScanError(null)
+    } else if (state && !state.success && state.error) {
+      toast.error(state.error)
     }
   }, [state])
 

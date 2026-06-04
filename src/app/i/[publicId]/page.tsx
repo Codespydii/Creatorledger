@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const metadata = {
-  title: 'Invoice — Creator Ledger',
+  title: 'Invoice — Caelo',
   robots: { index: false, follow: false },
 }
 
@@ -39,7 +39,7 @@ export default async function PublicInvoicePage({ params }: Props) {
         </div>
         <InvoiceDocument invoice={invoice} />
         <p className="mt-12 text-center text-xs text-gray-400">
-          Sent via <a href="https://creatorledgerapp.vercel.app" className="text-violet-600 hover:underline">Creator Ledger</a>
+          Sent via <a href="https://creatorledgerapp.vercel.app" className="text-violet-600 hover:underline">Caelo</a>
         </p>
       </div>
     </>

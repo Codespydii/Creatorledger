@@ -16,10 +16,10 @@ interface Props {
 }
 
 const SCORE_STYLES: Record<string, string> = {
-  good: 'bg-emerald-100 text-emerald-700',
-  fair: 'bg-amber-100 text-amber-700',
-  risky: 'bg-orange-100 text-orange-700',
-  predatory: 'bg-red-100 text-red-700',
+  good: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200',
+  fair: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200',
+  risky: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-200',
+  predatory: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-200',
 }
 
 const SCORE_LABELS: Record<string, string> = {

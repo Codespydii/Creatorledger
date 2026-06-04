@@ -164,3 +164,88 @@ export async function getInvoices() {
     orderBy: { createdAt: 'desc' },
   })
 }
+
+export async function updateInvoice(
+  _state: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await verifySession()
+  const id = formData.get('id') as string
+
+  const existing = await db.invoice.findUnique({ where: { id } })
+  if (!existing || existing.userId !== session.userId) {
+    return { success: false, error: 'Not found' }
+  }
+
+  const itemsRaw = formData.get('items')
+  let items: { description: string; quantity: number; unitPrice: string }[] = []
+  try {
+    items = JSON.parse(itemsRaw as string)
+  } catch {
+    return { success: false, error: 'Invalid invoice items' }
+  }
+
+  const result = InvoiceSchema.safeParse({
+    clientName: formData.get('clientName'),
+    clientEmail: formData.get('clientEmail'),
+    dueDate: formData.get('dueDate'),
+    taxPercent: formData.get('taxPercent') || '0',
+    notes: formData.get('notes') || undefined,
+    items,
+  })
+  if (!result.success) {
+    return { success: false, error: 'Validation failed', fieldErrors: result.error.flatten().fieldErrors }
+  }
+
+  const { clientName, clientEmail, dueDate, taxPercent, notes, items: validItems } = result.data
+
+  const lineItems = validItems.map((item) => ({
+    description: item.description,
+    quantity: item.quantity,
+    unitPriceCents: dollarsToCents(item.unitPrice),
+    totalCents: dollarsToCents(item.unitPrice) * item.quantity,
+  }))
+
+  const subtotalCents = lineItems.reduce((sum, item) => sum + item.totalCents, 0)
+  const taxCents = Math.round(subtotalCents * (parseFloat(taxPercent) / 100))
+  const totalCents = subtotalCents + taxCents
+
+  // Replace line items atomically, then update invoice fields.
+  await db.$transaction([
+    db.invoiceLineItem.deleteMany({ where: { invoiceId: id } }),
+    db.invoice.update({
+      where: { id },
+      data: {
+        clientName,
+        clientEmail,
+        dueDate: new Date(dueDate),
+        taxPercent: parseFloat(taxPercent),
+        subtotalCents,
+        taxCents,
+        totalCents,
+        notes: notes ?? null,
+        items: { create: lineItems },
+      },
+    }),
+  ])
+
+  revalidatePath('/invoices')
+  revalidatePath('/dashboard')
+  return { success: true, data: undefined }
+}
+
+export async function bulkDeleteInvoices(ids: string[]): Promise<ActionState<{ count: number }>> {
+  if (!Array.isArray(ids) || ids.length === 0) return { success: false, error: 'No invoices selected' }
+  if (ids.length > 500) return { success: false, error: 'Cannot delete more than 500 invoices at once' }
+
+  const session = await verifySession()
+
+  // Line items + reminder logs cascade on invoice delete (onDelete: Cascade).
+  const result = await db.invoice.deleteMany({
+    where: { id: { in: ids }, userId: session.userId },
+  })
+
+  revalidatePath('/invoices')
+  revalidatePath('/dashboard')
+  return { success: true, data: { count: result.count } }
+}

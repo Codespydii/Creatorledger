@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition, useActionState, useEffect } from 'react'
+import { toast } from 'sonner'
 import { Pencil, Trash2, X } from 'lucide-react'
 import { updateDeal, deleteDeal } from '@/app/actions/deals'
 import { Button } from '@/components/ui/button'
@@ -30,22 +31,38 @@ interface Props {
   startDate: string | null
   endDate: string | null
   notes: string | null
+  labeled?: boolean
+  onDone?: () => void
 }
 
 export function DealRowActions(props: Props) {
-  const { id, brandName, contactName, contactEmail, stage, valueCents, deliverables, startDate, endDate, notes } = props
+  const { id, brandName, contactName, contactEmail, stage, valueCents, deliverables, startDate, endDate, notes, labeled = false, onDone } = props
   const [modal, setModal] = useState<'edit' | 'delete' | null>(null)
   const [editState, editAction, editPending] = useActionState(updateDeal, undefined)
   const [deletePending, startDelete] = useTransition()
 
   useEffect(() => {
-    if (editState?.success) setModal(null)
+    if (editState?.success) {
+      toast.success('Deal updated')
+      setModal(null)
+      onDone?.()
+    } else if (editState && !editState.success && editState.error) {
+      toast.error(editState.error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editState])
 
   const handleDelete = () => {
     startDelete(async () => {
-      await deleteDeal(id)
-      setModal(null)
+      const r = await deleteDeal(id)
+      if (r?.success) {
+        toast.success('Deal deleted')
+        setModal(null)
+        onDone?.()
+      } else {
+        toast.error(r?.error ?? 'Could not delete deal')
+        setModal(null)
+      }
     })
   }
 
@@ -53,24 +70,35 @@ export function DealRowActions(props: Props) {
 
   return (
     <>
-      <div className="flex items-center gap-1 mt-2 pt-2 border-t border-border">
-        <button
-          onClick={() => setModal('edit')}
-          className="flex-1 flex items-center justify-center gap-1 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-        >
-          <Pencil className="h-3 w-3" /> Edit
-        </button>
-        <button
-          onClick={() => setModal('delete')}
-          className="flex-1 flex items-center justify-center gap-1 py-1 rounded-lg text-xs text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-        >
-          <Trash2 className="h-3 w-3" /> Delete
-        </button>
-      </div>
+      {labeled ? (
+        <div className="flex gap-2">
+          <Button type="button" variant="outline" className="flex-1 text-destructive hover:bg-red-50 dark:hover:bg-red-950/30" onClick={() => setModal('delete')}>
+            <Trash2 className="h-4 w-4" aria-hidden="true" /> Delete
+          </Button>
+          <Button type="button" className="flex-1" onClick={() => setModal('edit')}>
+            <Pencil className="h-4 w-4" aria-hidden="true" /> Edit
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-1 mt-2 pt-2 border-t border-border">
+          <button
+            onClick={() => setModal('edit')}
+            className="flex-1 flex items-center justify-center gap-1 py-1 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+          >
+            <Pencil className="h-3 w-3" /> Edit
+          </button>
+          <button
+            onClick={() => setModal('delete')}
+            className="flex-1 flex items-center justify-center gap-1 py-1 rounded-lg text-xs text-muted-foreground hover:text-destructive hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+          >
+            <Trash2 className="h-3 w-3" /> Delete
+          </button>
+        </div>
+      )}
 
       {/* Edit modal */}
       {modal === 'edit' && (
-        <div role="dialog" aria-modal="true" aria-labelledby="edit-deal-title" className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 overflow-y-auto py-8">
+        <div role="dialog" aria-modal="true" aria-labelledby="edit-deal-title" className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 px-4 overflow-y-auto py-8">
           <div className="w-full max-w-md rounded-2xl bg-card border border-border shadow-lg p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 id="edit-deal-title" className="text-lg font-semibold text-foreground">Edit Deal</h2>

@@ -2,8 +2,8 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata = {
-  title: 'Terms of Service — Creator Ledger',
-  description: 'Plain-English terms for using Creator Ledger during beta.',
+  title: 'Terms of Service — Caelo',
+  description: 'Plain-English terms for using Caelo during beta.',
 }
 
 const LAST_UPDATED = 'May 17, 2026'
@@ -29,7 +29,7 @@ export default function TermsPage() {
 
         <Section title="1. What this is">
           <p>
-            Creator Ledger (&quot;the Service&quot;) is a financial dashboard for creators. You give us
+            Caelo (&quot;the Service&quot;) is a financial dashboard for creators. You give us
             information about your business — revenue, expenses, deals, contracts — and we organize
             it, analyze it, and help you make sense of it.
           </p>
@@ -56,6 +56,14 @@ export default function TermsPage() {
             The Service is free during beta. When we introduce paid plans, we&apos;ll email you at least
             30 days before any charge. You can keep using your free account, downgrade, or export and
             leave — we&apos;ll never auto-bill you without telling you first.
+          </p>
+          <p className="mt-3">
+            <strong>Founding-member rate.</strong> If you join during beta and claim a founding spot, you
+            lock in $9/month for the Pro plan once it launches — 50% off the standard Pro price — and that
+            rate stays the same for as long as your subscription remains active and continuous. If you
+            cancel or let the subscription lapse, the founding rate ends and standard pricing applies if
+            you resubscribe. The founding rate covers the Pro plan as it exists at launch; genuinely new,
+            separately-priced add-ons aren&apos;t included.
           </p>
         </Section>
 

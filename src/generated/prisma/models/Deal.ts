@@ -48,6 +48,7 @@ export type DealMinAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   notes: string | null
+  closedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +67,7 @@ export type DealMaxAggregateOutputType = {
   startDate: Date | null
   endDate: Date | null
   notes: string | null
+  closedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -84,6 +86,7 @@ export type DealCountAggregateOutputType = {
   startDate: number
   endDate: number
   notes: number
+  closedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -112,6 +115,7 @@ export type DealMinAggregateInputType = {
   startDate?: true
   endDate?: true
   notes?: true
+  closedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -130,6 +134,7 @@ export type DealMaxAggregateInputType = {
   startDate?: true
   endDate?: true
   notes?: true
+  closedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -148,6 +153,7 @@ export type DealCountAggregateInputType = {
   startDate?: true
   endDate?: true
   notes?: true
+  closedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -253,6 +259,7 @@ export type DealGroupByOutputType = {
   startDate: Date | null
   endDate: Date | null
   notes: string | null
+  closedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: DealCountAggregateOutputType | null
@@ -294,10 +301,12 @@ export type DealWhereInput = {
   startDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"Deal"> | string | null
+  closedAt?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   revenues?: Prisma.RevenueEntryListRelationFilter
+  benchmark?: Prisma.XOR<Prisma.RateBenchmarkNullableScalarRelationFilter, Prisma.RateBenchmarkWhereInput> | null
 }
 
 export type DealOrderByWithRelationInput = {
@@ -314,10 +323,12 @@ export type DealOrderByWithRelationInput = {
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  closedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   revenues?: Prisma.RevenueEntryOrderByRelationAggregateInput
+  benchmark?: Prisma.RateBenchmarkOrderByWithRelationInput
 }
 
 export type DealWhereUniqueInput = Prisma.AtLeast<{
@@ -337,10 +348,12 @@ export type DealWhereUniqueInput = Prisma.AtLeast<{
   startDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"Deal"> | string | null
+  closedAt?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   revenues?: Prisma.RevenueEntryListRelationFilter
+  benchmark?: Prisma.XOR<Prisma.RateBenchmarkNullableScalarRelationFilter, Prisma.RateBenchmarkWhereInput> | null
 }, "id">
 
 export type DealOrderByWithAggregationInput = {
@@ -357,6 +370,7 @@ export type DealOrderByWithAggregationInput = {
   startDate?: Prisma.SortOrderInput | Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  closedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DealCountOrderByAggregateInput
@@ -383,6 +397,7 @@ export type DealScalarWhereWithAggregatesInput = {
   startDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Deal"> | Date | string | null
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Deal"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Deal"> | string | null
+  closedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Deal"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Deal"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Deal"> | Date | string
 }
@@ -400,10 +415,12 @@ export type DealCreateInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDealsInput
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutDealInput
+  benchmark?: Prisma.RateBenchmarkCreateNestedOneWithoutDealInput
 }
 
 export type DealUncheckedCreateInput = {
@@ -420,9 +437,11 @@ export type DealUncheckedCreateInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutDealInput
+  benchmark?: Prisma.RateBenchmarkUncheckedCreateNestedOneWithoutDealInput
 }
 
 export type DealUpdateInput = {
@@ -438,10 +457,12 @@ export type DealUpdateInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDealsNestedInput
   revenues?: Prisma.RevenueEntryUpdateManyWithoutDealNestedInput
+  benchmark?: Prisma.RateBenchmarkUpdateOneWithoutDealNestedInput
 }
 
 export type DealUncheckedUpdateInput = {
@@ -458,9 +479,11 @@ export type DealUncheckedUpdateInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutDealNestedInput
+  benchmark?: Prisma.RateBenchmarkUncheckedUpdateOneWithoutDealNestedInput
 }
 
 export type DealCreateManyInput = {
@@ -477,6 +500,7 @@ export type DealCreateManyInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -494,6 +518,7 @@ export type DealUpdateManyMutationInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -512,6 +537,7 @@ export type DealUncheckedUpdateManyInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -545,6 +571,7 @@ export type DealCountOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  closedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -567,6 +594,7 @@ export type DealMaxOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  closedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -585,6 +613,7 @@ export type DealMinOrderByAggregateInput = {
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  closedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -651,6 +680,22 @@ export type DealUpdateOneWithoutRevenuesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DealUpdateToOneWithWhereWithoutRevenuesInput, Prisma.DealUpdateWithoutRevenuesInput>, Prisma.DealUncheckedUpdateWithoutRevenuesInput>
 }
 
+export type DealCreateNestedOneWithoutBenchmarkInput = {
+  create?: Prisma.XOR<Prisma.DealCreateWithoutBenchmarkInput, Prisma.DealUncheckedCreateWithoutBenchmarkInput>
+  connectOrCreate?: Prisma.DealCreateOrConnectWithoutBenchmarkInput
+  connect?: Prisma.DealWhereUniqueInput
+}
+
+export type DealUpdateOneWithoutBenchmarkNestedInput = {
+  create?: Prisma.XOR<Prisma.DealCreateWithoutBenchmarkInput, Prisma.DealUncheckedCreateWithoutBenchmarkInput>
+  connectOrCreate?: Prisma.DealCreateOrConnectWithoutBenchmarkInput
+  upsert?: Prisma.DealUpsertWithoutBenchmarkInput
+  disconnect?: Prisma.DealWhereInput | boolean
+  delete?: Prisma.DealWhereInput | boolean
+  connect?: Prisma.DealWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DealUpdateToOneWithWhereWithoutBenchmarkInput, Prisma.DealUpdateWithoutBenchmarkInput>, Prisma.DealUncheckedUpdateWithoutBenchmarkInput>
+}
+
 export type DealCreateWithoutUserInput = {
   id?: string
   brandName: string
@@ -664,9 +709,11 @@ export type DealCreateWithoutUserInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutDealInput
+  benchmark?: Prisma.RateBenchmarkCreateNestedOneWithoutDealInput
 }
 
 export type DealUncheckedCreateWithoutUserInput = {
@@ -682,9 +729,11 @@ export type DealUncheckedCreateWithoutUserInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutDealInput
+  benchmark?: Prisma.RateBenchmarkUncheckedCreateNestedOneWithoutDealInput
 }
 
 export type DealCreateOrConnectWithoutUserInput = {
@@ -730,6 +779,7 @@ export type DealScalarWhereInput = {
   startDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   endDate?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"Deal"> | string | null
+  closedAt?: Prisma.DateTimeNullableFilter<"Deal"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Deal"> | Date | string
 }
@@ -747,9 +797,11 @@ export type DealCreateWithoutRevenuesInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDealsInput
+  benchmark?: Prisma.RateBenchmarkCreateNestedOneWithoutDealInput
 }
 
 export type DealUncheckedCreateWithoutRevenuesInput = {
@@ -766,8 +818,10 @@ export type DealUncheckedCreateWithoutRevenuesInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  benchmark?: Prisma.RateBenchmarkUncheckedCreateNestedOneWithoutDealInput
 }
 
 export type DealCreateOrConnectWithoutRevenuesInput = {
@@ -799,9 +853,11 @@ export type DealUpdateWithoutRevenuesInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDealsNestedInput
+  benchmark?: Prisma.RateBenchmarkUpdateOneWithoutDealNestedInput
 }
 
 export type DealUncheckedUpdateWithoutRevenuesInput = {
@@ -818,8 +874,106 @@ export type DealUncheckedUpdateWithoutRevenuesInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  benchmark?: Prisma.RateBenchmarkUncheckedUpdateOneWithoutDealNestedInput
+}
+
+export type DealCreateWithoutBenchmarkInput = {
+  id?: string
+  brandName: string
+  contactName?: string | null
+  contactEmail?: string | null
+  stage?: string
+  valueCents: number
+  currency?: string
+  description?: string | null
+  deliverables?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  notes?: string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutDealsInput
+  revenues?: Prisma.RevenueEntryCreateNestedManyWithoutDealInput
+}
+
+export type DealUncheckedCreateWithoutBenchmarkInput = {
+  id?: string
+  userId: string
+  brandName: string
+  contactName?: string | null
+  contactEmail?: string | null
+  stage?: string
+  valueCents: number
+  currency?: string
+  description?: string | null
+  deliverables?: string | null
+  startDate?: Date | string | null
+  endDate?: Date | string | null
+  notes?: string | null
+  closedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutDealInput
+}
+
+export type DealCreateOrConnectWithoutBenchmarkInput = {
+  where: Prisma.DealWhereUniqueInput
+  create: Prisma.XOR<Prisma.DealCreateWithoutBenchmarkInput, Prisma.DealUncheckedCreateWithoutBenchmarkInput>
+}
+
+export type DealUpsertWithoutBenchmarkInput = {
+  update: Prisma.XOR<Prisma.DealUpdateWithoutBenchmarkInput, Prisma.DealUncheckedUpdateWithoutBenchmarkInput>
+  create: Prisma.XOR<Prisma.DealCreateWithoutBenchmarkInput, Prisma.DealUncheckedCreateWithoutBenchmarkInput>
+  where?: Prisma.DealWhereInput
+}
+
+export type DealUpdateToOneWithWhereWithoutBenchmarkInput = {
+  where?: Prisma.DealWhereInput
+  data: Prisma.XOR<Prisma.DealUpdateWithoutBenchmarkInput, Prisma.DealUncheckedUpdateWithoutBenchmarkInput>
+}
+
+export type DealUpdateWithoutBenchmarkInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  brandName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  valueCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliverables?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutDealsNestedInput
+  revenues?: Prisma.RevenueEntryUpdateManyWithoutDealNestedInput
+}
+
+export type DealUncheckedUpdateWithoutBenchmarkInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  brandName?: Prisma.StringFieldUpdateOperationsInput | string
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  valueCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliverables?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutDealNestedInput
 }
 
 export type DealCreateManyUserInput = {
@@ -835,6 +989,7 @@ export type DealCreateManyUserInput = {
   startDate?: Date | string | null
   endDate?: Date | string | null
   notes?: string | null
+  closedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -852,9 +1007,11 @@ export type DealUpdateWithoutUserInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutDealNestedInput
+  benchmark?: Prisma.RateBenchmarkUpdateOneWithoutDealNestedInput
 }
 
 export type DealUncheckedUpdateWithoutUserInput = {
@@ -870,9 +1027,11 @@ export type DealUncheckedUpdateWithoutUserInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutDealNestedInput
+  benchmark?: Prisma.RateBenchmarkUncheckedUpdateOneWithoutDealNestedInput
 }
 
 export type DealUncheckedUpdateManyWithoutUserInput = {
@@ -888,6 +1047,7 @@ export type DealUncheckedUpdateManyWithoutUserInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -937,10 +1097,12 @@ export type DealSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   startDate?: boolean
   endDate?: boolean
   notes?: boolean
+  closedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   revenues?: boolean | Prisma.Deal$revenuesArgs<ExtArgs>
+  benchmark?: boolean | Prisma.Deal$benchmarkArgs<ExtArgs>
   _count?: boolean | Prisma.DealCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["deal"]>
 
@@ -958,6 +1120,7 @@ export type DealSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   startDate?: boolean
   endDate?: boolean
   notes?: boolean
+  closedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -977,6 +1140,7 @@ export type DealSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   startDate?: boolean
   endDate?: boolean
   notes?: boolean
+  closedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -996,14 +1160,16 @@ export type DealSelectScalar = {
   startDate?: boolean
   endDate?: boolean
   notes?: boolean
+  closedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DealOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "brandName" | "contactName" | "contactEmail" | "stage" | "valueCents" | "currency" | "description" | "deliverables" | "startDate" | "endDate" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["deal"]>
+export type DealOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "brandName" | "contactName" | "contactEmail" | "stage" | "valueCents" | "currency" | "description" | "deliverables" | "startDate" | "endDate" | "notes" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["deal"]>
 export type DealInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   revenues?: boolean | Prisma.Deal$revenuesArgs<ExtArgs>
+  benchmark?: boolean | Prisma.Deal$benchmarkArgs<ExtArgs>
   _count?: boolean | Prisma.DealCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DealIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1018,6 +1184,7 @@ export type $DealPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     revenues: Prisma.$RevenueEntryPayload<ExtArgs>[]
+    benchmark: Prisma.$RateBenchmarkPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1033,6 +1200,7 @@ export type $DealPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     startDate: Date | null
     endDate: Date | null
     notes: string | null
+    closedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["deal"]>
@@ -1431,6 +1599,7 @@ export interface Prisma__DealClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   revenues<T extends Prisma.Deal$revenuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Deal$revenuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenueEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  benchmark<T extends Prisma.Deal$benchmarkArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Deal$benchmarkArgs<ExtArgs>>): Prisma.Prisma__RateBenchmarkClient<runtime.Types.Result.GetResult<Prisma.$RateBenchmarkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1473,6 +1642,7 @@ export interface DealFieldRefs {
   readonly startDate: Prisma.FieldRef<"Deal", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Deal", 'DateTime'>
   readonly notes: Prisma.FieldRef<"Deal", 'String'>
+  readonly closedAt: Prisma.FieldRef<"Deal", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Deal", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Deal", 'DateTime'>
 }
@@ -1897,6 +2067,25 @@ export type Deal$revenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.RevenueEntryScalarFieldEnum | Prisma.RevenueEntryScalarFieldEnum[]
+}
+
+/**
+ * Deal.benchmark
+ */
+export type Deal$benchmarkArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RateBenchmark
+   */
+  select?: Prisma.RateBenchmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RateBenchmark
+   */
+  omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  where?: Prisma.RateBenchmarkWhereInput
 }
 
 /**

@@ -3,6 +3,8 @@ import { db } from '@/lib/db'
 import { SearchModal } from './search-modal'
 import { NotificationPanel } from './notification-panel'
 import { ThemeToggle } from './theme-toggle'
+import { MobileMenuButton } from './mobile-menu-button'
+import { AvatarMenu } from './avatar-menu'
 
 interface TopbarProps {
   title: string
@@ -14,28 +16,34 @@ function getInitials(name: string): string {
     .trim()
     .split(/\s+/)
     .slice(0, 2)
-    .map((w) => w[0].toUpperCase())
-    .join('')
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('') || '?'
 }
 
 export async function Topbar({ title, subtitle }: TopbarProps) {
   const session = await verifySession()
-  const user = await db.user.findUnique({ where: { id: session.userId }, select: { name: true } })
+  const user = await db.user.findUnique({
+    where: { id: session.userId },
+    select: { name: true, email: true },
+  })
   const initials = user?.name ? getInitials(user.name) : '?'
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-card px-6">
-      <div>
-        <h1 className="text-xl font-bold text-foreground">{title}</h1>
-        {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+    <header className="sticky top-0 z-30 flex h-[74px] items-center justify-between gap-3 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 px-4 sm:px-6">
+      <div className="flex items-center gap-2 min-w-0">
+        <MobileMenuButton />
+        <div className="min-w-0">
+          <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">{title}</h1>
+          {subtitle && (
+            <p className="text-xs sm:text-sm text-muted-foreground truncate hidden sm:block">{subtitle}</p>
+          )}
+        </div>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <SearchModal />
         <ThemeToggle />
         <NotificationPanel />
-        <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center" title={user?.name ?? ''}>
-          <span className="text-xs font-semibold text-white">{initials}</span>
-        </div>
+        <AvatarMenu name={user?.name ?? null} email={user?.email ?? ''} initials={initials} />
       </div>
     </header>
   )

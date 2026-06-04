@@ -7,6 +7,8 @@ import { DealSchema } from '@/lib/validations/deal'
 import { dollarsToCents } from '@/lib/utils'
 import type { ActionState } from '@/types'
 
+const TERMINAL_STAGES = ['completed', 'lost']
+
 export async function createDeal(
   _state: ActionState,
   formData: FormData
@@ -49,6 +51,7 @@ export async function createDeal(
       startDate: startDate ? new Date(startDate) : undefined,
       endDate: endDate ? new Date(endDate) : undefined,
       notes,
+      closedAt: TERMINAL_STAGES.includes(stage) ? new Date() : null,
     },
   })
 
@@ -99,6 +102,9 @@ export async function updateDeal(
       startDate: result.data.startDate ? new Date(result.data.startDate) : null,
       endDate: result.data.endDate ? new Date(result.data.endDate) : null,
       notes: result.data.notes ?? null,
+      closedAt: TERMINAL_STAGES.includes(result.data.stage)
+        ? (deal.closedAt && TERMINAL_STAGES.includes(deal.stage) ? deal.closedAt : new Date())
+        : null,
     },
   })
 
@@ -115,7 +121,15 @@ export async function updateDealStage(id: string, stage: string): Promise<Action
     return { success: false, error: 'Not found' }
   }
 
-  await db.deal.update({ where: { id }, data: { stage } })
+  await db.deal.update({
+    where: { id },
+    data: {
+      stage,
+      closedAt: TERMINAL_STAGES.includes(stage)
+        ? (deal.closedAt && TERMINAL_STAGES.includes(deal.stage) ? deal.closedAt : new Date())
+        : null,
+    },
+  })
   revalidatePath('/deals')
   revalidatePath('/dashboard')
   return { success: true, data: undefined }

@@ -1,22 +1,25 @@
 'use client'
 
-import { useTransition } from 'react'
+import { useOptimistic, useState, useTransition } from 'react'
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCorners,
+  useDraggable,
+  useDroppable,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import { toast } from 'sonner'
+import { CalendarDays, GripVertical, User } from 'lucide-react'
 import { updateDealStage } from '@/app/actions/deals'
-import { formatCurrency, formatDate } from '@/lib/utils'
-import { DealRowActions } from './deal-row-actions'
-import { CalendarDays, User } from 'lucide-react'
-
-const STAGES = [
-  { id: 'prospect',    label: 'Prospect',    color: 'bg-slate-100 text-slate-700 dark:bg-slate-800/60 dark:text-slate-200',     dot: 'bg-slate-400' },
-  { id: 'outreach',    label: 'Outreach',    color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200',         dot: 'bg-blue-400' },
-  { id: 'negotiation', label: 'Negotiation', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200',     dot: 'bg-amber-400' },
-  { id: 'contracted',  label: 'Contracted',  color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-200', dot: 'bg-violet-500' },
-  { id: 'in_progress', label: 'In Progress', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-200', dot: 'bg-orange-400' },
-  { id: 'completed',   label: 'Completed',   color: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200', dot: 'bg-emerald-500' },
-  { id: 'lost',        label: 'Lost',        color: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-200',             dot: 'bg-red-400' },
-]
-
-const ALL_STAGE_OPTIONS = STAGES.map((s) => ({ value: s.id, label: s.label }))
+import { formatCurrency, formatDate, cn } from '@/lib/utils'
+import { STAGES, type StageId } from './stages'
+import { DealDetailSheet, type ContributeDefaults } from './deal-detail-sheet'
 
 interface DealCard {
   id: string
@@ -30,32 +33,32 @@ interface DealCard {
   startDate?: string | null
   deliverables?: string | null
   notes?: string | null
+  hasRevenue?: boolean
+  alreadyContributed?: boolean
 }
 
 interface DealPipelineProps {
   deals: DealCard[]
   currency?: string
+  contributeDefaults?: ContributeDefaults
 }
 
-function StageSelect({ dealId, currentStage }: { dealId: string; currentStage: string }) {
-  const [pending, startTransition] = useTransition()
-
-  return (
-    <select
-      defaultValue={currentStage}
-      disabled={pending}
-      onChange={(e) => { const val = e.target.value; startTransition(() => { updateDealStage(dealId, val) }) }}
-      className="w-full text-xs rounded-lg border border-border bg-background px-2 py-1.5 text-muted-foreground disabled:opacity-50 transition-opacity"
-    >
-      {ALL_STAGE_OPTIONS.map((s) => (
-        <option key={s.value} value={s.value}>{s.label}</option>
-      ))}
-    </select>
+export function DealPipeline({ deals, currency = 'USD', contributeDefaults }: DealPipelineProps) {
+  const [items, setItemStage] = useOptimistic(
+    deals,
+    (state: DealCard[], move: { id: string; stage: string }) =>
+      state.map((d) => (d.id === move.id ? { ...d, stage: move.stage } : d)),
   )
-}
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const [detail, setDetail] = useState<DealCard | null>(null)
+  const [, startTransition] = useTransition()
 
-export function DealPipeline({ deals, currency = 'USD' }: DealPipelineProps) {
-  if (deals.length === 0) {
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(KeyboardSensor),
+  )
+
+  if (items.length === 0) {
     return (
       <div className="py-20 text-center">
         <p className="text-sm font-medium text-foreground">No deals yet</p>
@@ -64,100 +67,246 @@ export function DealPipeline({ deals, currency = 'USD' }: DealPipelineProps) {
     )
   }
 
+  const activeDeal = activeId ? items.find((d) => d.id === activeId) ?? null : null
+
+  const handleDragStart = (e: DragStartEvent) => setActiveId(String(e.active.id))
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    setActiveId(null)
+    const { active, over } = e
+    if (!over) return
+
+    const dealId = String(active.id)
+    const newStage = String(over.id) as StageId
+    const deal = items.find((d) => d.id === dealId)
+    if (!deal || deal.stage === newStage) return
+    if (!STAGES.find((s) => s.id === newStage)) return
+
+    startTransition(async () => {
+      setItemStage({ id: dealId, stage: newStage })
+      const result = await updateDealStage(dealId, newStage)
+      const newStageLabel = STAGES.find((s) => s.id === newStage)?.label ?? newStage
+      if (result?.success) {
+        toast.success(`Moved to ${newStageLabel}`)
+      } else {
+        toast.error(result?.error ?? 'Could not move deal')
+        // useOptimistic auto-reverts when transition ends without confirmation
+      }
+    })
+  }
+
+  const handleDragCancel = () => setActiveId(null)
+
   return (
-    <div className="overflow-x-auto -mx-6 px-6">
-      <div className="flex gap-3 min-w-max pb-4">
-        {STAGES.map((stage) => {
-          const stageDeals = deals.filter((d) => d.stage === stage.id)
-          const stageValue = stageDeals.reduce((s, d) => s + d.valueCents, 0)
+    <>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCorners}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragCancel={handleDragCancel}
+    >
+      <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6">
+        <div className="flex gap-3 min-w-max pb-4">
+          {STAGES.map((stage) => {
+            const stageDeals = items.filter((d) => d.stage === stage.id)
+            const stageValue = stageDeals.reduce((s, d) => s + d.valueCents, 0)
+            return (
+              <StageColumn
+                key={stage.id}
+                stage={stage}
+                deals={stageDeals}
+                stageValue={stageValue}
+                currency={currency}
+                draggedId={activeId}
+                onOpenDetail={setDetail}
+              />
+            )
+          })}
+        </div>
+      </div>
 
-          return (
-            <div key={stage.id} className="w-64 flex flex-col gap-2">
-              {/* Column header */}
-              <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <span className={`h-2 w-2 rounded-full ${stage.dot}`} />
-                  <span className="text-sm font-semibold text-foreground">{stage.label}</span>
-                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-xs font-medium text-muted-foreground">
-                    {stageDeals.length}
-                  </span>
-                </div>
-                {stageDeals.length > 0 && (
-                  <span className="text-xs text-muted-foreground">{formatCurrency(stageValue, currency)}</span>
-                )}
-              </div>
+      <DragOverlay>
+        {activeDeal ? (
+          <DealCardView
+            deal={activeDeal}
+            stage={STAGES.find((s) => s.id === activeDeal.stage) ?? STAGES[0]}
+            currency={currency}
+            isOverlay
+          />
+        ) : null}
+      </DragOverlay>
+    </DndContext>
 
-              {/* Cards */}
-              <div className="flex flex-col gap-2 min-h-20">
-                {stageDeals.map((deal) => (
-                  <div
-                    key={deal.id}
-                    className="rounded-xl border border-border bg-card p-3 shadow-sm hover:shadow-md transition-shadow"
-                  >
-                    {/* Brand + stage pill */}
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="text-sm font-semibold text-foreground leading-snug">{deal.brandName}</p>
-                      <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${stage.color}`}>
-                        {stage.label}
-                      </span>
-                    </div>
+    {detail && (
+      <DealDetailSheet deal={detail} currency={currency} onClose={() => setDetail(null)} contributeDefaults={contributeDefaults} />
+    )}
+    </>
+  )
+}
 
-                    {/* Contact */}
-                    {deal.contactName && (
-                      <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
-                        <User className="h-3 w-3 shrink-0" />
-                        <span className="truncate">{deal.contactName}</span>
-                      </div>
-                    )}
+interface StageColumnProps {
+  stage: typeof STAGES[number]
+  deals: DealCard[]
+  stageValue: number
+  currency: string
+  draggedId: string | null
+  onOpenDetail: (deal: DealCard) => void
+}
 
-                    {/* Deliverables preview */}
-                    {deal.deliverables && (
-                      <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
-                        {deal.deliverables}
-                      </p>
-                    )}
+function StageColumn({ stage, deals, stageValue, currency, draggedId, onOpenDetail }: StageColumnProps) {
+  const { setNodeRef, isOver } = useDroppable({ id: stage.id })
 
-                    {/* Value + end date */}
-                    <div className="mt-2.5 flex items-center justify-between">
-                      <span className="text-sm font-bold text-primary">{formatCurrency(deal.valueCents, currency)}</span>
-                      {deal.endDate && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <CalendarDays className="h-3 w-3" />
-                          <span>{formatDate(deal.endDate)}</span>
-                        </div>
-                      )}
-                    </div>
+  return (
+    <div className="w-64 flex flex-col gap-2">
+      <div className="flex items-center justify-between px-1">
+        <div className="flex items-center gap-2">
+          <span className={`h-2 w-2 rounded-full ${stage.dot}`} />
+          <span className="text-sm font-semibold text-foreground">{stage.label}</span>
+          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-xs font-medium text-muted-foreground">
+            {deals.length}
+          </span>
+        </div>
+        {deals.length > 0 && (
+          <span className="text-xs text-muted-foreground">{formatCurrency(stageValue, currency)}</span>
+        )}
+      </div>
 
-                    {/* Move stage */}
-                    <div className="mt-2">
-                      <StageSelect dealId={deal.id} currentStage={deal.stage} />
-                    </div>
+      <div
+        ref={setNodeRef}
+        className={cn(
+          'flex flex-col gap-2 min-h-20 rounded-xl p-1 transition-colors',
+          isOver && 'bg-primary/5 ring-2 ring-primary/30 ring-inset',
+        )}
+      >
+        {deals.map((deal) => (
+          <DraggableCard
+            key={deal.id}
+            deal={deal}
+            stage={stage}
+            currency={currency}
+            isDragging={draggedId === deal.id}
+            onOpenDetail={onOpenDetail}
+          />
+        ))}
 
-                    {/* Edit / Delete */}
-                    <DealRowActions
-                      id={deal.id}
-                      brandName={deal.brandName}
-                      contactName={deal.contactName ?? null}
-                      contactEmail={deal.contactEmail ?? null}
-                      stage={deal.stage}
-                      valueCents={deal.valueCents}
-                      deliverables={deal.deliverables ?? null}
-                      startDate={deal.startDate ?? null}
-                      endDate={deal.endDate ?? null}
-                      notes={deal.notes ?? null}
-                    />
-                  </div>
-                ))}
+        {deals.length === 0 && (
+          <div className="rounded-xl border border-dashed border-border/60 p-4 text-center">
+            <p className="text-xs text-muted-foreground/60">{isOver ? 'Drop here' : 'Empty'}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
 
-                {stageDeals.length === 0 && (
-                  <div className="rounded-xl border border-dashed border-border/60 p-4 text-center">
-                    <p className="text-xs text-muted-foreground/60">Empty</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          )
-        })}
+interface DraggableCardProps {
+  deal: DealCard
+  stage: typeof STAGES[number]
+  currency: string
+  isDragging: boolean
+  onOpenDetail: (deal: DealCard) => void
+}
+
+function DraggableCard({ deal, stage, currency, isDragging, onOpenDetail }: DraggableCardProps) {
+  const { setNodeRef, attributes, listeners, transform } = useDraggable({ id: deal.id })
+
+  const style = transform
+    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
+    : undefined
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      onClick={(e) => {
+        if ((e.target as HTMLElement).closest('button, a, input, label, select, textarea, [role="menu"], [role="dialog"]')) return
+        onOpenDetail(deal)
+      }}
+      className={cn(
+        'cursor-pointer rounded-xl border border-border bg-card p-3 shadow-sm hover:shadow-md transition-shadow group',
+        isDragging && 'opacity-30',
+      )}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex items-start gap-1.5 min-w-0">
+          <button
+            {...attributes}
+            {...listeners}
+            type="button"
+            aria-label={`Drag ${deal.brandName}`}
+            className="mt-0.5 cursor-grab active:cursor-grabbing rounded p-0.5 text-muted-foreground/40 hover:text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity touch-none"
+          >
+            <GripVertical className="h-3.5 w-3.5" />
+          </button>
+          <p className="text-sm font-semibold text-foreground leading-snug">{deal.brandName}</p>
+        </div>
+        <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${stage.color}`}>
+          {stage.label}
+        </span>
+      </div>
+
+      {deal.contactName && (
+        <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
+          <User className="h-3 w-3 shrink-0" />
+          <span className="truncate">{deal.contactName}</span>
+        </div>
+      )}
+
+      {deal.deliverables && (
+        <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+          {deal.deliverables}
+        </p>
+      )}
+
+      <div className="mt-2.5 flex items-center justify-between">
+        <span className="text-sm font-bold text-primary">{formatCurrency(deal.valueCents, currency)}</span>
+        {deal.endDate && (
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <CalendarDays className="h-3 w-3" />
+            <span>{formatDate(deal.endDate)}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+interface DealCardViewProps {
+  deal: DealCard
+  stage: typeof STAGES[number]
+  currency: string
+  isOverlay?: boolean
+}
+
+function DealCardView({ deal, stage, currency, isOverlay }: DealCardViewProps) {
+  return (
+    <div
+      className={cn(
+        'rounded-xl border border-border bg-card p-3 shadow-sm w-64',
+        isOverlay && 'shadow-2xl ring-2 ring-primary/40 rotate-2 cursor-grabbing',
+      )}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <p className="text-sm font-semibold text-foreground leading-snug">{deal.brandName}</p>
+        <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${stage.color}`}>
+          {stage.label}
+        </span>
+      </div>
+      {deal.contactName && (
+        <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
+          <User className="h-3 w-3 shrink-0" />
+          <span className="truncate">{deal.contactName}</span>
+        </div>
+      )}
+      <div className="mt-2.5 flex items-center justify-between">
+        <span className="text-sm font-bold text-primary">{formatCurrency(deal.valueCents, currency)}</span>
+        {deal.endDate && (
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <CalendarDays className="h-3 w-3" />
+            <span>{formatDate(deal.endDate)}</span>
+          </div>
+        )}
       </div>
     </div>
   )

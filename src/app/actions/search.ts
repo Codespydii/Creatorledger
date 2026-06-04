@@ -21,7 +21,8 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
   const uid = session.userId
   const contains = (field: string) => ({ contains: field, mode: 'insensitive' as const })
 
-  const [invoices, deals, expenses, revenues] = await Promise.all([
+  const [user, invoices, deals, expenses, revenues] = await Promise.all([
+    db.user.findUnique({ where: { id: uid }, select: { defaultCurrency: true } }),
     db.invoice.findMany({
       where: {
         userId: uid,
@@ -72,13 +73,15 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
     }),
   ])
 
+  const currency = user?.defaultCurrency ?? 'USD'
+
   const results: SearchResult[] = [
     ...invoices.map((inv) => ({
       id: inv.id,
       type: 'invoice' as const,
       label: inv.clientName,
       subtitle: inv.invoiceNumber,
-      meta: formatCurrency(inv.totalCents),
+      meta: formatCurrency(inv.totalCents, currency),
       href: `/invoices/${inv.id}`,
     })),
     ...deals.map((deal) => ({
@@ -86,7 +89,7 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
       type: 'deal' as const,
       label: deal.brandName,
       subtitle: deal.contactName ?? deal.stage,
-      meta: formatCurrency(deal.valueCents),
+      meta: formatCurrency(deal.valueCents, currency),
       href: '/deals',
     })),
     ...expenses.map((exp) => ({
@@ -94,7 +97,7 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
       type: 'expense' as const,
       label: exp.description,
       subtitle: exp.vendor ?? exp.category,
-      meta: formatCurrency(exp.amountCents),
+      meta: formatCurrency(exp.amountCents, currency),
       href: '/expenses',
     })),
     ...revenues.map((rev) => ({
@@ -102,7 +105,7 @@ export async function globalSearch(query: string): Promise<SearchResult[]> {
       type: 'revenue' as const,
       label: rev.description,
       subtitle: rev.platform ?? rev.source,
-      meta: formatCurrency(rev.amountCents),
+      meta: formatCurrency(rev.amountCents, currency),
       href: '/revenue',
     })),
   ]

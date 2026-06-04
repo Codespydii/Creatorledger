@@ -46,6 +46,7 @@ export type RateBenchmarkMinAggregateOutputType = {
   exclusivity: boolean | null
   usageRights: string | null
   source: string | null
+  dealId: string | null
   reportedAt: Date | null
 }
 
@@ -61,6 +62,7 @@ export type RateBenchmarkMaxAggregateOutputType = {
   exclusivity: boolean | null
   usageRights: string | null
   source: string | null
+  dealId: string | null
   reportedAt: Date | null
 }
 
@@ -76,6 +78,7 @@ export type RateBenchmarkCountAggregateOutputType = {
   exclusivity: number
   usageRights: number
   source: number
+  dealId: number
   reportedAt: number
   _all: number
 }
@@ -101,6 +104,7 @@ export type RateBenchmarkMinAggregateInputType = {
   exclusivity?: true
   usageRights?: true
   source?: true
+  dealId?: true
   reportedAt?: true
 }
 
@@ -116,6 +120,7 @@ export type RateBenchmarkMaxAggregateInputType = {
   exclusivity?: true
   usageRights?: true
   source?: true
+  dealId?: true
   reportedAt?: true
 }
 
@@ -131,6 +136,7 @@ export type RateBenchmarkCountAggregateInputType = {
   exclusivity?: true
   usageRights?: true
   source?: true
+  dealId?: true
   reportedAt?: true
   _all?: true
 }
@@ -233,6 +239,7 @@ export type RateBenchmarkGroupByOutputType = {
   exclusivity: boolean
   usageRights: string | null
   source: string
+  dealId: string | null
   reportedAt: Date
   _count: RateBenchmarkCountAggregateOutputType | null
   _avg: RateBenchmarkAvgAggregateOutputType | null
@@ -271,7 +278,10 @@ export type RateBenchmarkWhereInput = {
   exclusivity?: Prisma.BoolFilter<"RateBenchmark"> | boolean
   usageRights?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
   source?: Prisma.StringFilter<"RateBenchmark"> | string
+  dealId?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
   reportedAt?: Prisma.DateTimeFilter<"RateBenchmark"> | Date | string
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
 }
 
 export type RateBenchmarkOrderByWithRelationInput = {
@@ -286,11 +296,15 @@ export type RateBenchmarkOrderByWithRelationInput = {
   exclusivity?: Prisma.SortOrder
   usageRights?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrder
+  dealId?: Prisma.SortOrderInput | Prisma.SortOrder
   reportedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
+  deal?: Prisma.DealOrderByWithRelationInput
 }
 
 export type RateBenchmarkWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  dealId?: string
   AND?: Prisma.RateBenchmarkWhereInput | Prisma.RateBenchmarkWhereInput[]
   OR?: Prisma.RateBenchmarkWhereInput[]
   NOT?: Prisma.RateBenchmarkWhereInput | Prisma.RateBenchmarkWhereInput[]
@@ -305,7 +319,9 @@ export type RateBenchmarkWhereUniqueInput = Prisma.AtLeast<{
   usageRights?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
   source?: Prisma.StringFilter<"RateBenchmark"> | string
   reportedAt?: Prisma.DateTimeFilter<"RateBenchmark"> | Date | string
-}, "id">
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  deal?: Prisma.XOR<Prisma.DealNullableScalarRelationFilter, Prisma.DealWhereInput> | null
+}, "id" | "dealId">
 
 export type RateBenchmarkOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -319,6 +335,7 @@ export type RateBenchmarkOrderByWithAggregationInput = {
   exclusivity?: Prisma.SortOrder
   usageRights?: Prisma.SortOrderInput | Prisma.SortOrder
   source?: Prisma.SortOrder
+  dealId?: Prisma.SortOrderInput | Prisma.SortOrder
   reportedAt?: Prisma.SortOrder
   _count?: Prisma.RateBenchmarkCountOrderByAggregateInput
   _avg?: Prisma.RateBenchmarkAvgOrderByAggregateInput
@@ -342,12 +359,12 @@ export type RateBenchmarkScalarWhereWithAggregatesInput = {
   exclusivity?: Prisma.BoolWithAggregatesFilter<"RateBenchmark"> | boolean
   usageRights?: Prisma.StringNullableWithAggregatesFilter<"RateBenchmark"> | string | null
   source?: Prisma.StringWithAggregatesFilter<"RateBenchmark"> | string
+  dealId?: Prisma.StringNullableWithAggregatesFilter<"RateBenchmark"> | string | null
   reportedAt?: Prisma.DateTimeWithAggregatesFilter<"RateBenchmark"> | Date | string
 }
 
 export type RateBenchmarkCreateInput = {
   id?: string
-  userId?: string | null
   niche: string
   platform: string
   format: string
@@ -358,6 +375,8 @@ export type RateBenchmarkCreateInput = {
   usageRights?: string | null
   source?: string
   reportedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutRateBenchmarksInput
+  deal?: Prisma.DealCreateNestedOneWithoutBenchmarkInput
 }
 
 export type RateBenchmarkUncheckedCreateInput = {
@@ -372,12 +391,12 @@ export type RateBenchmarkUncheckedCreateInput = {
   exclusivity?: boolean
   usageRights?: string | null
   source?: string
+  dealId?: string | null
   reportedAt?: Date | string
 }
 
 export type RateBenchmarkUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   niche?: Prisma.StringFieldUpdateOperationsInput | string
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   format?: Prisma.StringFieldUpdateOperationsInput | string
@@ -388,6 +407,8 @@ export type RateBenchmarkUpdateInput = {
   usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.StringFieldUpdateOperationsInput | string
   reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutRateBenchmarksNestedInput
+  deal?: Prisma.DealUpdateOneWithoutBenchmarkNestedInput
 }
 
 export type RateBenchmarkUncheckedUpdateInput = {
@@ -402,6 +423,7 @@ export type RateBenchmarkUncheckedUpdateInput = {
   exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -417,12 +439,12 @@ export type RateBenchmarkCreateManyInput = {
   exclusivity?: boolean
   usageRights?: string | null
   source?: string
+  dealId?: string | null
   reportedAt?: Date | string
 }
 
 export type RateBenchmarkUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   niche?: Prisma.StringFieldUpdateOperationsInput | string
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   format?: Prisma.StringFieldUpdateOperationsInput | string
@@ -447,7 +469,23 @@ export type RateBenchmarkUncheckedUpdateManyInput = {
   exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
   usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RateBenchmarkListRelationFilter = {
+  every?: Prisma.RateBenchmarkWhereInput
+  some?: Prisma.RateBenchmarkWhereInput
+  none?: Prisma.RateBenchmarkWhereInput
+}
+
+export type RateBenchmarkOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type RateBenchmarkNullableScalarRelationFilter = {
+  is?: Prisma.RateBenchmarkWhereInput | null
+  isNot?: Prisma.RateBenchmarkWhereInput | null
 }
 
 export type RateBenchmarkCountOrderByAggregateInput = {
@@ -462,6 +500,7 @@ export type RateBenchmarkCountOrderByAggregateInput = {
   exclusivity?: Prisma.SortOrder
   usageRights?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
   reportedAt?: Prisma.SortOrder
 }
 
@@ -481,6 +520,7 @@ export type RateBenchmarkMaxOrderByAggregateInput = {
   exclusivity?: Prisma.SortOrder
   usageRights?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
   reportedAt?: Prisma.SortOrder
 }
 
@@ -496,11 +536,297 @@ export type RateBenchmarkMinOrderByAggregateInput = {
   exclusivity?: Prisma.SortOrder
   usageRights?: Prisma.SortOrder
   source?: Prisma.SortOrder
+  dealId?: Prisma.SortOrder
   reportedAt?: Prisma.SortOrder
 }
 
 export type RateBenchmarkSumOrderByAggregateInput = {
   amountCents?: Prisma.SortOrder
+}
+
+export type RateBenchmarkCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput> | Prisma.RateBenchmarkCreateWithoutUserInput[] | Prisma.RateBenchmarkUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutUserInput | Prisma.RateBenchmarkCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.RateBenchmarkCreateManyUserInputEnvelope
+  connect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+}
+
+export type RateBenchmarkUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput> | Prisma.RateBenchmarkCreateWithoutUserInput[] | Prisma.RateBenchmarkUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutUserInput | Prisma.RateBenchmarkCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.RateBenchmarkCreateManyUserInputEnvelope
+  connect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+}
+
+export type RateBenchmarkUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput> | Prisma.RateBenchmarkCreateWithoutUserInput[] | Prisma.RateBenchmarkUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutUserInput | Prisma.RateBenchmarkCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.RateBenchmarkUpsertWithWhereUniqueWithoutUserInput | Prisma.RateBenchmarkUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.RateBenchmarkCreateManyUserInputEnvelope
+  set?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  disconnect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  delete?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  connect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  update?: Prisma.RateBenchmarkUpdateWithWhereUniqueWithoutUserInput | Prisma.RateBenchmarkUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.RateBenchmarkUpdateManyWithWhereWithoutUserInput | Prisma.RateBenchmarkUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.RateBenchmarkScalarWhereInput | Prisma.RateBenchmarkScalarWhereInput[]
+}
+
+export type RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput> | Prisma.RateBenchmarkCreateWithoutUserInput[] | Prisma.RateBenchmarkUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutUserInput | Prisma.RateBenchmarkCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.RateBenchmarkUpsertWithWhereUniqueWithoutUserInput | Prisma.RateBenchmarkUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.RateBenchmarkCreateManyUserInputEnvelope
+  set?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  disconnect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  delete?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  connect?: Prisma.RateBenchmarkWhereUniqueInput | Prisma.RateBenchmarkWhereUniqueInput[]
+  update?: Prisma.RateBenchmarkUpdateWithWhereUniqueWithoutUserInput | Prisma.RateBenchmarkUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.RateBenchmarkUpdateManyWithWhereWithoutUserInput | Prisma.RateBenchmarkUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.RateBenchmarkScalarWhereInput | Prisma.RateBenchmarkScalarWhereInput[]
+}
+
+export type RateBenchmarkCreateNestedOneWithoutDealInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutDealInput
+  connect?: Prisma.RateBenchmarkWhereUniqueInput
+}
+
+export type RateBenchmarkUncheckedCreateNestedOneWithoutDealInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutDealInput
+  connect?: Prisma.RateBenchmarkWhereUniqueInput
+}
+
+export type RateBenchmarkUpdateOneWithoutDealNestedInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutDealInput
+  upsert?: Prisma.RateBenchmarkUpsertWithoutDealInput
+  disconnect?: Prisma.RateBenchmarkWhereInput | boolean
+  delete?: Prisma.RateBenchmarkWhereInput | boolean
+  connect?: Prisma.RateBenchmarkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RateBenchmarkUpdateToOneWithWhereWithoutDealInput, Prisma.RateBenchmarkUpdateWithoutDealInput>, Prisma.RateBenchmarkUncheckedUpdateWithoutDealInput>
+}
+
+export type RateBenchmarkUncheckedUpdateOneWithoutDealNestedInput = {
+  create?: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+  connectOrCreate?: Prisma.RateBenchmarkCreateOrConnectWithoutDealInput
+  upsert?: Prisma.RateBenchmarkUpsertWithoutDealInput
+  disconnect?: Prisma.RateBenchmarkWhereInput | boolean
+  delete?: Prisma.RateBenchmarkWhereInput | boolean
+  connect?: Prisma.RateBenchmarkWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RateBenchmarkUpdateToOneWithWhereWithoutDealInput, Prisma.RateBenchmarkUpdateWithoutDealInput>, Prisma.RateBenchmarkUncheckedUpdateWithoutDealInput>
+}
+
+export type RateBenchmarkCreateWithoutUserInput = {
+  id?: string
+  niche: string
+  platform: string
+  format: string
+  subscriberTier: string
+  amountCents: number
+  currency?: string
+  exclusivity?: boolean
+  usageRights?: string | null
+  source?: string
+  reportedAt?: Date | string
+  deal?: Prisma.DealCreateNestedOneWithoutBenchmarkInput
+}
+
+export type RateBenchmarkUncheckedCreateWithoutUserInput = {
+  id?: string
+  niche: string
+  platform: string
+  format: string
+  subscriberTier: string
+  amountCents: number
+  currency?: string
+  exclusivity?: boolean
+  usageRights?: string | null
+  source?: string
+  dealId?: string | null
+  reportedAt?: Date | string
+}
+
+export type RateBenchmarkCreateOrConnectWithoutUserInput = {
+  where: Prisma.RateBenchmarkWhereUniqueInput
+  create: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput>
+}
+
+export type RateBenchmarkCreateManyUserInputEnvelope = {
+  data: Prisma.RateBenchmarkCreateManyUserInput | Prisma.RateBenchmarkCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type RateBenchmarkUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.RateBenchmarkWhereUniqueInput
+  update: Prisma.XOR<Prisma.RateBenchmarkUpdateWithoutUserInput, Prisma.RateBenchmarkUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutUserInput, Prisma.RateBenchmarkUncheckedCreateWithoutUserInput>
+}
+
+export type RateBenchmarkUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.RateBenchmarkWhereUniqueInput
+  data: Prisma.XOR<Prisma.RateBenchmarkUpdateWithoutUserInput, Prisma.RateBenchmarkUncheckedUpdateWithoutUserInput>
+}
+
+export type RateBenchmarkUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.RateBenchmarkScalarWhereInput
+  data: Prisma.XOR<Prisma.RateBenchmarkUpdateManyMutationInput, Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserInput>
+}
+
+export type RateBenchmarkScalarWhereInput = {
+  AND?: Prisma.RateBenchmarkScalarWhereInput | Prisma.RateBenchmarkScalarWhereInput[]
+  OR?: Prisma.RateBenchmarkScalarWhereInput[]
+  NOT?: Prisma.RateBenchmarkScalarWhereInput | Prisma.RateBenchmarkScalarWhereInput[]
+  id?: Prisma.StringFilter<"RateBenchmark"> | string
+  userId?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
+  niche?: Prisma.StringFilter<"RateBenchmark"> | string
+  platform?: Prisma.StringFilter<"RateBenchmark"> | string
+  format?: Prisma.StringFilter<"RateBenchmark"> | string
+  subscriberTier?: Prisma.StringFilter<"RateBenchmark"> | string
+  amountCents?: Prisma.IntFilter<"RateBenchmark"> | number
+  currency?: Prisma.StringFilter<"RateBenchmark"> | string
+  exclusivity?: Prisma.BoolFilter<"RateBenchmark"> | boolean
+  usageRights?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
+  source?: Prisma.StringFilter<"RateBenchmark"> | string
+  dealId?: Prisma.StringNullableFilter<"RateBenchmark"> | string | null
+  reportedAt?: Prisma.DateTimeFilter<"RateBenchmark"> | Date | string
+}
+
+export type RateBenchmarkCreateWithoutDealInput = {
+  id?: string
+  niche: string
+  platform: string
+  format: string
+  subscriberTier: string
+  amountCents: number
+  currency?: string
+  exclusivity?: boolean
+  usageRights?: string | null
+  source?: string
+  reportedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutRateBenchmarksInput
+}
+
+export type RateBenchmarkUncheckedCreateWithoutDealInput = {
+  id?: string
+  userId?: string | null
+  niche: string
+  platform: string
+  format: string
+  subscriberTier: string
+  amountCents: number
+  currency?: string
+  exclusivity?: boolean
+  usageRights?: string | null
+  source?: string
+  reportedAt?: Date | string
+}
+
+export type RateBenchmarkCreateOrConnectWithoutDealInput = {
+  where: Prisma.RateBenchmarkWhereUniqueInput
+  create: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+}
+
+export type RateBenchmarkUpsertWithoutDealInput = {
+  update: Prisma.XOR<Prisma.RateBenchmarkUpdateWithoutDealInput, Prisma.RateBenchmarkUncheckedUpdateWithoutDealInput>
+  create: Prisma.XOR<Prisma.RateBenchmarkCreateWithoutDealInput, Prisma.RateBenchmarkUncheckedCreateWithoutDealInput>
+  where?: Prisma.RateBenchmarkWhereInput
+}
+
+export type RateBenchmarkUpdateToOneWithWhereWithoutDealInput = {
+  where?: Prisma.RateBenchmarkWhereInput
+  data: Prisma.XOR<Prisma.RateBenchmarkUpdateWithoutDealInput, Prisma.RateBenchmarkUncheckedUpdateWithoutDealInput>
+}
+
+export type RateBenchmarkUpdateWithoutDealInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  niche?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriberTier?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutRateBenchmarksNestedInput
+}
+
+export type RateBenchmarkUncheckedUpdateWithoutDealInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriberTier?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RateBenchmarkCreateManyUserInput = {
+  id?: string
+  niche: string
+  platform: string
+  format: string
+  subscriberTier: string
+  amountCents: number
+  currency?: string
+  exclusivity?: boolean
+  usageRights?: string | null
+  source?: string
+  dealId?: string | null
+  reportedAt?: Date | string
+}
+
+export type RateBenchmarkUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  niche?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriberTier?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deal?: Prisma.DealUpdateOneWithoutBenchmarkNestedInput
+}
+
+export type RateBenchmarkUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  niche?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriberTier?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RateBenchmarkUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  niche?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  format?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriberTier?: Prisma.StringFieldUpdateOperationsInput | string
+  amountCents?: Prisma.IntFieldUpdateOperationsInput | number
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusivity?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  usageRights?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  dealId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reportedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -517,7 +843,10 @@ export type RateBenchmarkSelect<ExtArgs extends runtime.Types.Extensions.Interna
   exclusivity?: boolean
   usageRights?: boolean
   source?: boolean
+  dealId?: boolean
   reportedAt?: boolean
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
 }, ExtArgs["result"]["rateBenchmark"]>
 
 export type RateBenchmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -532,7 +861,10 @@ export type RateBenchmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   exclusivity?: boolean
   usageRights?: boolean
   source?: boolean
+  dealId?: boolean
   reportedAt?: boolean
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
 }, ExtArgs["result"]["rateBenchmark"]>
 
 export type RateBenchmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -547,7 +879,10 @@ export type RateBenchmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   exclusivity?: boolean
   usageRights?: boolean
   source?: boolean
+  dealId?: boolean
   reportedAt?: boolean
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
 }, ExtArgs["result"]["rateBenchmark"]>
 
 export type RateBenchmarkSelectScalar = {
@@ -562,14 +897,30 @@ export type RateBenchmarkSelectScalar = {
   exclusivity?: boolean
   usageRights?: boolean
   source?: boolean
+  dealId?: boolean
   reportedAt?: boolean
 }
 
-export type RateBenchmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "niche" | "platform" | "format" | "subscriberTier" | "amountCents" | "currency" | "exclusivity" | "usageRights" | "source" | "reportedAt", ExtArgs["result"]["rateBenchmark"]>
+export type RateBenchmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "niche" | "platform" | "format" | "subscriberTier" | "amountCents" | "currency" | "exclusivity" | "usageRights" | "source" | "dealId" | "reportedAt", ExtArgs["result"]["rateBenchmark"]>
+export type RateBenchmarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
+}
+export type RateBenchmarkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
+}
+export type RateBenchmarkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.RateBenchmark$userArgs<ExtArgs>
+  deal?: boolean | Prisma.RateBenchmark$dealArgs<ExtArgs>
+}
 
 export type $RateBenchmarkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RateBenchmark"
-  objects: {}
+  objects: {
+    user: Prisma.$UserPayload<ExtArgs> | null
+    deal: Prisma.$DealPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string | null
@@ -582,6 +933,7 @@ export type $RateBenchmarkPayload<ExtArgs extends runtime.Types.Extensions.Inter
     exclusivity: boolean
     usageRights: string | null
     source: string
+    dealId: string | null
     reportedAt: Date
   }, ExtArgs["result"]["rateBenchmark"]>
   composites: {}
@@ -977,6 +1329,8 @@ readonly fields: RateBenchmarkFieldRefs;
  */
 export interface Prisma__RateBenchmarkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.RateBenchmark$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RateBenchmark$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  deal<T extends Prisma.RateBenchmark$dealArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RateBenchmark$dealArgs<ExtArgs>>): Prisma.Prisma__DealClient<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1017,6 +1371,7 @@ export interface RateBenchmarkFieldRefs {
   readonly exclusivity: Prisma.FieldRef<"RateBenchmark", 'Boolean'>
   readonly usageRights: Prisma.FieldRef<"RateBenchmark", 'String'>
   readonly source: Prisma.FieldRef<"RateBenchmark", 'String'>
+  readonly dealId: Prisma.FieldRef<"RateBenchmark", 'String'>
   readonly reportedAt: Prisma.FieldRef<"RateBenchmark", 'DateTime'>
 }
     
@@ -1034,6 +1389,10 @@ export type RateBenchmarkFindUniqueArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
   /**
    * Filter, which RateBenchmark to fetch.
    */
@@ -1053,6 +1412,10 @@ export type RateBenchmarkFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  /**
    * Filter, which RateBenchmark to fetch.
    */
   where: Prisma.RateBenchmarkWhereUniqueInput
@@ -1070,6 +1433,10 @@ export type RateBenchmarkFindFirstArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
   /**
    * Filter, which RateBenchmark to fetch.
    */
@@ -1119,6 +1486,10 @@ export type RateBenchmarkFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  /**
    * Filter, which RateBenchmark to fetch.
    */
   where?: Prisma.RateBenchmarkWhereInput
@@ -1166,6 +1537,10 @@ export type RateBenchmarkFindManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
   /**
    * Filter, which RateBenchmarks to fetch.
    */
@@ -1215,6 +1590,10 @@ export type RateBenchmarkCreateArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  /**
    * The data needed to create a RateBenchmark.
    */
   data: Prisma.XOR<Prisma.RateBenchmarkCreateInput, Prisma.RateBenchmarkUncheckedCreateInput>
@@ -1248,6 +1627,10 @@ export type RateBenchmarkCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    */
   data: Prisma.RateBenchmarkCreateManyInput | Prisma.RateBenchmarkCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1262,6 +1645,10 @@ export type RateBenchmarkUpdateArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
   /**
    * The data needed to update a RateBenchmark.
    */
@@ -1314,6 +1701,10 @@ export type RateBenchmarkUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * Limit how many RateBenchmarks to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1328,6 +1719,10 @@ export type RateBenchmarkUpsertArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
   /**
    * The filter to search for the RateBenchmark to update in case it exists.
    */
@@ -1355,6 +1750,10 @@ export type RateBenchmarkDeleteArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  /**
    * Filter which RateBenchmark to delete.
    */
   where: Prisma.RateBenchmarkWhereUniqueInput
@@ -1375,6 +1774,44 @@ export type RateBenchmarkDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
+ * RateBenchmark.user
+ */
+export type RateBenchmark$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * RateBenchmark.deal
+ */
+export type RateBenchmark$dealArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Deal
+   */
+  select?: Prisma.DealSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Deal
+   */
+  omit?: Prisma.DealOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DealInclude<ExtArgs> | null
+  where?: Prisma.DealWhereInput
+}
+
+/**
  * RateBenchmark without action
  */
 export type RateBenchmarkDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1386,4 +1823,8 @@ export type RateBenchmarkDefaultArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the RateBenchmark
    */
   omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
 }

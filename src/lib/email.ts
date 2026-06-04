@@ -30,9 +30,9 @@ export async function sendPasswordResetEmail(params: PasswordResetParams) {
   }
 
   await getResend().emails.send({
-    from: `Creator Ledger <${FROM}>`,
+    from: `Caelo <${FROM}>`,
     to: params.toEmail,
-    subject: 'Reset your Creator Ledger password',
+    subject: 'Reset your Caelo password',
     html: buildResetEmailHtml(params),
   })
 }
@@ -48,7 +48,7 @@ function buildResetEmailHtml(p: PasswordResetParams): string {
     </div>
     <div style="padding:40px;">
       <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:0;">Hi ${p.toName},</p>
-      <p style="color:#0f172a;font-size:15px;line-height:1.6;">We received a request to reset your Creator Ledger password. Click the button below to choose a new one. This link expires in ${p.expiresInMinutes} minutes.</p>
+      <p style="color:#0f172a;font-size:15px;line-height:1.6;">We received a request to reset your Caelo password. Click the button below to choose a new one. This link expires in ${p.expiresInMinutes} minutes.</p>
       <div style="text-align:center;margin:28px 0;">
         <a href="${p.resetUrl}" style="display:inline-block;background:#7c3aed;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:12px 32px;border-radius:8px;">Reset password</a>
       </div>
@@ -57,7 +57,7 @@ function buildResetEmailHtml(p: PasswordResetParams): string {
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">Didn&apos;t request this? You can safely ignore this email — your password won&apos;t change.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body>
@@ -74,9 +74,9 @@ interface VerifyEmailParams {
 export async function sendVerificationEmail(p: VerifyEmailParams) {
   if (!isEmailConfigured()) throw new Error('Email service is not configured')
   await getResend().emails.send({
-    from: `Creator Ledger <${FROM}>`,
+    from: `Caelo <${FROM}>`,
     to: p.toEmail,
-    subject: 'Confirm your email — Creator Ledger',
+    subject: 'Confirm your email — Caelo',
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:32px 16px;">
@@ -92,7 +92,7 @@ export async function sendVerificationEmail(p: VerifyEmailParams) {
       </div>
       <p style="color:#64748b;font-size:13px;line-height:1.6;">Or paste this link into your browser:</p>
       <p style="color:#7c3aed;font-size:13px;line-height:1.6;word-break:break-all;"><a href="${p.verifyUrl}" style="color:#7c3aed;">${p.verifyUrl}</a></p>
-      <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">If you didn&apos;t sign up for Creator Ledger, you can safely ignore this email.</p>
+      <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">If you didn&apos;t sign up for Caelo, you can safely ignore this email.</p>
     </div>
   </div>
 </body></html>`,
@@ -109,16 +109,16 @@ export async function sendWelcomeEmail(p: WelcomeEmailParams) {
   if (!isEmailConfigured()) throw new Error('Email service is not configured')
   const firstName = p.toName.split(' ')[0]
   await getResend().emails.send({
-    from: `Mahipal at Creator Ledger <${FROM}>`,
+    from: `Mahipal at Caelo <${FROM}>`,
     replyTo: 'mahipalsinghrajput476@gmail.com',
     to: p.toEmail,
-    subject: `Welcome to Creator Ledger, ${firstName}`,
+    subject: `Welcome to Caelo, ${firstName}`,
     html: `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8fafc;margin:0;padding:32px 16px;">
   <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
     <div style="background:#7c3aed;padding:32px 40px;">
-      <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Welcome to Creator Ledger 👋</h1>
+      <h1 style="color:#ffffff;margin:0;font-size:22px;font-weight:700;">Welcome to Caelo 👋</h1>
     </div>
     <div style="padding:40px;">
       <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-top:0;">Hi ${firstName},</p>
@@ -190,7 +190,7 @@ export async function sendInvoiceToClient(p: InvoiceSendParams) {
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.fromName}</strong></p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body></html>`,
@@ -278,7 +278,7 @@ function buildEmailHtml(p: OverdueReminderParams, amount: string, due: string): 
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.creatorName}</strong></p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Creator Ledger</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body>

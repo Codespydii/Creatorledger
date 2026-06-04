@@ -16,8 +16,8 @@ export function ForecastInsights({ insights }: ForecastInsightsProps) {
         <ul className="space-y-3">
           {insights.map((insight, i) => (
             <li key={i} className="flex items-start gap-3">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 shrink-0">
-                <Lightbulb className="h-3.5 w-3.5 text-amber-600" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40 shrink-0">
+                <Lightbulb className="h-3.5 w-3.5 text-amber-600 dark:text-amber-300" />
               </div>
               <span className="text-sm text-foreground leading-relaxed">{insight}</span>
             </li>

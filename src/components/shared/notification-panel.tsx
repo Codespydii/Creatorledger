@@ -54,11 +54,15 @@ export function NotificationPanel() {
   return (
     <div ref={panelRef} className="relative">
       <button
+        type="button"
         onClick={() => setOpen((v) => !v)}
-        className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border hover:bg-accent transition-colors"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-label={loaded && visible.length > 0 ? `Notifications (${visible.length} unread)` : 'Notifications'}
         title="Notifications"
+        className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border hover:bg-accent transition-colors"
       >
-        <Bell className="h-4 w-4 text-muted-foreground" />
+        <Bell className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
         {loaded && visible.length > 0 && (
           <span className={`absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold text-white ${hasUrgent ? 'bg-red-500' : 'bg-emerald-500'}`}>
             {visible.length > 9 ? '9+' : visible.length}
@@ -67,7 +71,7 @@ export function NotificationPanel() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 z-50 w-96 rounded-2xl border border-border bg-card shadow-xl overflow-hidden">
+        <div className="fixed inset-x-3 top-16 z-50 sm:absolute sm:inset-x-auto sm:right-0 sm:top-11 sm:w-96 max-h-[calc(100vh-5rem)] overflow-hidden rounded-2xl border border-border bg-card shadow-xl flex flex-col">
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
             <h3 className="text-sm font-semibold text-foreground">Notifications</h3>
             {visible.length > 0 && (
@@ -80,7 +84,7 @@ export function NotificationPanel() {
             )}
           </div>
 
-          <div className="max-h-[420px] overflow-y-auto">
+          <div className="flex-1 overflow-y-auto sm:max-h-[420px]">
             {!loaded && (
               <div className="py-10 text-center text-sm text-muted-foreground">Loading…</div>
             )}

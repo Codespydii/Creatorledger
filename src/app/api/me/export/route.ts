@@ -54,7 +54,7 @@ export async function GET() {
   const exportData = {
     metadata: {
       exportedAt: new Date().toISOString(),
-      note: 'This is your complete user data from Creator Ledger. Sensitive credentials (password hash, OAuth tokens, payment-provider keys) are intentionally omitted.',
+      note: 'This is your complete user data from Caelo. Sensitive credentials (password hash, OAuth tokens, payment-provider keys) are intentionally omitted.',
       format: 'JSON',
       schema_version: 1,
     },

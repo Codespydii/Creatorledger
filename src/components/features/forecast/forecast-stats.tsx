@@ -65,8 +65,8 @@ export function ForecastStats({ forecast, currency = 'USD' }: ForecastStatsProps
               <span className="text-sm text-muted-foreground">Expected inflows</span>
               <span className="text-2xl font-bold text-emerald-600">{formatCurrency(forecast.totalInflows, currency)}</span>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100">
-              <TrendingUp className="h-5 w-5 text-emerald-600" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900/40">
+              <TrendingUp className="h-5 w-5 text-emerald-600 dark:text-emerald-300" />
             </div>
           </div>
           <div className="mt-4 text-xs text-muted-foreground">
@@ -83,8 +83,8 @@ export function ForecastStats({ forecast, currency = 'USD' }: ForecastStatsProps
               <span className="text-sm text-muted-foreground">Expected outflows</span>
               <span className="text-2xl font-bold text-red-500">{formatCurrency(forecast.totalOutflows, currency)}</span>
             </div>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100">
-              <TrendingDown className="h-5 w-5 text-red-500" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 dark:bg-red-900/40">
+              <TrendingDown className="h-5 w-5 text-red-500 dark:text-red-300" />
             </div>
           </div>
           <div className="mt-4 text-xs text-muted-foreground">

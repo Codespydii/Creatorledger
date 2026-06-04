@@ -60,8 +60,8 @@ export function RevenueBreakdown({ data, currency = 'USD' }: RevenueBreakdownPro
         <CardTitle>Revenue by Source</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="h-[220px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <div style={{ width: '100%', height: 220 }}>
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <PieChart margin={{ top: 8, right: 24, bottom: 8, left: 24 }}>
               <Pie
                 data={data}

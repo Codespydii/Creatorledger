@@ -31,6 +31,13 @@ export async function createRevenueEntry(
   const { source, amount, currency, description, platform, date, dealId } = result.data
   const amountCents = dollarsToCents(amount)
 
+  // Only honor a deal link if the deal is actually the user's own.
+  let linkedDealId: string | undefined = undefined
+  if (dealId) {
+    const deal = await db.deal.findUnique({ where: { id: dealId }, select: { userId: true } })
+    if (deal && deal.userId === session.userId) linkedDealId = dealId
+  }
+
   await db.revenueEntry.create({
     data: {
       userId: session.userId,
@@ -40,12 +47,13 @@ export async function createRevenueEntry(
       description,
       platform,
       date: new Date(date),
-      dealId,
+      dealId: linkedDealId,
     },
   })
 
   revalidatePath('/revenue')
   revalidatePath('/dashboard')
+  if (linkedDealId) revalidatePath('/deals') // so the deal's "paid" state refreshes
   return { success: true, data: undefined }
 }
 
@@ -101,6 +109,21 @@ export async function deleteRevenueEntry(id: string): Promise<ActionState> {
   revalidatePath('/revenue')
   revalidatePath('/dashboard')
   return { success: true, data: undefined }
+}
+
+export async function bulkDeleteRevenueEntries(ids: string[]): Promise<ActionState<{ count: number }>> {
+  if (!Array.isArray(ids) || ids.length === 0) return { success: false, error: 'No entries selected' }
+  if (ids.length > 500) return { success: false, error: 'Cannot delete more than 500 entries at once' }
+
+  const session = await verifySession()
+
+  const result = await db.revenueEntry.deleteMany({
+    where: { id: { in: ids }, userId: session.userId },
+  })
+
+  revalidatePath('/revenue')
+  revalidatePath('/dashboard')
+  return { success: true, data: { count: result.count } }
 }
 
 export async function createRefund(

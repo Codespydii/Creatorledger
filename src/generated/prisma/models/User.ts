@@ -34,9 +34,13 @@ export type UserMinAggregateOutputType = {
   channelName: string | null
   platform: string | null
   defaultCurrency: string | null
+  businessAddress: string | null
+  ein: string | null
+  website: string | null
   primaryPlatform: string | null
   audienceTier: string | null
   primaryPain: string | null
+  niche: string | null
   onboardedAt: Date | null
   emailVerifiedAt: Date | null
   createdAt: Date | null
@@ -54,9 +58,13 @@ export type UserMaxAggregateOutputType = {
   channelName: string | null
   platform: string | null
   defaultCurrency: string | null
+  businessAddress: string | null
+  ein: string | null
+  website: string | null
   primaryPlatform: string | null
   audienceTier: string | null
   primaryPain: string | null
+  niche: string | null
   onboardedAt: Date | null
   emailVerifiedAt: Date | null
   createdAt: Date | null
@@ -74,9 +82,13 @@ export type UserCountAggregateOutputType = {
   channelName: number
   platform: number
   defaultCurrency: number
+  businessAddress: number
+  ein: number
+  website: number
   primaryPlatform: number
   audienceTier: number
   primaryPain: number
+  niche: number
   onboardedAt: number
   emailVerifiedAt: number
   createdAt: number
@@ -96,9 +108,13 @@ export type UserMinAggregateInputType = {
   channelName?: true
   platform?: true
   defaultCurrency?: true
+  businessAddress?: true
+  ein?: true
+  website?: true
   primaryPlatform?: true
   audienceTier?: true
   primaryPain?: true
+  niche?: true
   onboardedAt?: true
   emailVerifiedAt?: true
   createdAt?: true
@@ -116,9 +132,13 @@ export type UserMaxAggregateInputType = {
   channelName?: true
   platform?: true
   defaultCurrency?: true
+  businessAddress?: true
+  ein?: true
+  website?: true
   primaryPlatform?: true
   audienceTier?: true
   primaryPain?: true
+  niche?: true
   onboardedAt?: true
   emailVerifiedAt?: true
   createdAt?: true
@@ -136,9 +156,13 @@ export type UserCountAggregateInputType = {
   channelName?: true
   platform?: true
   defaultCurrency?: true
+  businessAddress?: true
+  ein?: true
+  website?: true
   primaryPlatform?: true
   audienceTier?: true
   primaryPain?: true
+  niche?: true
   onboardedAt?: true
   emailVerifiedAt?: true
   createdAt?: true
@@ -229,9 +253,13 @@ export type UserGroupByOutputType = {
   channelName: string | null
   platform: string | null
   defaultCurrency: string
+  businessAddress: string | null
+  ein: string | null
+  website: string | null
   primaryPlatform: string | null
   audienceTier: string | null
   primaryPain: string | null
+  niche: string | null
   onboardedAt: Date | null
   emailVerifiedAt: Date | null
   createdAt: Date
@@ -270,9 +298,13 @@ export type UserWhereInput = {
   channelName?: Prisma.StringNullableFilter<"User"> | string | null
   platform?: Prisma.StringNullableFilter<"User"> | string | null
   defaultCurrency?: Prisma.StringFilter<"User"> | string
+  businessAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  ein?: Prisma.StringNullableFilter<"User"> | string | null
+  website?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPlatform?: Prisma.StringNullableFilter<"User"> | string | null
   audienceTier?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableFilter<"User"> | string | null
+  niche?: Prisma.StringNullableFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -282,6 +314,7 @@ export type UserWhereInput = {
   invoices?: Prisma.InvoiceListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   deals?: Prisma.DealListRelationFilter
+  rateBenchmarks?: Prisma.RateBenchmarkListRelationFilter
   teamMembers?: Prisma.TeamMemberListRelationFilter
   mediaKit?: Prisma.XOR<Prisma.MediaKitNullableScalarRelationFilter, Prisma.MediaKitWhereInput> | null
   contracts?: Prisma.ContractListRelationFilter
@@ -300,9 +333,13 @@ export type UserOrderByWithRelationInput = {
   channelName?: Prisma.SortOrderInput | Prisma.SortOrder
   platform?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultCurrency?: Prisma.SortOrder
+  businessAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  ein?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPlatform?: Prisma.SortOrderInput | Prisma.SortOrder
   audienceTier?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPain?: Prisma.SortOrderInput | Prisma.SortOrder
+  niche?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -312,6 +349,7 @@ export type UserOrderByWithRelationInput = {
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
   deals?: Prisma.DealOrderByRelationAggregateInput
+  rateBenchmarks?: Prisma.RateBenchmarkOrderByRelationAggregateInput
   teamMembers?: Prisma.TeamMemberOrderByRelationAggregateInput
   mediaKit?: Prisma.MediaKitOrderByWithRelationInput
   contracts?: Prisma.ContractOrderByRelationAggregateInput
@@ -333,9 +371,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   channelName?: Prisma.StringNullableFilter<"User"> | string | null
   platform?: Prisma.StringNullableFilter<"User"> | string | null
   defaultCurrency?: Prisma.StringFilter<"User"> | string
+  businessAddress?: Prisma.StringNullableFilter<"User"> | string | null
+  ein?: Prisma.StringNullableFilter<"User"> | string | null
+  website?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPlatform?: Prisma.StringNullableFilter<"User"> | string | null
   audienceTier?: Prisma.StringNullableFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableFilter<"User"> | string | null
+  niche?: Prisma.StringNullableFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -345,6 +387,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   invoices?: Prisma.InvoiceListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   deals?: Prisma.DealListRelationFilter
+  rateBenchmarks?: Prisma.RateBenchmarkListRelationFilter
   teamMembers?: Prisma.TeamMemberListRelationFilter
   mediaKit?: Prisma.XOR<Prisma.MediaKitNullableScalarRelationFilter, Prisma.MediaKitWhereInput> | null
   contracts?: Prisma.ContractListRelationFilter
@@ -363,9 +406,13 @@ export type UserOrderByWithAggregationInput = {
   channelName?: Prisma.SortOrderInput | Prisma.SortOrder
   platform?: Prisma.SortOrderInput | Prisma.SortOrder
   defaultCurrency?: Prisma.SortOrder
+  businessAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  ein?: Prisma.SortOrderInput | Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPlatform?: Prisma.SortOrderInput | Prisma.SortOrder
   audienceTier?: Prisma.SortOrderInput | Prisma.SortOrder
   primaryPain?: Prisma.SortOrderInput | Prisma.SortOrder
+  niche?: Prisma.SortOrderInput | Prisma.SortOrder
   onboardedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -389,9 +436,13 @@ export type UserScalarWhereWithAggregatesInput = {
   channelName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   platform?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   defaultCurrency?: Prisma.StringWithAggregatesFilter<"User"> | string
+  businessAddress?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  ein?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   primaryPlatform?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   audienceTier?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   primaryPain?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  niche?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   onboardedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -409,9 +460,13 @@ export type UserCreateInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -421,6 +476,7 @@ export type UserCreateInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -439,9 +495,13 @@ export type UserUncheckedCreateInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -451,6 +511,7 @@ export type UserUncheckedCreateInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -469,9 +530,13 @@ export type UserUpdateInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -481,6 +546,7 @@ export type UserUpdateInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -499,9 +565,13 @@ export type UserUncheckedUpdateInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -511,6 +581,7 @@ export type UserUncheckedUpdateInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -529,9 +600,13 @@ export type UserCreateManyInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -549,9 +624,13 @@ export type UserUpdateManyMutationInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,9 +648,13 @@ export type UserUncheckedUpdateManyInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,9 +672,13 @@ export type UserCountOrderByAggregateInput = {
   channelName?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   defaultCurrency?: Prisma.SortOrder
+  businessAddress?: Prisma.SortOrder
+  ein?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   primaryPlatform?: Prisma.SortOrder
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
+  niche?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -609,9 +696,13 @@ export type UserMaxOrderByAggregateInput = {
   channelName?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   defaultCurrency?: Prisma.SortOrder
+  businessAddress?: Prisma.SortOrder
+  ein?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   primaryPlatform?: Prisma.SortOrder
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
+  niche?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -629,9 +720,13 @@ export type UserMinOrderByAggregateInput = {
   channelName?: Prisma.SortOrder
   platform?: Prisma.SortOrder
   defaultCurrency?: Prisma.SortOrder
+  businessAddress?: Prisma.SortOrder
+  ein?: Prisma.SortOrder
+  website?: Prisma.SortOrder
   primaryPlatform?: Prisma.SortOrder
   audienceTier?: Prisma.SortOrder
   primaryPain?: Prisma.SortOrder
+  niche?: Prisma.SortOrder
   onboardedAt?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -642,6 +737,11 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -786,6 +886,22 @@ export type UserUpdateOneRequiredWithoutDealsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDealsInput, Prisma.UserUpdateWithoutDealsInput>, Prisma.UserUncheckedUpdateWithoutDealsInput>
 }
 
+export type UserCreateNestedOneWithoutRateBenchmarksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRateBenchmarksInput, Prisma.UserUncheckedCreateWithoutRateBenchmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRateBenchmarksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutRateBenchmarksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRateBenchmarksInput, Prisma.UserUncheckedCreateWithoutRateBenchmarksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRateBenchmarksInput
+  upsert?: Prisma.UserUpsertWithoutRateBenchmarksInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRateBenchmarksInput, Prisma.UserUpdateWithoutRateBenchmarksInput>, Prisma.UserUncheckedUpdateWithoutRateBenchmarksInput>
+}
+
 export type UserCreateNestedOneWithoutTeamMembersInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeamMembersInput
@@ -810,9 +926,13 @@ export type UserCreateWithoutEmailVerificationTokensInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -822,6 +942,7 @@ export type UserCreateWithoutEmailVerificationTokensInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -839,9 +960,13 @@ export type UserUncheckedCreateWithoutEmailVerificationTokensInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -851,6 +976,7 @@ export type UserUncheckedCreateWithoutEmailVerificationTokensInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -884,9 +1010,13 @@ export type UserUpdateWithoutEmailVerificationTokensInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -896,6 +1026,7 @@ export type UserUpdateWithoutEmailVerificationTokensInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -913,9 +1044,13 @@ export type UserUncheckedUpdateWithoutEmailVerificationTokensInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -925,6 +1060,7 @@ export type UserUncheckedUpdateWithoutEmailVerificationTokensInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -942,9 +1078,13 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -954,6 +1094,7 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -971,9 +1112,13 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -983,6 +1128,7 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1016,9 +1162,13 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1028,6 +1178,7 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1045,9 +1196,13 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1057,6 +1212,7 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1074,9 +1230,13 @@ export type UserCreateWithoutYoutubeConnectionInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1086,6 +1246,7 @@ export type UserCreateWithoutYoutubeConnectionInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -1103,9 +1264,13 @@ export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1115,6 +1280,7 @@ export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1148,9 +1314,13 @@ export type UserUpdateWithoutYoutubeConnectionInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1160,6 +1330,7 @@ export type UserUpdateWithoutYoutubeConnectionInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1177,9 +1348,13 @@ export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1189,6 +1364,7 @@ export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1206,9 +1382,13 @@ export type UserCreateWithoutContractsInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1218,6 +1398,7 @@ export type UserCreateWithoutContractsInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
@@ -1235,9 +1416,13 @@ export type UserUncheckedCreateWithoutContractsInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1247,6 +1432,7 @@ export type UserUncheckedCreateWithoutContractsInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
@@ -1280,9 +1466,13 @@ export type UserUpdateWithoutContractsInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1292,6 +1482,7 @@ export type UserUpdateWithoutContractsInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
@@ -1309,9 +1500,13 @@ export type UserUncheckedUpdateWithoutContractsInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1321,6 +1516,7 @@ export type UserUncheckedUpdateWithoutContractsInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
@@ -1338,9 +1534,13 @@ export type UserCreateWithoutMediaKitInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1350,6 +1550,7 @@ export type UserCreateWithoutMediaKitInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
@@ -1367,9 +1568,13 @@ export type UserUncheckedCreateWithoutMediaKitInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1379,6 +1584,7 @@ export type UserUncheckedCreateWithoutMediaKitInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
@@ -1412,9 +1618,13 @@ export type UserUpdateWithoutMediaKitInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1424,6 +1634,7 @@ export type UserUpdateWithoutMediaKitInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
@@ -1441,9 +1652,13 @@ export type UserUncheckedUpdateWithoutMediaKitInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1453,6 +1668,7 @@ export type UserUncheckedUpdateWithoutMediaKitInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
@@ -1470,9 +1686,13 @@ export type UserCreateWithoutRevenuesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1481,6 +1701,7 @@ export type UserCreateWithoutRevenuesInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -1499,9 +1720,13 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1510,6 +1735,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1544,9 +1770,13 @@ export type UserUpdateWithoutRevenuesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1555,6 +1785,7 @@ export type UserUpdateWithoutRevenuesInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1573,9 +1804,13 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1584,6 +1819,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1602,9 +1838,13 @@ export type UserCreateWithoutInvoicesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1613,6 +1853,7 @@ export type UserCreateWithoutInvoicesInput = {
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -1631,9 +1872,13 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1642,6 +1887,7 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1676,9 +1922,13 @@ export type UserUpdateWithoutInvoicesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1687,6 +1937,7 @@ export type UserUpdateWithoutInvoicesInput = {
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1705,9 +1956,13 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1716,6 +1971,7 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1734,9 +1990,13 @@ export type UserCreateWithoutExpensesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1745,6 +2005,7 @@ export type UserCreateWithoutExpensesInput = {
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -1763,9 +2024,13 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1774,6 +2039,7 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1808,9 +2074,13 @@ export type UserUpdateWithoutExpensesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1819,6 +2089,7 @@ export type UserUpdateWithoutExpensesInput = {
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1837,9 +2108,13 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1848,6 +2123,7 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1866,9 +2142,13 @@ export type UserCreateWithoutDealsInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1877,6 +2157,7 @@ export type UserCreateWithoutDealsInput = {
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
@@ -1895,9 +2176,13 @@ export type UserUncheckedCreateWithoutDealsInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -1906,6 +2191,7 @@ export type UserUncheckedCreateWithoutDealsInput = {
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
@@ -1940,9 +2226,13 @@ export type UserUpdateWithoutDealsInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1951,6 +2241,7 @@ export type UserUpdateWithoutDealsInput = {
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
@@ -1969,9 +2260,13 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1980,6 +2275,159 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
+  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
+  contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
+  youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutRateBenchmarksInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash?: string | null
+  googleId?: string | null
+  avatarUrl?: string | null
+  channelName?: string | null
+  platform?: string | null
+  defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
+  primaryPlatform?: string | null
+  audienceTier?: string | null
+  primaryPain?: string | null
+  niche?: string | null
+  onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  stripeKey?: string | null
+  revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
+  contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
+  youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRateBenchmarksInput = {
+  id?: string
+  email: string
+  name: string
+  passwordHash?: string | null
+  googleId?: string | null
+  avatarUrl?: string | null
+  channelName?: string | null
+  platform?: string | null
+  defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
+  primaryPlatform?: string | null
+  audienceTier?: string | null
+  primaryPain?: string | null
+  niche?: string | null
+  onboardedAt?: Date | string | null
+  emailVerifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  stripeKey?: string | null
+  revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
+  contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
+  youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRateBenchmarksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRateBenchmarksInput, Prisma.UserUncheckedCreateWithoutRateBenchmarksInput>
+}
+
+export type UserUpsertWithoutRateBenchmarksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRateBenchmarksInput, Prisma.UserUncheckedUpdateWithoutRateBenchmarksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRateBenchmarksInput, Prisma.UserUncheckedCreateWithoutRateBenchmarksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRateBenchmarksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRateBenchmarksInput, Prisma.UserUncheckedUpdateWithoutRateBenchmarksInput>
+}
+
+export type UserUpdateWithoutRateBenchmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
+  contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
+  youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  emailVerificationTokens?: Prisma.EmailVerificationTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRateBenchmarksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
   teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
@@ -1998,9 +2446,13 @@ export type UserCreateWithoutTeamMembersInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -2010,6 +2462,7 @@ export type UserCreateWithoutTeamMembersInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionCreateNestedOneWithoutUserInput
@@ -2027,9 +2480,13 @@ export type UserUncheckedCreateWithoutTeamMembersInput = {
   channelName?: string | null
   platform?: string | null
   defaultCurrency?: string
+  businessAddress?: string | null
+  ein?: string | null
+  website?: string | null
   primaryPlatform?: string | null
   audienceTier?: string | null
   primaryPain?: string | null
+  niche?: string | null
   onboardedAt?: Date | string | null
   emailVerifiedAt?: Date | string | null
   createdAt?: Date | string
@@ -2039,6 +2496,7 @@ export type UserUncheckedCreateWithoutTeamMembersInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedCreateNestedManyWithoutUserInput
   mediaKit?: Prisma.MediaKitUncheckedCreateNestedOneWithoutUserInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutUserInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedCreateNestedOneWithoutUserInput
@@ -2072,9 +2530,13 @@ export type UserUpdateWithoutTeamMembersInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2084,6 +2546,7 @@ export type UserUpdateWithoutTeamMembersInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUpdateOneWithoutUserNestedInput
@@ -2101,9 +2564,13 @@ export type UserUncheckedUpdateWithoutTeamMembersInput = {
   channelName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   defaultCurrency?: Prisma.StringFieldUpdateOperationsInput | string
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ein?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audienceTier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   primaryPain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  niche?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   onboardedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2113,6 +2580,7 @@ export type UserUncheckedUpdateWithoutTeamMembersInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
+  rateBenchmarks?: Prisma.RateBenchmarkUncheckedUpdateManyWithoutUserNestedInput
   mediaKit?: Prisma.MediaKitUncheckedUpdateOneWithoutUserNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutUserNestedInput
   youtubeConnection?: Prisma.YouTubeConnectionUncheckedUpdateOneWithoutUserNestedInput
@@ -2130,6 +2598,7 @@ export type UserCountOutputType = {
   invoices: number
   expenses: number
   deals: number
+  rateBenchmarks: number
   teamMembers: number
   contracts: number
   passwordResetTokens: number
@@ -2141,6 +2610,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
   expenses?: boolean | UserCountOutputTypeCountExpensesArgs
   deals?: boolean | UserCountOutputTypeCountDealsArgs
+  rateBenchmarks?: boolean | UserCountOutputTypeCountRateBenchmarksArgs
   teamMembers?: boolean | UserCountOutputTypeCountTeamMembersArgs
   contracts?: boolean | UserCountOutputTypeCountContractsArgs
   passwordResetTokens?: boolean | UserCountOutputTypeCountPasswordResetTokensArgs
@@ -2188,6 +2658,13 @@ export type UserCountOutputTypeCountDealsArgs<ExtArgs extends runtime.Types.Exte
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountRateBenchmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RateBenchmarkWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountTeamMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeamMemberWhereInput
 }
@@ -2224,9 +2701,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   channelName?: boolean
   platform?: boolean
   defaultCurrency?: boolean
+  businessAddress?: boolean
+  ein?: boolean
+  website?: boolean
   primaryPlatform?: boolean
   audienceTier?: boolean
   primaryPain?: boolean
+  niche?: boolean
   onboardedAt?: boolean
   emailVerifiedAt?: boolean
   createdAt?: boolean
@@ -2236,6 +2717,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
   expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
   deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
+  rateBenchmarks?: boolean | Prisma.User$rateBenchmarksArgs<ExtArgs>
   teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>
   mediaKit?: boolean | Prisma.User$mediaKitArgs<ExtArgs>
   contracts?: boolean | Prisma.User$contractsArgs<ExtArgs>
@@ -2255,9 +2737,13 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   channelName?: boolean
   platform?: boolean
   defaultCurrency?: boolean
+  businessAddress?: boolean
+  ein?: boolean
+  website?: boolean
   primaryPlatform?: boolean
   audienceTier?: boolean
   primaryPain?: boolean
+  niche?: boolean
   onboardedAt?: boolean
   emailVerifiedAt?: boolean
   createdAt?: boolean
@@ -2275,9 +2761,13 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   channelName?: boolean
   platform?: boolean
   defaultCurrency?: boolean
+  businessAddress?: boolean
+  ein?: boolean
+  website?: boolean
   primaryPlatform?: boolean
   audienceTier?: boolean
   primaryPain?: boolean
+  niche?: boolean
   onboardedAt?: boolean
   emailVerifiedAt?: boolean
   createdAt?: boolean
@@ -2295,9 +2785,13 @@ export type UserSelectScalar = {
   channelName?: boolean
   platform?: boolean
   defaultCurrency?: boolean
+  businessAddress?: boolean
+  ein?: boolean
+  website?: boolean
   primaryPlatform?: boolean
   audienceTier?: boolean
   primaryPain?: boolean
+  niche?: boolean
   onboardedAt?: boolean
   emailVerifiedAt?: boolean
   createdAt?: boolean
@@ -2305,12 +2799,13 @@ export type UserSelectScalar = {
   stripeKey?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "primaryPlatform" | "audienceTier" | "primaryPain" | "onboardedAt" | "emailVerifiedAt" | "createdAt" | "updatedAt" | "stripeKey", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "businessAddress" | "ein" | "website" | "primaryPlatform" | "audienceTier" | "primaryPain" | "niche" | "onboardedAt" | "emailVerifiedAt" | "createdAt" | "updatedAt" | "stripeKey", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
   expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
   deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
+  rateBenchmarks?: boolean | Prisma.User$rateBenchmarksArgs<ExtArgs>
   teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>
   mediaKit?: boolean | Prisma.User$mediaKitArgs<ExtArgs>
   contracts?: boolean | Prisma.User$contractsArgs<ExtArgs>
@@ -2329,6 +2824,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
     deals: Prisma.$DealPayload<ExtArgs>[]
+    rateBenchmarks: Prisma.$RateBenchmarkPayload<ExtArgs>[]
     teamMembers: Prisma.$TeamMemberPayload<ExtArgs>[]
     mediaKit: Prisma.$MediaKitPayload<ExtArgs> | null
     contracts: Prisma.$ContractPayload<ExtArgs>[]
@@ -2346,9 +2842,13 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     channelName: string | null
     platform: string | null
     defaultCurrency: string
+    businessAddress: string | null
+    ein: string | null
+    website: string | null
     primaryPlatform: string | null
     audienceTier: string | null
     primaryPain: string | null
+    niche: string | null
     onboardedAt: Date | null
     emailVerifiedAt: Date | null
     createdAt: Date
@@ -2752,6 +3252,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   invoices<T extends Prisma.User$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expenses<T extends Prisma.User$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   deals<T extends Prisma.User$dealsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dealsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  rateBenchmarks<T extends Prisma.User$rateBenchmarksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rateBenchmarksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RateBenchmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamMembers<T extends Prisma.User$teamMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teamMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   mediaKit<T extends Prisma.User$mediaKitArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mediaKitArgs<ExtArgs>>): Prisma.Prisma__MediaKitClient<runtime.Types.Result.GetResult<Prisma.$MediaKitPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contracts<T extends Prisma.User$contractsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$contractsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2796,9 +3297,13 @@ export interface UserFieldRefs {
   readonly channelName: Prisma.FieldRef<"User", 'String'>
   readonly platform: Prisma.FieldRef<"User", 'String'>
   readonly defaultCurrency: Prisma.FieldRef<"User", 'String'>
+  readonly businessAddress: Prisma.FieldRef<"User", 'String'>
+  readonly ein: Prisma.FieldRef<"User", 'String'>
+  readonly website: Prisma.FieldRef<"User", 'String'>
   readonly primaryPlatform: Prisma.FieldRef<"User", 'String'>
   readonly audienceTier: Prisma.FieldRef<"User", 'String'>
   readonly primaryPain: Prisma.FieldRef<"User", 'String'>
+  readonly niche: Prisma.FieldRef<"User", 'String'>
   readonly onboardedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly emailVerifiedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -3290,6 +3795,30 @@ export type User$dealsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.DealScalarFieldEnum | Prisma.DealScalarFieldEnum[]
+}
+
+/**
+ * User.rateBenchmarks
+ */
+export type User$rateBenchmarksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RateBenchmark
+   */
+  select?: Prisma.RateBenchmarkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RateBenchmark
+   */
+  omit?: Prisma.RateBenchmarkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RateBenchmarkInclude<ExtArgs> | null
+  where?: Prisma.RateBenchmarkWhereInput
+  orderBy?: Prisma.RateBenchmarkOrderByWithRelationInput | Prisma.RateBenchmarkOrderByWithRelationInput[]
+  cursor?: Prisma.RateBenchmarkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RateBenchmarkScalarFieldEnum | Prisma.RateBenchmarkScalarFieldEnum[]
 }
 
 /**

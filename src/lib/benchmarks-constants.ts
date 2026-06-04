@@ -54,3 +54,38 @@ export function tierForSubscribers(n: number): string {
 export function niceLabel(value: string, list: readonly { value: string; label: string }[]): string {
   return list.find((x) => x.value === value)?.label ?? value
 }
+
+/**
+ * Best-guess map from an onboarding `primaryPlatform` to a benchmark platform.
+ * Returns '' when there's no clean equivalent (twitch/substack/twitter/multi/other)
+ * so the contribute form leaves it blank for the creator to pick.
+ */
+export function mapProfilePlatform(p?: string | null): string {
+  switch (p) {
+    case 'youtube': return 'youtube'
+    case 'instagram': return 'instagram'
+    case 'tiktok': return 'tiktok'
+    case 'podcasts': return 'podcast'
+    default: return ''
+  }
+}
+
+/**
+ * Best-guess map from an onboarding `audienceTier` to a benchmark subscriber tier.
+ * Onboarding tiers are coarser, so the two straddling buckets return '' (ask).
+ */
+export function mapProfileTier(t?: string | null): string {
+  switch (t) {
+    case 'just_starting':
+    case 'under_10k': return 'micro' // 0–10K
+    case '1m_plus': return 'mega'    // 1M+
+    case '10k_to_100k':              // straddles small + mid
+    case '100k_to_1m':               // straddles large + macro
+    default: return ''
+  }
+}
+
+/** Only pass a stored niche through if it's still a valid benchmark niche. */
+export function validNicheOrEmpty(n?: string | null): string {
+  return n && NICHES.some((x) => x.value === n) ? n : ''
+}

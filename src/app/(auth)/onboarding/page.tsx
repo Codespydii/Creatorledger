@@ -4,7 +4,7 @@ import { db } from '@/lib/db'
 import { OnboardingWizard } from './wizard'
 
 export const metadata = {
-  title: 'Welcome — Creator Ledger',
+  title: 'Welcome — Caelo',
   description: 'Three quick questions so we can tailor your dashboard.',
 }
 

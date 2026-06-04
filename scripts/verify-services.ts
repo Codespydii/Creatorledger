@@ -39,10 +39,10 @@ async function main() {
       // Send a real test email to Resend's universal-success address.
       // No quota burn; this address auto-succeeds.
       const r = await resend.emails.send({
-        from: `Creator Ledger <${process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'}>`,
+        from: `Caelo <${process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'}>`,
         to: 'delivered@resend.dev',
-        subject: 'Connectivity test — Creator Ledger',
-        html: '<p>This is a Resend connectivity test from Creator Ledger setup.</p>',
+        subject: 'Connectivity test — Caelo',
+        html: '<p>This is a Resend connectivity test from Caelo setup.</p>',
       })
       if (r.error) {
         check('Resend send to delivered@resend.dev', false, JSON.stringify(r.error))
@@ -74,7 +74,7 @@ async function main() {
         timestamp,
         platform: 'node',
         level: 'info',
-        message: { formatted: 'Creator Ledger setup verification (safe to ignore)' },
+        message: { formatted: 'Caelo setup verification (safe to ignore)' },
         environment: 'setup-test',
         tags: { source: 'verify-services-script' },
       })
