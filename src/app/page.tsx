@@ -135,7 +135,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       {/* SECTION 1 — NAVBAR */}
       <nav className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 flex h-16 items-center justify-between">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 grid h-16 grid-cols-[1fr_auto_1fr] items-center">
           <Link href="/" className="flex items-center gap-2" aria-label="Caelo home">
             <Image src="/caelo-logo.png" alt="Caelo" width={125} height={36} priority className="h-9 w-auto" />
           </Link>
@@ -150,7 +150,7 @@ export default function LandingPage() {
               FAQ
             </a>
           </div>
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
             <ThemeToggle />
             <Link
               href="/login"
