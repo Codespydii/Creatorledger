@@ -19,7 +19,9 @@ export default async function ContractsPage() {
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Contract Analyzer" subtitle="Spot risky terms before you sign" />
       <main className="flex-1 p-4 sm:p-6 space-y-6 max-w-4xl">
-        <ContractUploadForm geminiConfigured={isGeminiConfigured()} />
+        <div data-tour="contracts">
+          <ContractUploadForm geminiConfigured={isGeminiConfigured()} />
+        </div>
         <ContractList contracts={contracts} />
       </main>
     </div>

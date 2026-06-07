@@ -70,8 +70,12 @@ GOOGLE_OAUTH_REDIRECT_URI="http://localhost:3000/api/oauth/youtube/callback"
 GOOGLE_SIGNIN_REDIRECT_URI="http://localhost:3000/api/oauth/google/callback"
 
 # Email (https://resend.com) — required for verification + welcome + password reset + invoice reminders
+# RESEND_FROM_EMAIL must be an address on a domain verified in Resend. Defaults to noreply@usecaelo.com.
+# SUPPORT_EMAIL is the reply-to for system mail + the public contact address. Defaults to support@usecaelo.com.
+# It must be able to RECEIVE mail (set up a Hostinger mailbox or forwarder) — Resend only sends.
 RESEND_API_KEY=""
-RESEND_FROM_EMAIL="hello@yourdomain.com"
+RESEND_FROM_EMAIL="noreply@usecaelo.com"
+SUPPORT_EMAIL="support@usecaelo.com"
 
 # Cron auth (any random string; required by Vercel cron routes)
 CRON_SECRET="<random string>"

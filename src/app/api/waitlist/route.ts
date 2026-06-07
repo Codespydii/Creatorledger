@@ -4,8 +4,9 @@ import { rateLimit, rateLimitErrorMessage } from '@/lib/rate-limit'
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://creatorledgerapp.vercel.app'
-const FROM = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://usecaelo.com'
+const FROM = process.env.RESEND_FROM_EMAIL ?? 'noreply@usecaelo.com'
+const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL ?? 'support@usecaelo.com'
 const FOUNDER_EMAIL = process.env.FOUNDER_EMAIL
 
 let _resend: Resend | null = null
@@ -79,6 +80,7 @@ export async function POST(req: Request) {
     await Promise.all([
       resend.emails.send({
         from: `Mahipal from Caelo <${FROM}>`,
+        replyTo: SUPPORT_EMAIL,
         to: email,
         subject: 'Your Caelo beta access is ready',
         html: buildWelcomeHtml(),

@@ -29,7 +29,9 @@ export default async function ForecastPage() {
       />
       <main className="flex-1 p-4 sm:p-6 space-y-6">
         <ForecastStats forecast={forecast} currency={currency} />
-        <ForecastChart days={forecast.days} currency={currency} />
+        <div data-tour="forecast">
+          <ForecastChart days={forecast.days} currency={currency} />
+        </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <ForecastSources sources={forecast.inflowsBySource} totalInflows={forecast.totalInflows} currency={currency} />
           <ForecastInsights insights={forecast.insights} />

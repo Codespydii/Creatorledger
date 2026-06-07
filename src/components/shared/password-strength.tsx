@@ -4,8 +4,8 @@ function scorePassword(pw: string): { score: 0 | 1 | 2 | 3 | 4; label: string; t
   if (!pw) return { score: 0, label: '', tone: 'bg-muted' }
 
   let score = 0
-  if (pw.length >= 8) score++
-  if (pw.length >= 12) score++
+  if (pw.length >= 10) score++
+  if (pw.length >= 14) score++
   if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++
   if (/\d/.test(pw)) score++
   if (/[^A-Za-z0-9]/.test(pw)) score++
@@ -14,7 +14,7 @@ function scorePassword(pw: string): { score: 0 | 1 | 2 | 3 | 4; label: string; t
   const common = ['password', '12345678', 'qwerty', 'letmein', 'iloveyou', 'admin']
   if (common.some(c => pw.toLowerCase().includes(c))) score = Math.min(score, 1)
 
-  if (pw.length < 8) return { score: 1, label: 'Too short', tone: 'bg-red-500' }
+  if (pw.length < 10) return { score: 1, label: 'Too short', tone: 'bg-red-500' }
 
   const clamped = Math.min(4, score) as 0 | 1 | 2 | 3 | 4
   const map = [
@@ -35,7 +35,7 @@ export function PasswordStrength({ value }: Props) {
   if (!value) {
     return (
       <p className="text-xs text-muted-foreground">
-        Use 8+ characters. Longer is better — a passphrase like &quot;<span className="font-mono">violet-hummingbird-2026</span>&quot; beats <span className="font-mono">P@ss1!</span>.
+        Use 10+ characters, with a letter and a number. Longer is better — a passphrase like &quot;<span className="font-mono">violet-hummingbird-2026</span>&quot; beats <span className="font-mono">P@ss1!</span>.
       </p>
     )
   }

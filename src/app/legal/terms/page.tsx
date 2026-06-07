@@ -7,7 +7,7 @@ export const metadata = {
 }
 
 const LAST_UPDATED = 'May 17, 2026'
-const CONTACT_EMAIL = 'mahipalsinghrajput476@gmail.com'
+const CONTACT_EMAIL = 'support@usecaelo.com'
 
 export default function TermsPage() {
   return (

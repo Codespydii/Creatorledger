@@ -162,7 +162,7 @@ export default async function SettingsPage({ searchParams }: Props) {
               <Card>
                 <CardHeader>
                   <CardTitle>Change Password</CardTitle>
-                  <CardDescription>Use a strong password of at least 8 characters.</CardDescription>
+                  <CardDescription>At least 10 characters, including a letter and a number.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <PasswordForm />

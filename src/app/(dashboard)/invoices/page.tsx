@@ -48,7 +48,7 @@ export default async function InvoicesPage() {
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Invoices" subtitle="Create and manage client invoices" />
       <main className="flex-1 p-4 sm:p-6 space-y-6">
-        <div className="flex flex-wrap items-start justify-between gap-3">
+        <div data-tour="invoices" className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex gap-6">
             <div>
               <p className="text-sm text-muted-foreground">Total Paid</p>

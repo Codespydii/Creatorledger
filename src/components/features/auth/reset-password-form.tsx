@@ -26,7 +26,7 @@ export function ResetPasswordForm({ token }: Props) {
           name="password"
           type="password"
           label="New password"
-          placeholder="At least 8 characters"
+          placeholder="Min. 10 characters, with a letter & number"
           autoComplete="new-password"
           required
           error={state?.success === false ? state.fieldErrors?.password?.[0] : undefined}

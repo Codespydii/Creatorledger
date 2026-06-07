@@ -2,7 +2,7 @@
 
 import { verifySession } from '@/lib/session'
 import { scanReceipt, type ReceiptData } from '@/lib/receipt-ocr'
-import { GeminiConfigError, isGeminiConfigured } from '@/lib/gemini'
+import { friendlyGeminiError, isGeminiConfigured } from '@/lib/gemini'
 import { verifyFileMatchesMime } from '@/lib/file-validation'
 import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 
@@ -51,10 +51,7 @@ export async function scanReceiptAction(formData: FormData): Promise<ScanReceipt
     const data = await scanReceipt({ mimeType: file.type, base64Data: buf.toString('base64') })
     return { success: true, data }
   } catch (err) {
-    if (err instanceof GeminiConfigError) {
-      return { success: false, error: 'AI scanning is not configured. Set GEMINI_API_KEY first.' }
-    }
-    const message = err instanceof Error ? err.message : 'Could not scan receipt. Try again.'
-    return { success: false, error: message }
+    console.error('[receipt-scan] scan failed:', err)
+    return { success: false, error: friendlyGeminiError(err, 'Could not scan receipt. Try again.') }
   }
 }

@@ -7,6 +7,7 @@ import { RevenueChart } from '@/components/features/dashboard/revenue-chart'
 import { RevenueBreakdown } from '@/components/features/dashboard/revenue-breakdown'
 import { SetupCard } from '@/components/features/dashboard/setup-card'
 import { QuickAddMenu } from '@/components/features/dashboard/quick-add-menu'
+import { TourLauncher } from '@/components/tour'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { verifySession } from '@/lib/session'
@@ -145,7 +146,10 @@ export default async function DashboardPage() {
               {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
             </p>
           </div>
-          <QuickAddMenu />
+          <div className="flex items-center gap-2">
+            <TourLauncher className="hidden sm:inline-flex" />
+            <QuickAddMenu />
+          </div>
         </div>
 
         {isEmpty && (
@@ -160,7 +164,7 @@ export default async function DashboardPage() {
         )}
 
         {/* KPI cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div data-tour="overview" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard title="Revenue This Month" valueCents={stats.thisMonthRev} changePct={stats.revPct} icon={TrendingUp} currency={currency} />
           <StatCard title="Expenses This Month" valueCents={stats.thisMonthExp} changePct={stats.expPct} icon={Receipt} positive={false} currency={currency} />
           <StatCard title="Net Profit" valueCents={stats.netProfit} changePct={stats.profitPct} icon={DollarSign} currency={currency} />

@@ -46,6 +46,39 @@ export function isGeminiConfigured(): boolean {
   return Boolean(process.env.GEMINI_API_KEY)
 }
 
+/**
+ * Maps any Gemini error to safe, friendly, user-facing copy. Never exposes raw
+ * provider text, status bodies, or finish reasons to the end user. Callers should
+ * still log the original error server-side for debugging.
+ */
+export function friendlyGeminiError(
+  err: unknown,
+  fallback = 'Something went wrong with the AI service. Please try again.',
+): string {
+  if (err instanceof GeminiConfigError) {
+    return 'AI features are not configured yet. Set GEMINI_API_KEY in your environment.'
+  }
+  if (err instanceof GeminiResponseError) {
+    if (err.reason === 'MAX_TOKENS') {
+      return 'The document was too long for the AI to finish reading. Try a shorter excerpt or paste just the key sections.'
+    }
+    // SAFETY, RECITATION, OTHER
+    return "The AI couldn't process this content. Try a different file, or paste the text directly."
+  }
+  if (err instanceof GeminiApiError) {
+    if (err.status === 429) {
+      return 'The AI service is busy right now. Wait a few seconds and try again.'
+    }
+    if (err.status === 400) {
+      return "The AI couldn't read this content. Try a different file, or paste the text directly."
+    }
+    if (err.status >= 500) {
+      return 'The AI service is temporarily unavailable. Please try again in a moment.'
+    }
+  }
+  return fallback
+}
+
 export async function generate(options: GenerateOptions): Promise<string> {
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) throw new GeminiConfigError()

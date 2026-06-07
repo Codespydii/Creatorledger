@@ -15,11 +15,12 @@ import {
   Sparkles,
   Globe2,
   BarChart2,
+  ArrowRight,
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/theme-toggle'
 import { EmailCapture } from '@/components/shared/email-capture'
 
-const CONTACT_EMAIL = 'mahipalsinghrajput476@gmail.com'
+const CONTACT_EMAIL = 'support@usecaelo.com'
 
 const painPoints = [
   'Your spreadsheet breaks the moment you earn from 5+ income streams.',
@@ -56,7 +57,7 @@ const everythingElse = [
   {
     icon: Sparkles,
     title: 'Public media kit',
-    desc: 'Shareable rate-card page at caelo.app/m/you, auto-filled from your channel stats.',
+    desc: 'Shareable rate-card page at usecaelo.com/m/you, auto-filled from your channel stats.',
   },
   {
     icon: Globe2,
@@ -186,8 +187,19 @@ export default function LandingPage() {
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
             Track sponsorships, scan receipts with AI, catch dangerous contract clauses before you sign, and forecast cash flow &mdash; built for creators on every platform.
           </p>
-          <div className="flex justify-center">
-            <EmailCapture />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              href="/signup"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-7 text-base font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            >
+              Start free — no card <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="#features"
+              className="inline-flex h-12 items-center justify-center rounded-xl border border-border bg-card px-6 text-base font-medium text-foreground transition-colors hover:border-foreground/30"
+            >
+              See how it works
+            </a>
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">

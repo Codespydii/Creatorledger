@@ -36,7 +36,7 @@ export default async function ReportsPage({ searchParams }: PageProps) {
       <main className="flex-1 p-4 sm:p-6 space-y-6">
 
         {/* Period selector + exports */}
-        <div className="flex items-center justify-between flex-wrap gap-3">
+        <div data-tour="reports" className="flex items-center justify-between flex-wrap gap-3">
           <PeriodFilter current={period} currentFrom={rawFrom} currentTo={rawTo} />
           <div className="flex items-center gap-2">
             <ExportButton rows={r.plRows} period={period} />

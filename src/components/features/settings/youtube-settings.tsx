@@ -115,6 +115,7 @@ export function YoutubeSettings(props: Props) {
 
           <a
             href="/api/oauth/youtube/start"
+            data-tour="connect-youtube"
             className="mt-3 inline-flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition-colors"
           >
             <Video className="h-4 w-4" /> Connect YouTube

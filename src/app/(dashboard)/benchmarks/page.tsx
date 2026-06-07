@@ -58,7 +58,9 @@ export default async function BenchmarksPage({ searchParams }: Props) {
         </div>
 
         <BenchmarkFilters initial={filter} />
-        <BenchmarkStatsDisplay stats={stats} currency={currency} />
+        <div data-tour="benchmarks">
+          <BenchmarkStatsDisplay stats={stats} currency={currency} />
+        </div>
         <RecentContributions contributions={recent} currency={currency} />
       </main>
     </div>

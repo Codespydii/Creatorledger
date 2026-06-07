@@ -2,7 +2,7 @@
 
 import { verifySession } from '@/lib/session'
 import { extractDealFromEmail, type DealExtraction } from '@/lib/deal-extractor'
-import { GeminiConfigError, isGeminiConfigured } from '@/lib/gemini'
+import { friendlyGeminiError, isGeminiConfigured } from '@/lib/gemini'
 import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 
 const MAX_TEXT_LEN = 10_000
@@ -40,10 +40,7 @@ export async function extractDealFromEmailAction(text: string): Promise<ExtractD
     }
     return { success: true, data }
   } catch (err) {
-    if (err instanceof GeminiConfigError) {
-      return { success: false, error: 'AI features are not configured.' }
-    }
-    const message = err instanceof Error ? err.message : 'Extraction failed. Try again.'
-    return { success: false, error: message }
+    console.error('[email-deals] extraction failed:', err)
+    return { success: false, error: friendlyGeminiError(err, 'Extraction failed. Try again.') }
   }
 }

@@ -64,7 +64,9 @@ export default async function MediaKitPage() {
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Media Kit" subtitle="A professional pitch page brands can view and download" />
       <main className="flex-1 p-4 sm:p-6 max-w-4xl">
-        <MediaKitForm initial={initial} publicUrl={publicUrl} />
+        <div data-tour="mediakit">
+          <MediaKitForm initial={initial} publicUrl={publicUrl} />
+        </div>
       </main>
     </div>
   )
