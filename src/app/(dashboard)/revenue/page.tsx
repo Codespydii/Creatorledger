@@ -45,7 +45,7 @@ export default async function RevenuePage() {
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Revenue" subtitle="Track all your income streams" />
       <main className="flex-1 p-4 sm:p-6 space-y-6">
-        <div className="flex flex-wrap items-start justify-between gap-3">
+        <div data-tour="revenue" className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-sm text-muted-foreground">Total Revenue</p>
             <p className="text-3xl font-bold text-foreground">{formatCurrency(totalCents, currency)}</p>

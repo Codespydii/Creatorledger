@@ -11,7 +11,8 @@ function getResend(): Resend {
   return _resend
 }
 
-const FROM = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+const FROM = process.env.RESEND_FROM_EMAIL ?? 'noreply@usecaelo.com'
+const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL ?? 'support@usecaelo.com'
 
 export function isEmailConfigured(): boolean {
   return Boolean(process.env.RESEND_API_KEY)
@@ -31,6 +32,7 @@ export async function sendPasswordResetEmail(params: PasswordResetParams) {
 
   await getResend().emails.send({
     from: `Caelo <${FROM}>`,
+    replyTo: SUPPORT_EMAIL,
     to: params.toEmail,
     subject: 'Reset your Caelo password',
     html: buildResetEmailHtml(params),
@@ -57,7 +59,7 @@ function buildResetEmailHtml(p: PasswordResetParams): string {
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-top:24px;">Didn&apos;t request this? You can safely ignore this email — your password won&apos;t change.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://usecaelo.com" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body>
@@ -75,6 +77,7 @@ export async function sendVerificationEmail(p: VerifyEmailParams) {
   if (!isEmailConfigured()) throw new Error('Email service is not configured')
   await getResend().emails.send({
     from: `Caelo <${FROM}>`,
+    replyTo: SUPPORT_EMAIL,
     to: p.toEmail,
     subject: 'Confirm your email — Caelo',
     html: `<!DOCTYPE html>
@@ -110,7 +113,7 @@ export async function sendWelcomeEmail(p: WelcomeEmailParams) {
   const firstName = p.toName.split(' ')[0]
   await getResend().emails.send({
     from: `Mahipal at Caelo <${FROM}>`,
-    replyTo: 'mahipalsinghrajput476@gmail.com',
+    replyTo: SUPPORT_EMAIL,
     to: p.toEmail,
     subject: `Welcome to Caelo, ${firstName}`,
     html: `<!DOCTYPE html>
@@ -136,7 +139,7 @@ export async function sendWelcomeEmail(p: WelcomeEmailParams) {
       <p style="color:#0f172a;font-size:15px;line-height:1.6;margin-bottom:0;">— Mahipal</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">You&apos;re receiving this because you signed up at <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">creatorledgerapp.vercel.app</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">You&apos;re receiving this because you signed up at <a href="https://usecaelo.com" style="color:#7c3aed;text-decoration:none;">usecaelo.com</a></p>
     </div>
   </div>
 </body></html>`,
@@ -190,7 +193,7 @@ export async function sendInvoiceToClient(p: InvoiceSendParams) {
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.fromName}</strong></p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://usecaelo.com" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body></html>`,
@@ -278,7 +281,7 @@ function buildEmailHtml(p: OverdueReminderParams, amount: string, due: string): 
       <p style="color:#64748b;font-size:14px;line-height:1.6;margin-bottom:0;">Thank you,<br><strong style="color:#0f172a;">${p.creatorName}</strong></p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e2e8f0;">
-      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://creatorledgerapp.vercel.app" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
+      <p style="color:#94a3b8;font-size:12px;margin:0;text-align:center;">Sent via <a href="https://usecaelo.com" style="color:#7c3aed;text-decoration:none;">Caelo</a></p>
     </div>
   </div>
 </body>

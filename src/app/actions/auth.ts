@@ -1,6 +1,7 @@
 'use server'
 
 import { redirect } from 'next/navigation'
+import { after } from 'next/server'
 import { createHash, randomBytes } from 'crypto'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
@@ -54,7 +55,10 @@ export async function signup(
     data: { name, email, passwordHash: hashedPassword },
   })
 
-  // Fire-and-forget emails (welcome + verification). Don't block signup if Resend isn't configured.
+  // Welcome + verification emails. The token row is written inside the request
+  // (so the link is valid immediately), but the actual sends run via after() —
+  // which completes AFTER the response is flushed. The previous fire-and-forget
+  // promise could be killed by redirect() on serverless, dropping the emails.
   if (isEmailConfigured()) {
     const rawVerifyToken = randomBytes(32).toString('hex')
     const verifyTokenHash = hashToken(rawVerifyToken)
@@ -65,16 +69,17 @@ export async function signup(
     const verifyUrl = `${getAppUrl()}/verify-email/${rawVerifyToken}`
     const dashboardUrl = `${getAppUrl()}/dashboard`
 
-    Promise.allSettled([
-      sendVerificationEmail({
-        toEmail: user.email, toName: user.name,
-        verifyUrl, expiresInHours: VERIFY_TOKEN_TTL_HOURS,
-      }),
-      sendWelcomeEmail({
-        toEmail: user.email, toName: user.name,
-        dashboardUrl,
-      }),
-    ]).then((results) => {
+    after(async () => {
+      const results = await Promise.allSettled([
+        sendVerificationEmail({
+          toEmail: user.email, toName: user.name,
+          verifyUrl, expiresInHours: VERIFY_TOKEN_TTL_HOURS,
+        }),
+        sendWelcomeEmail({
+          toEmail: user.email, toName: user.name,
+          dashboardUrl,
+        }),
+      ])
       results.forEach((r, i) => {
         if (r.status === 'rejected') {
           const label = i === 0 ? 'verification' : 'welcome'
@@ -128,23 +133,34 @@ export async function resendVerificationEmail(): Promise<ActionState> {
   if (user.emailVerifiedAt) return { success: true, data: undefined }
   if (!isEmailConfigured()) return { success: false, error: 'Email service is not configured' }
 
+  const ok = await issueAndSendVerification(user)
+  if (!ok) return { success: false, error: 'Failed to send verification email. Please try again.' }
+  return { success: true, data: undefined }
+}
+
+/**
+ * Rotates an unused verification token and emails a fresh link. Returns true on
+ * send success. Shared by the in-app resend action and the login gate (which
+ * auto-resends after a correct-password login from an unverified account).
+ */
+async function issueAndSendVerification(user: { id: string; email: string; name: string }): Promise<boolean> {
+  if (!isEmailConfigured()) return false
   const rawToken = randomBytes(32).toString('hex')
   const tokenHash = hashToken(rawToken)
   const expiresAt = new Date(Date.now() + VERIFY_TOKEN_TTL_HOURS * 60 * 60 * 1000)
   await db.emailVerificationToken.deleteMany({ where: { userId: user.id, usedAt: null, expiresAt: { gt: new Date() } } })
   await db.emailVerificationToken.create({ data: { userId: user.id, tokenHash, expiresAt } })
-
   try {
     await sendVerificationEmail({
       toEmail: user.email, toName: user.name,
       verifyUrl: `${getAppUrl()}/verify-email/${rawToken}`,
       expiresInHours: VERIFY_TOKEN_TTL_HOURS,
     })
+    return true
   } catch (err) {
-    console.error('Resend verification failed:', err instanceof Error ? err.message : err)
-    return { success: false, error: 'Failed to send verification email. Please try again.' }
+    console.error('Verification email failed:', err instanceof Error ? err.message : err)
+    return false
   }
-  return { success: true, data: undefined }
 }
 
 export async function login(
@@ -177,6 +193,19 @@ export async function login(
   const valid = await bcrypt.compare(password, user.passwordHash)
   if (!valid) {
     return { success: false, error: 'Invalid email or password' }
+  }
+
+  if (!user.emailVerifiedAt) {
+    // Password was correct, so it's safe to re-issue a link to this address.
+    // Rate-limit by email so repeated login attempts can't spam the inbox.
+    const rl = await rateLimit(LIMITS.resendVerify, email)
+    const resent = rl.ok ? await issueAndSendVerification(user) : false
+    return {
+      success: false,
+      error: resent
+        ? 'Please verify your email before signing in. We just sent a fresh confirmation link — check your inbox (and spam).'
+        : 'Please verify your email before signing in. Check your inbox (and spam) for the confirmation link.',
+    }
   }
 
   await createSession(user.id, user.email)

@@ -79,7 +79,7 @@ export default async function DealsPage() {
     <div className="flex flex-col flex-1 overflow-auto">
       <Topbar title="Brand Deals" subtitle="Manage your partnership pipeline" />
       <main className="flex-1 p-4 sm:p-6 space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div data-tour="deals" className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-6">
             <div>
               <p className="text-sm text-muted-foreground">Pipeline Value</p>

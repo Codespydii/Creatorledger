@@ -39,7 +39,7 @@ async function main() {
       // Send a real test email to Resend's universal-success address.
       // No quota burn; this address auto-succeeds.
       const r = await resend.emails.send({
-        from: `Caelo <${process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'}>`,
+        from: `Caelo <${process.env.RESEND_FROM_EMAIL ?? 'noreply@usecaelo.com'}>`,
         to: 'delivered@resend.dev',
         subject: 'Connectivity test — Caelo',
         html: '<p>This is a Resend connectivity test from Caelo setup.</p>',

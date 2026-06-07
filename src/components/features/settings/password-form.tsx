@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef } from 'react'
 import { changePassword } from '@/app/actions/settings'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 
 export function PasswordForm() {
   const [state, action, pending] = useActionState(changePassword, undefined)
@@ -25,26 +25,23 @@ export function PasswordForm() {
           Password changed successfully.
         </div>
       )}
-      <Input
+      <PasswordInput
         id="currentPassword"
         name="currentPassword"
-        type="password"
         label="Current Password"
         required
       />
       <div className="grid grid-cols-2 gap-3">
-        <Input
+        <PasswordInput
           id="newPassword"
           name="newPassword"
-          type="password"
           label="New Password"
-          placeholder="Min. 8 characters"
+          placeholder="Min. 10 characters, with a letter & number"
           required
         />
-        <Input
+        <PasswordInput
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
           label="Confirm New Password"
           required
         />

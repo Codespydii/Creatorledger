@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { LogOut, Settings, User } from 'lucide-react'
+import { LogOut, Settings, User, Sparkles, Shield } from 'lucide-react'
 import { logout } from '@/app/actions/auth'
+import { useTour } from '@/hooks/use-tour'
+import { isAdmin } from '@/lib/admin'
 import { cn } from '@/lib/utils'
 
 interface AvatarMenuProps {
@@ -15,6 +17,7 @@ interface AvatarMenuProps {
 export function AvatarMenu({ name, email, initials }: AvatarMenuProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const { startTour } = useTour()
 
   useEffect(() => {
     if (!open) return
@@ -75,6 +78,26 @@ export function AvatarMenu({ name, email, initials }: AvatarMenuProps) {
               <Settings className="h-4 w-4 text-muted-foreground" />
               Settings
             </Link>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => { setOpen(false); startTour() }}
+              className="flex w-full items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-accent"
+            >
+              <Sparkles className="h-4 w-4 text-muted-foreground" />
+              Take a tour
+            </button>
+            {isAdmin(email) && (
+              <Link
+                href="/spiral"
+                role="menuitem"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-accent"
+              >
+                <Shield className="h-4 w-4 text-muted-foreground" />
+                Admin
+              </Link>
+            )}
           </div>
           <div className="border-t border-border py-1">
             <form action={logout}>

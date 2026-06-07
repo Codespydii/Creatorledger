@@ -85,7 +85,7 @@ function SignupInner() {
                 name="password"
                 type="password"
                 label="Password"
-                placeholder="Min. 8 characters"
+                placeholder="Min. 10 characters, with a letter & number"
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.currentTarget.value)}

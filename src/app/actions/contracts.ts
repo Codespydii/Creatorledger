@@ -6,7 +6,7 @@ import { db } from '@/lib/db'
 import { verifySession } from '@/lib/session'
 import { analyzeContract } from '@/lib/contract-analyzer'
 import { extractDocxText } from '@/lib/docx'
-import { GeminiConfigError } from '@/lib/gemini'
+import { friendlyGeminiError } from '@/lib/gemini'
 import { verifyFileMatchesMime } from '@/lib/file-validation'
 import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
 import type { ActionState } from '@/types'
@@ -104,14 +104,8 @@ export async function analyzeContractAction(
       analysisData = await analyzeContract({ text: pastedText })
     }
   } catch (err) {
-    if (err instanceof GeminiConfigError) {
-      return {
-        success: false,
-        error: 'AI features are not configured yet. Set GEMINI_API_KEY in your environment.',
-      }
-    }
-    const message = err instanceof Error ? err.message : 'Analysis failed. Try again.'
-    return { success: false, error: message }
+    console.error('[contracts] analysis failed:', err)
+    return { success: false, error: friendlyGeminiError(err, 'Analysis failed. Try again.') }
   }
 
   const contract = await db.contract.create({
