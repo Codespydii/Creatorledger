@@ -10,30 +10,29 @@ const APP_DIR = join(process.cwd(), 'src', 'app')
 // Special files that live alongside a route but are not themselves pages.
 const NON_PAGE_FILES = new Set(['layout.tsx', 'loading.tsx', 'error.tsx', 'not-found.tsx'])
 
-// Authenticated, admin, and internal routes are excluded from the public
-// sitemap: search engines can't crawl login-gated pages (they'd just be
-// redirected to /login), and admin/internal pages shouldn't be advertised. A
-// route is dropped if it equals or sits under any of these prefixes. The scan
-// stays automatic, so new *public* pages are still picked up with no edits.
-const PRIVATE_PREFIXES = [
+// Route-group folders whose contents are not public marketing pages. The whole
+// group is skipped during traversal, so every authenticated/auth-flow route
+// inside `(auth)` (login, signup, forgot-password, reset-password, onboarding)
+// and `(dashboard)` (dashboard, settings, revenue, invoices, …) is excluded.
+const EXCLUDED_GROUPS = new Set(['(auth)', '(dashboard)'])
+
+// Belt-and-suspenders prefix filter for the explicitly-named auth routes and
+// for non-marketing pages that live OUTSIDE a route group (admin, internal
+// print pages). A route is dropped if it equals or sits under any prefix. The
+// scan stays automatic, so new *public* marketing pages are still picked up
+// with no edits.
+const EXCLUDED_PREFIXES = [
+  '/login',
+  '/signup',
+  '/forgot-password',
+  '/reset-password',
   '/dashboard',
-  '/settings',
-  '/revenue',
-  '/expenses',
-  '/deals',
-  '/invoices',
-  '/forecast',
-  '/reports',
-  '/media-kit',
-  '/contracts',
-  '/benchmarks',
-  '/spiral',
-  '/onboarding',
-  '/report-pdf',
+  '/spiral', // admin
+  '/report-pdf', // internal PDF render route
 ]
 
-function isPrivate(path: string): boolean {
-  return PRIVATE_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))
+function isExcluded(path: string): boolean {
+  return EXCLUDED_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`))
 }
 
 /**
@@ -61,7 +60,9 @@ function collectRoutes(dir: string, segments: string[] = []): string[] {
   for (const entry of entries) {
     if (!entry.isDirectory()) continue
     const name = entry.name
+    // Skip api routes, private folders, dynamic segments, and excluded route groups.
     if (name === 'api' || name.startsWith('_') || name.startsWith('[')) continue
+    if (EXCLUDED_GROUPS.has(name)) continue
     routes.push(...collectRoutes(join(dir, name), [...segments, name]))
   }
 
@@ -76,7 +77,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = Array.from(
     new Set(collectRoutes(APP_DIR).map((p) => (p === '/' ? '/' : p.replace(/\/+$/, '')))),
   )
-    .filter((p) => !isPrivate(p))
+    .filter((p) => !isExcluded(p))
     .sort()
 
   return paths.map((path) => {
