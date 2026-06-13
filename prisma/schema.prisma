@@ -29,6 +29,8 @@ model User {
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
   stripeKey       String?   @map("stripe_key")
+  isFoundingMember Boolean  @default(false) @map("is_founding_member")
+  plan             String   @default("beta") @map("plan")
 
   revenues     RevenueEntry[]
   invoices     Invoice[]

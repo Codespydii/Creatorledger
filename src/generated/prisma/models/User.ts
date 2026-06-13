@@ -46,6 +46,8 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   stripeKey: string | null
+  isFoundingMember: boolean | null
+  plan: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -70,6 +72,8 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   stripeKey: string | null
+  isFoundingMember: boolean | null
+  plan: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -94,6 +98,8 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   stripeKey: number
+  isFoundingMember: number
+  plan: number
   _all: number
 }
 
@@ -120,6 +126,8 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
+  isFoundingMember?: true
+  plan?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -144,6 +152,8 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
+  isFoundingMember?: true
+  plan?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -168,6 +178,8 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   stripeKey?: true
+  isFoundingMember?: true
+  plan?: true
   _all?: true
 }
 
@@ -265,6 +277,8 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   stripeKey: string | null
+  isFoundingMember: boolean
+  plan: string
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -310,6 +324,8 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableFilter<"User"> | string | null
+  isFoundingMember?: Prisma.BoolFilter<"User"> | boolean
+  plan?: Prisma.StringFilter<"User"> | string
   revenues?: Prisma.RevenueEntryListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
@@ -345,6 +361,8 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  isFoundingMember?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
   revenues?: Prisma.RevenueEntryOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
@@ -383,6 +401,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableFilter<"User"> | string | null
+  isFoundingMember?: Prisma.BoolFilter<"User"> | boolean
+  plan?: Prisma.StringFilter<"User"> | string
   revenues?: Prisma.RevenueEntryListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
@@ -418,6 +438,8 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrderInput | Prisma.SortOrder
+  isFoundingMember?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -448,6 +470,8 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   stripeKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isFoundingMember?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  plan?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
 export type UserCreateInput = {
@@ -472,6 +496,8 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -507,6 +533,8 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -542,6 +570,8 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -577,6 +607,8 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -612,6 +644,8 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
 }
 
 export type UserUpdateManyMutationInput = {
@@ -636,6 +670,8 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -660,6 +696,8 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -684,6 +722,8 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
+  isFoundingMember?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -708,6 +748,8 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
+  isFoundingMember?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -732,6 +774,8 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stripeKey?: Prisma.SortOrder
+  isFoundingMember?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -758,6 +802,10 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type UserCreateNestedOneWithoutEmailVerificationTokensInput = {
@@ -938,6 +986,8 @@ export type UserCreateWithoutEmailVerificationTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -972,6 +1022,8 @@ export type UserUncheckedCreateWithoutEmailVerificationTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -1022,6 +1074,8 @@ export type UserUpdateWithoutEmailVerificationTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -1056,6 +1110,8 @@ export type UserUncheckedUpdateWithoutEmailVerificationTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -1090,6 +1146,8 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -1124,6 +1182,8 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -1174,6 +1234,8 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -1208,6 +1270,8 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -1242,6 +1306,8 @@ export type UserCreateWithoutYoutubeConnectionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -1276,6 +1342,8 @@ export type UserUncheckedCreateWithoutYoutubeConnectionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -1326,6 +1394,8 @@ export type UserUpdateWithoutYoutubeConnectionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -1360,6 +1430,8 @@ export type UserUncheckedUpdateWithoutYoutubeConnectionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -1394,6 +1466,8 @@ export type UserCreateWithoutContractsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -1428,6 +1502,8 @@ export type UserUncheckedCreateWithoutContractsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -1478,6 +1554,8 @@ export type UserUpdateWithoutContractsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -1512,6 +1590,8 @@ export type UserUncheckedUpdateWithoutContractsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -1546,6 +1626,8 @@ export type UserCreateWithoutMediaKitInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -1580,6 +1662,8 @@ export type UserUncheckedCreateWithoutMediaKitInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -1630,6 +1714,8 @@ export type UserUpdateWithoutMediaKitInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -1664,6 +1750,8 @@ export type UserUncheckedUpdateWithoutMediaKitInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -1698,6 +1786,8 @@ export type UserCreateWithoutRevenuesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
@@ -1732,6 +1822,8 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
@@ -1782,6 +1874,8 @@ export type UserUpdateWithoutRevenuesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
@@ -1816,6 +1910,8 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
@@ -1850,6 +1946,8 @@ export type UserCreateWithoutInvoicesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
@@ -1884,6 +1982,8 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
@@ -1934,6 +2034,8 @@ export type UserUpdateWithoutInvoicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
@@ -1968,6 +2070,8 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
@@ -2002,6 +2106,8 @@ export type UserCreateWithoutExpensesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   deals?: Prisma.DealCreateNestedManyWithoutUserInput
@@ -2036,6 +2142,8 @@ export type UserUncheckedCreateWithoutExpensesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   deals?: Prisma.DealUncheckedCreateNestedManyWithoutUserInput
@@ -2086,6 +2194,8 @@ export type UserUpdateWithoutExpensesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUpdateManyWithoutUserNestedInput
@@ -2120,6 +2230,8 @@ export type UserUncheckedUpdateWithoutExpensesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   deals?: Prisma.DealUncheckedUpdateManyWithoutUserNestedInput
@@ -2154,6 +2266,8 @@ export type UserCreateWithoutDealsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -2188,6 +2302,8 @@ export type UserUncheckedCreateWithoutDealsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -2238,6 +2354,8 @@ export type UserUpdateWithoutDealsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -2272,6 +2390,8 @@ export type UserUncheckedUpdateWithoutDealsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -2306,6 +2426,8 @@ export type UserCreateWithoutRateBenchmarksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -2340,6 +2462,8 @@ export type UserUncheckedCreateWithoutRateBenchmarksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -2390,6 +2514,8 @@ export type UserUpdateWithoutRateBenchmarksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -2424,6 +2550,8 @@ export type UserUncheckedUpdateWithoutRateBenchmarksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -2458,6 +2586,8 @@ export type UserCreateWithoutTeamMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutUserInput
@@ -2492,6 +2622,8 @@ export type UserUncheckedCreateWithoutTeamMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stripeKey?: string | null
+  isFoundingMember?: boolean
+  plan?: string
   revenues?: Prisma.RevenueEntryUncheckedCreateNestedManyWithoutUserInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutUserInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutUserInput
@@ -2542,6 +2674,8 @@ export type UserUpdateWithoutTeamMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutUserNestedInput
@@ -2576,6 +2710,8 @@ export type UserUncheckedUpdateWithoutTeamMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFoundingMember?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
   revenues?: Prisma.RevenueEntryUncheckedUpdateManyWithoutUserNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutUserNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutUserNestedInput
@@ -2713,6 +2849,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
+  isFoundingMember?: boolean
+  plan?: boolean
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
   expenses?: boolean | Prisma.User$expensesArgs<ExtArgs>
@@ -2749,6 +2887,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
+  isFoundingMember?: boolean
+  plan?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2773,6 +2913,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
+  isFoundingMember?: boolean
+  plan?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -2797,9 +2939,11 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   stripeKey?: boolean
+  isFoundingMember?: boolean
+  plan?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "businessAddress" | "ein" | "website" | "primaryPlatform" | "audienceTier" | "primaryPain" | "niche" | "onboardedAt" | "emailVerifiedAt" | "createdAt" | "updatedAt" | "stripeKey", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "googleId" | "avatarUrl" | "channelName" | "platform" | "defaultCurrency" | "businessAddress" | "ein" | "website" | "primaryPlatform" | "audienceTier" | "primaryPain" | "niche" | "onboardedAt" | "emailVerifiedAt" | "createdAt" | "updatedAt" | "stripeKey" | "isFoundingMember" | "plan", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   invoices?: boolean | Prisma.User$invoicesArgs<ExtArgs>
@@ -2854,6 +2998,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     stripeKey: string | null
+    isFoundingMember: boolean
+    plan: string
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -3309,6 +3455,8 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly stripeKey: Prisma.FieldRef<"User", 'String'>
+  readonly isFoundingMember: Prisma.FieldRef<"User", 'Boolean'>
+  readonly plan: Prisma.FieldRef<"User", 'String'>
 }
     
 

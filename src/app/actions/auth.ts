@@ -10,6 +10,7 @@ import { createSession, deleteSession } from '@/lib/session'
 import { SignupSchema, LoginSchema } from '@/lib/validations/auth'
 import { sendPasswordResetEmail, sendVerificationEmail, sendWelcomeEmail, isEmailConfigured } from '@/lib/email'
 import { rateLimit, rateLimitErrorMessage, LIMITS } from '@/lib/rate-limit'
+import { FOUNDING_CAP } from '@/lib/beta'
 import type { ActionState } from '@/types'
 
 const RESET_TOKEN_TTL_MINUTES = 60
@@ -51,8 +52,14 @@ export async function signup(
 
   const hashedPassword = await bcrypt.hash(password, 12)
 
+  // First FOUNDING_CAP signups lock in the founding price. The count→create
+  // window can theoretically race, but at this scale (a 50-spot beta) the worst
+  // case is one extra founder, which is harmless.
+  const founderCount = await db.user.count({ where: { isFoundingMember: true } })
+  const isFoundingMember = founderCount < FOUNDING_CAP
+
   const user = await db.user.create({
-    data: { name, email, passwordHash: hashedPassword },
+    data: { name, email, passwordHash: hashedPassword, isFoundingMember },
   })
 
   // Welcome + verification emails. The token row is written inside the request

@@ -60,6 +60,15 @@ export function GuidedTour({ steps, onComplete, autoStartOn = '/dashboard' }: Gu
     if (isTourActive) setStep(0)
   }, [isTourActive])
 
+  // Warm every page the tour visits the moment it opens. Each step lives on its
+  // own route, so without this each "Next" is a cold server navigation; with the
+  // RSC payloads prefetched, the push on Next resolves near-instantly.
+  useEffect(() => {
+    if (!isTourActive) return
+    const routes = Array.from(new Set(steps.map((s) => s.route)))
+    routes.forEach((r) => router.prefetch(r))
+  }, [isTourActive, steps, router])
+
   // Drive the current step: navigate to its route if needed, then wait for the
   // anchor to mount, scroll it into view, and measure it (re-measuring on
   // scroll/resize). Re-runs whenever the step or the settled route changes.
@@ -68,9 +77,12 @@ export function GuidedTour({ steps, onComplete, autoStartOn = '/dashboard' }: Gu
     const def = steps[step]
     if (!def) return
 
-    // Not on the right page yet → navigate. This effect re-runs once `pathname`
-    // updates, falling through to the measure path below.
+    // Not on the right page yet → navigate. Clear the stale spotlight so it
+    // doesn't appear frozen on the previous page's element while the next route
+    // loads (shows the centered dim instead). This effect re-runs once
+    // `pathname` updates, falling through to the measure path below.
     if (pathname !== def.route) {
+      setRect(null)
       router.push(def.route)
       return
     }
