@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { LogOut, Settings, User, Sparkles, Shield } from 'lucide-react'
+import { LogOut, Settings, User, Sparkles, Shield, MessageSquare } from 'lucide-react'
 import { logout } from '@/app/actions/auth'
 import { useTour } from '@/hooks/use-tour'
 import { isAdmin } from '@/lib/admin'
@@ -87,6 +87,15 @@ export function AvatarMenu({ name, email, initials }: AvatarMenuProps) {
               <Sparkles className="h-4 w-4 text-muted-foreground" />
               Take a tour
             </button>
+            <a
+              href="mailto:support@usecaelo.com?subject=Caelo%20beta%20feedback"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-accent"
+            >
+              <MessageSquare className="h-4 w-4 text-muted-foreground" />
+              Send feedback
+            </a>
             {isAdmin(email) && (
               <Link
                 href="/spiral"

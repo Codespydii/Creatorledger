@@ -864,10 +864,6 @@ export type MediaKitUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MediaKitUpdateToOneWithWhereWithoutUserInput, Prisma.MediaKitUpdateWithoutUserInput>, Prisma.MediaKitUncheckedUpdateWithoutUserInput>
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number

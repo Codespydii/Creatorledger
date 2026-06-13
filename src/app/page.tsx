@@ -11,16 +11,20 @@ import {
   ScanLine,
   CheckCircle2,
   Plus,
-  Video,
   Sparkles,
   Globe2,
   BarChart2,
   ArrowRight,
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/theme-toggle'
-import { EmailCapture } from '@/components/shared/email-capture'
+import { PLATFORMS, YouTubeIcon } from '@/components/shared/platform-icons'
+import { getFoundingStats, BETA_LENGTH_WEEKS } from '@/lib/beta'
 
 const CONTACT_EMAIL = 'support@usecaelo.com'
+
+// Re-check the live founding-spot count at most once a minute; the page is
+// otherwise static marketing.
+export const revalidate = 60
 
 const painPoints = [
   'Your spreadsheet breaks the moment you earn from 5+ income streams.',
@@ -102,12 +106,10 @@ const agencyFeatures = [
   'Team access and permissions',
 ]
 
-const platforms = ['YouTube', 'Instagram', 'TikTok', 'Twitch', 'Podcasts', 'Substack', 'Patreon', 'Twitter']
-
 const faq = [
   {
     q: 'Who is this for?',
-    a: 'Any creator earning real income from sponsorships, ad revenue, merch, or memberships — from your first paid deal to your hundredth. YouTube, Instagram, TikTok, Twitch, podcasts, Substack — it doesn\'t matter where your audience lives.',
+    a: 'Any creator earning real income from sponsorships, ad revenue, merch, or memberships — from your first paid deal to your hundredth. YouTube, Instagram, TikTok, Twitch, Spotify, Substack, X — it doesn\'t matter where your audience lives.',
   },
   {
     q: 'How is this different from QuickBooks or FreshBooks?',
@@ -131,7 +133,8 @@ const faq = [
   },
 ]
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { left: spotsLeft, cap: foundingCap, isFull: foundingFull } = await getFoundingStats()
   return (
     <div className="min-h-screen bg-background">
       {/* SECTION 1 — NAVBAR */}
@@ -178,7 +181,9 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 sm:pt-24 pb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            Free beta &middot; Founding spots open
+            {foundingFull
+              ? 'Free beta · Founding spots full'
+              : `Free beta · ${spotsLeft} of ${foundingCap} founding spots left`}
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] tracking-tight mb-6 max-w-3xl mx-auto">
             Run your creator business{' '}
@@ -218,12 +223,13 @@ export default function LandingPage() {
               Made for creators on
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {platforms.map((p) => (
+              {PLATFORMS.map(({ name, Icon }) => (
                 <span
-                  key={p}
-                  className="inline-flex items-center rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground"
+                  key={name}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground"
                 >
-                  {p}
+                  <Icon className="h-3.5 w-3.5" />
+                  {name}
                 </span>
               ))}
             </div>
@@ -243,63 +249,22 @@ export default function LandingPage() {
                 usecaelo.com/dashboard
               </div>
             </div>
-            <div className="p-6 sm:p-8 bg-slate-50/50 dark:bg-background">
-              <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
-                <div>
-                  <h3 className="text-base font-bold text-foreground">Good morning, Alex</h3>
-                  <p className="text-xs text-muted-foreground">Thursday, May 15</p>
-                </div>
-                <span className="rounded-md bg-primary/10 px-2 py-1 text-xs font-medium text-primary">
-                  + Add Revenue
-                </span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                <MockStat label="Revenue MTD" value="$18,420" change="+24%" positive />
-                <MockStat label="Expenses MTD" value="$3,210" change="−12%" positive />
-                <MockStat label="Net Profit" value="$15,210" change="+31%" positive />
-                <MockStat label="Outstanding" value="$8,500" change="2 invoices" positive={false} />
-              </div>
-              <div className="rounded-xl border border-border bg-card p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-semibold text-foreground">Revenue vs Expenses &middot; 6mo</span>
-                  <span className="text-xs text-muted-foreground">$94,210 total</span>
-                </div>
-                <svg viewBox="0 0 400 80" className="w-full h-20" preserveAspectRatio="none">
-                  <defs>
-                    <linearGradient id="heroGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#7c3aed" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M0,60 L40,55 L80,40 L120,45 L160,30 L200,32 L240,20 L280,25 L320,15 L360,18 L400,8 L400,80 L0,80 Z" fill="url(#heroGrad)" />
-                  <path d="M0,60 L40,55 L80,40 L120,45 L160,30 L200,32 L240,20 L280,25 L320,15 L360,18 L400,8" stroke="#7c3aed" strokeWidth="2" fill="none" />
-                </svg>
-              </div>
-              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="rounded-xl border border-border bg-card p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-foreground">Active Deals</span>
-                    <span className="text-[10px] text-muted-foreground">3 in pipeline</span>
-                  </div>
-                  <div className="space-y-2">
-                    <MockDeal brand="Notion" amount="$4,500" stage="Contracted" tone="emerald" />
-                    <MockDeal brand="Squarespace" amount="$3,200" stage="Negotiation" tone="amber" />
-                    <MockDeal brand="Riverside" amount="$2,800" stage="Outreach" tone="violet" />
-                  </div>
-                </div>
-                <div className="rounded-xl border border-border bg-card p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-foreground">Upcoming Invoices</span>
-                    <span className="text-[10px] text-muted-foreground">$8,500 due</span>
-                  </div>
-                  <div className="space-y-2">
-                    <MockInvoice client="Acme Co" amount="$3,500" due="Due in 4 days" />
-                    <MockInvoice client="Bright Labs" amount="$2,200" due="Due in 9 days" />
-                    <MockInvoice client="HelloFresh" amount="$2,800" due="Due in 14 days" />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Image
+              src="/dashboard-preview-light.png"
+              alt="The Caelo dashboard showing revenue, expenses, net profit, and revenue-by-source for a creator business"
+              width={1305}
+              height={563}
+              priority
+              className="w-full h-auto block dark:hidden"
+            />
+            <Image
+              src="/dashboard-preview-dark.png"
+              alt="The Caelo dashboard showing revenue, expenses, net profit, and revenue-by-source for a creator business"
+              width={1304}
+              height={554}
+              priority
+              className="w-full h-auto hidden dark:block"
+            />
           </div>
         </div>
       </section>
@@ -338,7 +303,7 @@ export default function LandingPage() {
           {/* Row 1 — YouTube AdSense auto-sync */}
           <ShowcaseRow
             eyebrowLabel="YouTube auto-sync"
-            eyebrowIcon={Video}
+            eyebrowIcon={YouTubeIcon}
             eyebrowColor="red"
             title="Your AdSense revenue, logged for you every morning."
             description="Connect once with Google OAuth. Every day at 4 AM, your YouTube AdSense earnings sync into the dashboard — broken down by channel, ready for reports. No CSVs, no manual entry, no missing months ever again."
@@ -500,7 +465,9 @@ export default function LandingPage() {
                 <span className="text-sm text-muted-foreground">/ month</span>
               </div>
               <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-300 font-medium">
-                Only for the first 50 creators — spot 51 pays $19
+                {foundingFull
+                  ? 'Founding spots are full — Pro is $19/mo'
+                  : `${spotsLeft} of ${foundingCap} founding spots left — then $19/mo`}
               </p>
             </div>
             <ul className="mt-6 space-y-2.5 mb-6 flex-1">
@@ -524,9 +491,10 @@ export default function LandingPage() {
             name="Agency"
             price="$99"
             unit="/ month"
+            subtitle="For creator agencies — coming soon"
             features={agencyFeatures}
-            ctaLabel="Contact us →"
-            ctaHref={`mailto:${CONTACT_EMAIL}`}
+            ctaLabel="Coming soon"
+            comingSoon
           />
         </div>
       </section>
@@ -564,15 +532,24 @@ export default function LandingPage() {
       <section className="border-t border-border bg-gradient-to-b from-violet-50 to-background dark:from-violet-950/30">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 py-20 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Join the founding beta &mdash; 50 spots
+            Join the founding beta &mdash; {foundingCap} spots
           </h2>
           <p className="text-base text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
-            We&apos;re opening free access to our first 50 creators. No credit card. No time limit.
-            Founding members lock in <span className="font-semibold text-foreground">$9/mo</span>{' '}
-            &mdash; 50% off the Pro price, forever. Spot 51 pays full price.
+            Free access during our {BETA_LENGTH_WEEKS}-week founding beta &mdash; no credit card.
+            The first {foundingCap} creators lock in{' '}
+            <span className="font-semibold text-foreground">$9/mo</span>, half off Pro; after that it&apos;s $19.{' '}
+            {foundingFull ? 'Founding spots are now full.' : `Only ${spotsLeft} left.`}
           </p>
-          <div className="flex justify-center">
-            <EmailCapture />
+          <div className="flex flex-col items-center gap-4">
+            <Link
+              href="/signup"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-8 text-base font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            >
+              Claim your founding spot <ArrowRight className="h-4 w-4" />
+            </Link>
+            <p className="text-xs text-muted-foreground">
+              Free during beta &middot; No credit card &middot; Cancel anytime
+            </p>
           </div>
         </div>
       </section>
@@ -611,68 +588,6 @@ export default function LandingPage() {
   )
 }
 
-function MockStat({
-  label,
-  value,
-  change,
-  positive,
-}: {
-  label: string
-  value: string
-  change: string
-  positive: boolean
-}) {
-  return (
-    <div className="rounded-lg border border-border bg-card p-3">
-      <div className="text-[9px] uppercase tracking-wider text-muted-foreground mb-0.5">{label}</div>
-      <div className="text-sm font-bold text-foreground">{value}</div>
-      <div className={`mt-0.5 text-[10px] font-medium ${positive ? 'text-emerald-600' : 'text-amber-600'}`}>
-        {change}
-      </div>
-    </div>
-  )
-}
-
-const TONE_STYLES: Record<string, string> = {
-  emerald: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300',
-  amber: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300',
-  violet: 'bg-violet-100 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300',
-}
-
-function MockDeal({
-  brand,
-  amount,
-  stage,
-  tone,
-}: {
-  brand: string
-  amount: string
-  stage: string
-  tone: 'emerald' | 'amber' | 'violet'
-}) {
-  return (
-    <div className="flex items-center justify-between text-[11px]">
-      <div className="flex items-center gap-2 min-w-0">
-        <span className={`rounded px-1.5 py-0.5 text-[9px] font-medium ${TONE_STYLES[tone]}`}>{stage}</span>
-        <span className="text-foreground truncate">{brand}</span>
-      </div>
-      <span className="font-semibold text-foreground shrink-0">{amount}</span>
-    </div>
-  )
-}
-
-function MockInvoice({ client, amount, due }: { client: string; amount: string; due: string }) {
-  return (
-    <div className="flex items-center justify-between text-xs">
-      <div className="flex flex-col min-w-0">
-        <span className="text-foreground truncate">{client}</span>
-        <span className="text-[10px] text-muted-foreground">{due}</span>
-      </div>
-      <span className="font-semibold text-foreground shrink-0">{amount}</span>
-    </div>
-  )
-}
-
 function Step({ n, title, desc }: { n: string; title: string; desc: string }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -695,6 +610,7 @@ function PlanCard({
   features,
   ctaLabel,
   ctaHref,
+  comingSoon = false,
 }: {
   name: string
   price: string
@@ -702,7 +618,8 @@ function PlanCard({
   subtitle?: string
   features: string[]
   ctaLabel: string
-  ctaHref: string
+  ctaHref?: string
+  comingSoon?: boolean
 }) {
   return (
     <div className="rounded-2xl border border-border bg-card p-7 flex flex-col shadow-sm">
@@ -720,12 +637,21 @@ function PlanCard({
           </li>
         ))}
       </ul>
-      <Link
-        href={ctaHref}
-        className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground hover:bg-accent transition-colors"
-      >
-        {ctaLabel}
-      </Link>
+      {comingSoon ? (
+        <span
+          aria-disabled="true"
+          className="inline-flex h-10 cursor-default items-center justify-center rounded-xl border border-dashed border-border bg-muted/50 px-4 text-sm font-semibold text-muted-foreground"
+        >
+          {ctaLabel}
+        </span>
+      ) : (
+        <Link
+          href={ctaHref ?? '#'}
+          className="inline-flex h-10 items-center justify-center rounded-xl border border-border bg-background px-4 text-sm font-semibold text-foreground hover:bg-accent transition-colors"
+        >
+          {ctaLabel}
+        </Link>
+      )}
     </div>
   )
 }
@@ -798,7 +724,7 @@ function YouTubeSyncMock() {
     <div className="rounded-2xl border border-border bg-card shadow-xl overflow-hidden">
       <div className="flex items-center justify-between border-b border-border bg-muted/40 px-4 py-3">
         <div className="flex items-center gap-2">
-          <Video className="h-4 w-4 text-red-500" />
+          <YouTubeIcon className="h-4 w-4" />
           <span className="text-xs font-semibold text-foreground">YouTube connection</span>
         </div>
         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:text-emerald-300">

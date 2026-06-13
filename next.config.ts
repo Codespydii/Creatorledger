@@ -9,6 +9,19 @@ const nextConfig: NextConfig = {
   // bundler mishandles; keep it external so Node loads it at runtime.
   serverExternalPackages: ['@react-pdf/renderer', 'mammoth'],
 
+  experimental: {
+    // Reuse prefetched/visited page segments in the client router cache instead
+    // of refetching on every navigation. `dynamic` defaults to 0 (no reuse),
+    // which made the cross-page guided tour refetch each page's data on every
+    // "Next". Caching dynamic segments for a few minutes lets the tour's
+    // prefetch-on-open hold each page's payload so Next lands instantly. The
+    // app isn't real-time, and server actions still revalidate after mutations.
+    staleTimes: {
+      dynamic: 180,
+      static: 300,
+    },
+  },
+
   async headers() {
     // Baseline security headers applied to every route. (CSP intentionally
     // omitted for now — it needs per-page testing to avoid breaking Recharts,

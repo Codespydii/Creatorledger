@@ -33,7 +33,12 @@ export async function Topbar({ title, subtitle }: TopbarProps) {
       <div className="flex items-center gap-2 min-w-0">
         <MobileMenuButton />
         <div className="min-w-0">
-          <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">{title}</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">{title}</h1>
+            <span className="shrink-0 rounded-full border border-violet-200 bg-violet-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-violet-700 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-300">
+              Beta
+            </span>
+          </div>
           {subtitle && (
             <p className="text-xs sm:text-sm text-muted-foreground truncate hidden sm:block">{subtitle}</p>
           )}
