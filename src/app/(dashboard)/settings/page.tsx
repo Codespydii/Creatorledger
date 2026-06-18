@@ -69,7 +69,7 @@ export default async function SettingsPage({ searchParams }: Props) {
       <Topbar title="Settings" subtitle="Manage your account preferences" />
       <main className="flex-1 p-4 sm:p-6">
         <div className="mx-auto flex w-full max-w-5xl gap-8">
-          <aside className="w-44 shrink-0">
+          <aside className="hidden w-44 shrink-0 md:block">
             <SettingsNav />
           </aside>
 

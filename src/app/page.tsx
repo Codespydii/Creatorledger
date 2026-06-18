@@ -15,6 +15,7 @@ import {
   Globe2,
   BarChart2,
   ArrowRight,
+  X,
 } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/theme-toggle'
 import { PLATFORMS, YouTubeIcon } from '@/components/shared/platform-icons'
@@ -74,6 +75,27 @@ const everythingElse = [
     desc: 'P&L by month, revenue by source, expense breakdown by category. Hand it to your accountant.',
   },
 ]
+
+// Each line maps one Caelo feature to a distinct real tool a creator would
+// otherwise pay for. Prices are the published month-to-month rates verified in
+// June 2026 (QuickBooks Solopreneur $20, FreshBooks Lite $19, Expensify Collect
+// $5, HubSpot Starter $20, LegalZoom Legal Advantage $35, Float $59, Beacons
+// Creator $10). The "otherwise" total is summed in code so it can't drift.
+const simplerStack: Array<{
+  icon: React.ComponentType<{ className?: string }>
+  feature: string
+  replaces: string
+  price: number
+}> = [
+  { icon: BarChart2, feature: 'Creator bookkeeping & P&L', replaces: 'QuickBooks Solopreneur', price: 20 },
+  { icon: FileText, feature: 'Invoices + Stripe payment links', replaces: 'FreshBooks', price: 19 },
+  { icon: ScanLine, feature: 'AI receipt scanning', replaces: 'Expensify', price: 5 },
+  { icon: Handshake, feature: 'Brand-deal CRM pipeline', replaces: 'HubSpot Starter', price: 20 },
+  { icon: ShieldCheck, feature: 'AI contract review', replaces: 'LegalZoom', price: 35 },
+  { icon: LineChart, feature: '90-day cash forecast', replaces: 'Float', price: 59 },
+  { icon: Sparkles, feature: 'Public media kit', replaces: 'Beacons', price: 10 },
+]
+const stackTotal = simplerStack.reduce((sum, s) => sum + s.price, 0)
 
 const stats = [
   { value: '11', label: 'Income stream types tracked' },
@@ -387,6 +409,94 @@ export default async function LandingPage() {
                 <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4.6 — A SIMPLER STACK (cost comparison) */}
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-20 sm:py-24">
+          <div className="text-center mb-10 max-w-2xl mx-auto">
+            <p className="text-sm font-semibold uppercase tracking-wider text-primary mb-3">A simpler stack</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 tracking-tight">
+              Stop paying for seven apps to run one business.
+            </h2>
+            <p className="text-base text-muted-foreground">
+              Most creators stitch together a bookkeeping tool, an invoicer, a receipt scanner, a CRM, a
+              contract reviewer and more. Caelo is all of it &mdash; for less than any single one.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div
+              aria-hidden
+              className="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-violet-100/60 via-transparent to-emerald-100/40 blur-2xl dark:from-violet-900/20 dark:to-emerald-900/10"
+            />
+            <div className="rounded-2xl border border-border bg-card shadow-xl overflow-hidden">
+              <ul className="divide-y divide-border">
+                {simplerStack.map(({ icon: Icon, feature, replaces, price }) => (
+                  <li key={feature} className="flex items-center gap-4 px-5 sm:px-6 py-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                      <Icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-semibold text-foreground">{feature}</div>
+                      <div className="text-xs text-muted-foreground">
+                        Replaces <span className="font-medium text-foreground/70">{replaces}</span>
+                      </div>
+                    </div>
+                    <div className="shrink-0 text-sm font-semibold text-foreground tabular-nums">
+                      ${price}
+                      <span className="text-xs font-normal text-muted-foreground">/mo</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {/* What you'd spend otherwise */}
+              <div className="flex items-center gap-4 border-t border-border px-5 sm:px-6 py-4">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-red-100 dark:bg-red-950/40">
+                  <X className="h-4 w-4 text-red-600 dark:text-red-400" />
+                </div>
+                <div className="flex-1 text-sm font-medium text-muted-foreground">
+                  What you&rsquo;d spend otherwise
+                </div>
+                <div className="shrink-0 text-sm font-semibold text-red-500 line-through tabular-nums">
+                  ${stackTotal}/mo
+                </div>
+              </div>
+
+              {/* Caelo */}
+              <div className="flex items-center gap-4 bg-emerald-50 px-5 sm:px-6 py-5 dark:bg-emerald-950/30">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/15">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-bold text-emerald-800 dark:text-emerald-200">
+                    Caelo &mdash; everything above
+                  </div>
+                  <div className="text-xs text-emerald-700/80 dark:text-emerald-300/80">
+                    Founding price, locked forever
+                  </div>
+                </div>
+                <div className="shrink-0 text-xl font-bold text-emerald-700 tabular-nums dark:text-emerald-300">
+                  $9<span className="text-sm font-medium">/mo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-3">
+            <Link
+              href="/signup"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-7 text-base font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            >
+              Replace your whole stack <ArrowRight className="h-4 w-4" />
+            </Link>
+            <p className="text-[11px] text-muted-foreground text-center">
+              Competitor prices are public month-to-month rates as of {new Date().getFullYear()}. Caelo founding
+              price; $19/mo after.
+            </p>
           </div>
         </div>
       </section>
