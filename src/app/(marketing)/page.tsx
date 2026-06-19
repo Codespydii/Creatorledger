@@ -18,11 +18,12 @@ import {
   X,
 } from 'lucide-react'
 import { PLATFORMS, YouTubeIcon } from '@/components/shared/platform-icons'
-import { getFoundingStats, BETA_LENGTH_WEEKS } from '@/lib/beta'
+import { FOUNDING_CAP, BETA_LENGTH_WEEKS } from '@/lib/beta'
+import { FoundingSpots } from '@/components/marketing/founding-spots'
 
-// Re-check the live founding-spot count at most once a minute; the page is
-// otherwise static marketing.
-export const revalidate = 60
+// Fully static marketing page. The live "founding spots left" count is fetched
+// on the client (see <FoundingSpots>), so the HTML serves from the edge with no
+// DB call on the request path — and the counter is always current, never stale.
 
 const painPoints = [
   'Your spreadsheet breaks the moment you earn from 5+ income streams.',
@@ -152,8 +153,7 @@ const faq = [
   },
 ]
 
-export default async function LandingPage() {
-  const { left: spotsLeft, cap: foundingCap, isFull: foundingFull } = await getFoundingStats()
+export default function LandingPage() {
   return (
     <div className="bg-background">
       {/* SECTION 2 — HERO */}
@@ -165,9 +165,7 @@ export default async function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 sm:pt-24 pb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            {foundingFull
-              ? 'Free beta · Founding spots full'
-              : `Free beta · ${spotsLeft} of ${foundingCap} founding spots left`}
+            <FoundingSpots variant="badge" cap={FOUNDING_CAP} />
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] tracking-tight mb-6 max-w-3xl mx-auto">
             Run your creator business{' '}
@@ -537,9 +535,7 @@ export default async function LandingPage() {
                 <span className="text-sm text-muted-foreground">/ month</span>
               </div>
               <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-300 font-medium">
-                {foundingFull
-                  ? 'Founding spots are full — Pro is $19/mo'
-                  : `${spotsLeft} of ${foundingCap} founding spots left — then $19/mo`}
+                <FoundingSpots variant="pricing" cap={FOUNDING_CAP} />
               </p>
             </div>
             <ul className="mt-6 space-y-2.5 mb-6 flex-1">
@@ -604,13 +600,13 @@ export default async function LandingPage() {
       <section className="border-t border-border bg-gradient-to-b from-violet-50 to-background dark:from-violet-950/30">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 py-20 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Join the founding beta &mdash; {foundingCap} spots
+            Join the founding beta &mdash; {FOUNDING_CAP} spots
           </h2>
           <p className="text-base text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
             Free access during our {BETA_LENGTH_WEEKS}-week founding beta &mdash; no credit card.
-            The first {foundingCap} creators lock in{' '}
+            The first {FOUNDING_CAP} creators lock in{' '}
             <span className="font-semibold text-foreground">$9/mo</span>, half off Pro; after that it&apos;s $19.{' '}
-            {foundingFull ? 'Founding spots are now full.' : `Only ${spotsLeft} left.`}
+            <FoundingSpots variant="cta" cap={FOUNDING_CAP} />
           </p>
           <div className="flex flex-col items-center gap-4">
             <Link
