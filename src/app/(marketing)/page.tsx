@@ -17,11 +17,8 @@ import {
   ArrowRight,
   X,
 } from 'lucide-react'
-import { ThemeToggle } from '@/components/shared/theme-toggle'
 import { PLATFORMS, YouTubeIcon } from '@/components/shared/platform-icons'
 import { getFoundingStats, BETA_LENGTH_WEEKS } from '@/lib/beta'
-
-const CONTACT_EMAIL = 'support@usecaelo.com'
 
 // Re-check the live founding-spot count at most once a minute; the page is
 // otherwise static marketing.
@@ -158,42 +155,7 @@ const faq = [
 export default async function LandingPage() {
   const { left: spotsLeft, cap: foundingCap, isFull: foundingFull } = await getFoundingStats()
   return (
-    <div className="min-h-screen bg-background">
-      {/* SECTION 1 — NAVBAR */}
-      <nav className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 grid h-16 grid-cols-[1fr_auto_1fr] items-center">
-          <Link href="/" className="flex items-center gap-2" aria-label="Caelo home">
-            <Image src="/caelo-logo.png" alt="Caelo" width={125} height={36} priority className="h-9 w-auto" />
-          </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
-              Features
-            </a>
-            <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
-            </a>
-            <a href="#faq" className="text-muted-foreground hover:text-foreground transition-colors">
-              FAQ
-            </a>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3 justify-self-end">
-            <ThemeToggle />
-            <Link
-              href="/login"
-              className="hidden sm:inline text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-2"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/signup"
-              className="inline-flex h-9 items-center justify-center rounded-xl bg-primary px-4 text-sm font-medium text-white hover:bg-violet-700 transition-colors"
-            >
-              Join Free Beta
-            </Link>
-          </div>
-        </div>
-      </nav>
-
+    <div className="bg-background">
       {/* SECTION 2 — HERO */}
       <section className="relative overflow-hidden">
         <div
@@ -664,36 +626,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* SECTION 9 — FOOTER */}
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Image src="/caelo-logo.png" alt="Caelo" width={97} height={28} className="h-7 w-auto" />
-              <span className="hidden sm:inline text-xs text-muted-foreground">
-                The financial OS for full-time creators.
-              </span>
-            </div>
-            <div className="flex items-center gap-5 text-xs">
-              <Link href="/legal/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy
-              </Link>
-              <Link href="/legal/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms
-              </Link>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-          <div className="mt-6 pt-6 border-t border-border text-xs text-muted-foreground text-center">
-            &copy; {new Date().getFullYear()} Caelo. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

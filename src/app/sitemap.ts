@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { FEATURES } from '@/components/marketing/nav-data'
+import { getPostSlugs } from '@/lib/blog'
 
 const BASE_URL = 'https://usecaelo.com'
 
@@ -80,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((p) => !isExcluded(p))
     .sort()
 
-  return paths.map((path) => {
+  const staticEntries: MetadataRoute.Sitemap = paths.map((path) => {
     if (path === '/') {
       return {
         url: BASE_URL,
@@ -96,4 +98,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }
   })
+
+  // Dynamic [slug] routes can't be discovered by the directory walk above, so
+  // enumerate them from their source of truth: the feature catalog and the
+  // blog content folder.
+  const featureEntries: MetadataRoute.Sitemap = FEATURES.map((f) => ({
+    url: `${BASE_URL}/features/${f.slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }))
+
+  const blogEntries: MetadataRoute.Sitemap = getPostSlugs().map((slug) => ({
+    url: `${BASE_URL}/blog/${slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
+
+  return [...staticEntries, ...featureEntries, ...blogEntries]
 }

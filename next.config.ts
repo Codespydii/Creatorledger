@@ -1,7 +1,13 @@
 import type { NextConfig } from 'next'
 import { withSentryConfig } from '@sentry/nextjs'
+import createMDX from '@next/mdx'
 
 const nextConfig: NextConfig = {
+  // Let `.md`/`.mdx` files participate as pages and be importable as
+  // components. Blog posts live in src/content/blog/*.mdx and are imported
+  // dynamically by the [slug] route.
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+
   // @react-pdf/renderer ships native-ish bindings (fontkit, pdfkit) that
   // Vercel's serverless bundler can't tree-shake correctly. Keeping it
   // external means Node loads it normally at runtime instead of bundling.
@@ -41,9 +47,15 @@ const nextConfig: NextConfig = {
   },
 }
 
+// Compile MDX (no custom remark/rehype plugins — Turbopack can't receive
+// non-serializable plugin functions, and the styling is handled in
+// src/mdx-components.tsx instead).
+const withMDX = createMDX({})
+const mdxConfig = withMDX(nextConfig)
+
 // Only wrap with Sentry when a DSN is set; otherwise export the bare config.
 const config = process.env.SENTRY_DSN
-  ? withSentryConfig(nextConfig, {
+  ? withSentryConfig(mdxConfig, {
       silent: true,
       org: process.env.SENTRY_ORG,
       project: process.env.SENTRY_PROJECT,
@@ -53,6 +65,6 @@ const config = process.env.SENTRY_DSN
       // disableLogger was deprecated; the replacement (webpack.treeshake.removeDebugLogging)
       // is not supported with Turbopack. Sentry's build-time logger output is harmless.
     })
-  : nextConfig
+  : mdxConfig
 
 export default config
