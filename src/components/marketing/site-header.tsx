@@ -111,6 +111,13 @@ export function SiteHeader() {
           </DropdownTrigger>
 
           <Link
+            href="/blog"
+            className="rounded-lg px-3 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+          >
+            Blog
+          </Link>
+
+          <Link
             href="/#pricing"
             className="rounded-lg px-3 py-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
           >
@@ -185,6 +192,14 @@ export function SiteHeader() {
                 ),
               )}
             </MobileGroup>
+
+            <Link
+              href="/blog"
+              onClick={() => setMobileOpen(false)}
+              className="block rounded-lg px-2 py-2 text-sm font-medium text-foreground hover:bg-accent transition-colors"
+            >
+              Blog
+            </Link>
 
             <Link
               href="/#pricing"

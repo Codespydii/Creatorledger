@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 export const metadata = {
   title: 'Terms of Service — Caelo',
   description: 'The terms that govern your use of Caelo.',
+  alternates: { canonical: '/legal/terms' },
 }
 
 const LAST_UPDATED = 'June 7, 2026'

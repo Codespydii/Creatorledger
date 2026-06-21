@@ -28,6 +28,18 @@ const nextConfig: NextConfig = {
     },
   },
 
+  async redirects() {
+    // The bookkeeping pillar moved under /guides. 308-redirect the old top-level
+    // URL so any existing links/crawls land on the canonical location.
+    return [
+      {
+        source: '/bookkeeping-for-creators',
+        destination: '/guides/bookkeeping-for-creators',
+        permanent: true,
+      },
+    ]
+  },
+
   async headers() {
     // Baseline security headers applied to every route. (CSP intentionally
     // omitted for now — it needs per-page testing to avoid breaking Recharts,

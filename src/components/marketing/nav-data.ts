@@ -187,9 +187,11 @@ export interface ResourceLink {
 }
 
 // Powers the Resources dropdown. Items without an href (comingSoon) render
-// disabled rather than as dead links.
+// disabled rather than as dead links. (Blog is a top-level nav item, so it's
+// intentionally not duplicated here.)
 export const RESOURCES: ResourceLink[] = [
-  { name: 'Blog', desc: 'Playbooks on creator finance, taxes & deals', href: '/blog' },
+  { name: 'Guides', desc: 'How to use Caelo, step by step', href: '/guides' },
+  { name: 'Compare', desc: 'Caelo vs QuickBooks, Wave & FreshBooks', href: '/compare' },
   { name: 'Help & FAQ', desc: 'Answers to the most common questions', href: '/#faq' },
   { name: 'Free tools & templates', desc: 'Rate calculator, invoice & contract templates', comingSoon: true },
 ]
@@ -211,8 +213,19 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [...FEATURES.map((f) => ({ label: f.name, href: `/features/${f.slug}` }))],
   },
   {
+    heading: 'Compare',
+    links: [
+      { label: 'All comparisons', href: '/compare' },
+      { label: 'Caelo vs QuickBooks', href: '/usecaelo-vs-quickbooks' },
+      { label: 'Caelo vs Wave', href: '/usecaelo-vs-wave' },
+      { label: 'Caelo vs FreshBooks', href: '/usecaelo-vs-freshbooks' },
+    ],
+  },
+  {
     heading: 'Resources',
     links: [
+      { label: 'Guides', href: '/guides' },
+      { label: 'Bookkeeping for creators', href: '/guides/bookkeeping-for-creators' },
       { label: 'Blog', href: '/blog' },
       { label: 'Help & FAQ', href: '/#faq' },
       { label: 'Free tools & templates', comingSoon: true },

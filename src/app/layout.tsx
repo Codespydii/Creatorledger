@@ -3,7 +3,6 @@ import Script from 'next/script'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { ThemeProvider } from '@/components/shared/theme-provider'
 import { Toaster } from 'sonner'
 import './globals.css'
@@ -59,10 +58,46 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+// Sitewide structured data. Organization powers brand/knowledge-panel
+// understanding; SoftwareApplication makes Caelo eligible for product rich
+// results and gives answer engines (ChatGPT, Perplexity, Gemini) a citable,
+// machine-readable description of what the product is and what it costs. No
+// aggregateRating until we have real reviews — faking it risks a manual action.
+const ORG_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Caelo',
+  url: APP_URL,
+  logo: `${APP_URL}/caelo-logo.png`,
+  description: META_DESCRIPTION,
+  email: 'support@usecaelo.com',
+}
+
+const SOFTWARE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Caelo',
+  applicationCategory: 'FinanceApplication',
+  applicationSubCategory: 'Bookkeeping & accounting software for creators',
+  operatingSystem: 'Web',
+  url: APP_URL,
+  description: META_DESCRIPTION,
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free during the founding beta; Pro from $9/mo for founding members.',
+  },
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full bg-background text-foreground antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([ORG_SCHEMA, SOFTWARE_SCHEMA]) }}
+        />
         <ThemeProvider>
           {children}
           <Toaster
@@ -75,7 +110,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />
-        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');`}
+            </Script>
+          </>
+        )}
         {CLARITY_ID && (
           <Script id="ms-clarity" strategy="afterInteractive">
             {`(function(c,l,a,r,i,t,y){

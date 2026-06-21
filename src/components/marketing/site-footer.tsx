@@ -6,7 +6,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-card">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <Image src="/caelo-logo.png" alt="Caelo" width={97} height={28} className="h-7 w-auto" />

@@ -17,6 +17,12 @@ export interface PostMeta {
   tags?: string[]
   /** Optional cover image, e.g. "/blog/my-post-cover.jpg" (lives in /public). */
   cover?: string
+  /**
+   * When true the post is excluded from the blog index, the sitemap, and static
+   * generation (so its URL 404s rather than serving unfinished content). Use it
+   * to keep a draft in the repo without exposing it to crawlers.
+   */
+  draft?: boolean
 }
 
 export interface PostSummary extends PostMeta {
@@ -51,7 +57,21 @@ export function getPostSlugs(): string[] {
   }
 }
 
-/** All posts with their metadata, newest first. */
+/**
+ * Slugs of every *publishable* post (drafts excluded). Use this for anything
+ * crawler-facing — the sitemap and the [slug] route's generateStaticParams — so
+ * draft posts never get a URL or a sitemap entry. Loads each post's `meta`, so
+ * it's async (unlike the filename-only getPostSlugs).
+ */
+export async function getPublishedSlugs(): Promise<string[]> {
+  const slugs = getPostSlugs()
+  const withMeta = await Promise.all(
+    slugs.map(async (slug) => ({ slug, meta: (await loadPost(slug)).meta })),
+  )
+  return withMeta.filter(({ meta }) => !meta.draft).map(({ slug }) => slug)
+}
+
+/** All published posts with their metadata, newest first (drafts excluded). */
 export async function getAllPosts(): Promise<PostSummary[]> {
   const slugs = getPostSlugs()
   const posts = await Promise.all(
@@ -60,7 +80,9 @@ export async function getAllPosts(): Promise<PostSummary[]> {
       return { slug, ...meta }
     }),
   )
-  return posts.sort((a, b) => +new Date(b.date) - +new Date(a.date))
+  return posts
+    .filter((p) => !p.draft)
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date))
 }
 
 export function formatDate(iso: string): string {

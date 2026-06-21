@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -19,11 +20,17 @@ import {
 } from 'lucide-react'
 import { PLATFORMS, YouTubeIcon } from '@/components/shared/platform-icons'
 import { FOUNDING_CAP, BETA_LENGTH_WEEKS } from '@/lib/beta'
-import { FoundingSpots } from '@/components/marketing/founding-spots'
 
-// Fully static marketing page. The live "founding spots left" count is fetched
-// on the client (see <FoundingSpots>), so the HTML serves from the edge with no
-// DB call on the request path — and the counter is always current, never stale.
+// Self-referencing canonical for the homepage. Title/description/OG are
+// inherited from the root layout's `default` metadata; this only pins the
+// canonical URL so query-string and trailing-slash variants don't fragment
+// ranking signals.
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
+
+// Fully static marketing page — serves from the edge with no DB call on the
+// request path.
 
 const painPoints = [
   'Your spreadsheet breaks the moment you earn from 5+ income streams.',
@@ -95,11 +102,25 @@ const simplerStack: Array<{
 ]
 const stackTotal = simplerStack.reduce((sum, s) => sum + s.price, 0)
 
+// Money saved per year vs stitching together the separate tools above, measured
+// against Caelo's regular $19/mo (the durable, always-true figure — founding
+// members save even more). Derived from `stackTotal` so it can never drift from
+// the comparison table above it.
+const CAELO_MONTHLY = 19
+const annualSavings = (stackTotal - CAELO_MONTHLY) * 12
+
+// Estimated hours saved per year on bookkeeping & admin once receipt scanning,
+// YouTube auto-sync and AI contract review replace manual entry. An estimate,
+// not telemetry — tune `HOURS_SAVED_PER_MONTH` if you want a different figure.
+const HOURS_SAVED_PER_MONTH = 6
+const annualHoursSaved = HOURS_SAVED_PER_MONTH * 12
+
 const stats = [
-  { value: '11', label: 'Income stream types tracked' },
-  { value: '5 sec', label: 'To scan a contract with AI' },
-  { value: '$0', label: 'To join the founding beta' },
-  { value: '90 days', label: 'Cash forecast horizon' },
+  { value: `$${annualSavings.toLocaleString()}`, label: 'Saved per year vs paying for separate tools' },
+  { value: `${annualHoursSaved}+ hrs`, label: 'Saved per year on bookkeeping & admin' },
+  { value: '0', label: 'Spreadsheets to maintain' },
+  // "7" derives from the comparison list above so it never drifts.
+  { value: `${simplerStack.length} → 1`, label: 'Creator apps replaced by one' },
 ]
 
 const freeFeatures = [
@@ -153,9 +174,26 @@ const faq = [
   },
 ]
 
+// FAQPage structured data, built from the same `faq` array rendered below — so
+// the markup and the visible Q&A can never drift. Makes the homepage eligible
+// for FAQ rich results and gives answer engines extractable Q&A pairs.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+}
+
 export default function LandingPage() {
   return (
     <div className="bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       {/* SECTION 2 — HERO */}
       <section className="relative overflow-hidden">
         <div
@@ -165,14 +203,14 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-16 sm:pt-24 pb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <FoundingSpots variant="badge" cap={FOUNDING_CAP} />
+            Free beta · Founding spots open
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] tracking-tight mb-6 max-w-3xl mx-auto">
-            Run your creator business{' '}
-            <span className="text-primary">like a real business.</span>
+            Bookkeeping &amp; accounting software{' '}
+            <span className="text-primary">built for creators.</span>
           </h1>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Track sponsorships, scan receipts with AI, catch dangerous contract clauses before you sign, and forecast cash flow &mdash; built for creators on every platform.
+            Run your creator business like a real business. Track sponsorships, scan receipts with AI, catch dangerous contract clauses before you sign, and forecast cash flow &mdash; built for YouTubers, streamers and influencers on every platform.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
@@ -274,10 +312,10 @@ export default function LandingPage() {
             Built for the creator P&amp;L
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold text-foreground mb-4 tracking-tight">
-            Everything built for how creators actually earn.
+            The all-in-one bookkeeping platform for content creators.
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground">
-            Not adapted from small-business software. Built from scratch for your income model.
+            Everything built for how creators actually earn — not adapted from small-business software, but built from scratch for your income model.
           </p>
         </div>
 
@@ -490,7 +528,12 @@ export default function LandingPage() {
 
       {/* SECTION 6 — HONEST STATS */}
       <section className="border-t border-border bg-emerald-50/60 dark:bg-emerald-950/20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 py-12">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 py-14">
+          <div className="text-center mb-10 max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+              Less time on admin. More money in your pocket.
+            </h2>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {stats.map((s) => (
               <div key={s.label}>
@@ -499,6 +542,11 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
+          <p className="mt-8 text-center text-[11px] text-muted-foreground">
+            Savings vs the ${stackTotal}/mo it costs to run the separate tools above, measured against Caelo at $
+            {CAELO_MONTHLY}/mo. Time saved is an estimate based on replacing manual data entry with AI scanning and
+            auto-sync.
+          </p>
         </div>
       </section>
 
@@ -535,7 +583,7 @@ export default function LandingPage() {
                 <span className="text-sm text-muted-foreground">/ month</span>
               </div>
               <p className="mt-2 text-xs text-emerald-700 dark:text-emerald-300 font-medium">
-                <FoundingSpots variant="pricing" cap={FOUNDING_CAP} />
+                Founding price $9/mo — then $19/mo
               </p>
             </div>
             <ul className="mt-6 space-y-2.5 mb-6 flex-1">
@@ -605,8 +653,7 @@ export default function LandingPage() {
           <p className="text-base text-muted-foreground mb-8 max-w-xl mx-auto leading-relaxed">
             Free access during our {BETA_LENGTH_WEEKS}-week founding beta &mdash; no credit card.
             The first {FOUNDING_CAP} creators lock in{' '}
-            <span className="font-semibold text-foreground">$9/mo</span>, half off Pro; after that it&apos;s $19.{' '}
-            <FoundingSpots variant="cta" cap={FOUNDING_CAP} />
+            <span className="font-semibold text-foreground">$9/mo</span>, half off Pro; after that it&apos;s $19.
           </p>
           <div className="flex flex-col items-center gap-4">
             <Link

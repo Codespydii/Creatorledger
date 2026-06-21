@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react'
 export const metadata = {
   title: 'Privacy Policy — Caelo',
   description: 'How Caelo collects, uses, protects, and shares your information.',
+  alternates: { canonical: '/legal/privacy' },
 }
 
 const LAST_UPDATED = 'June 7, 2026'

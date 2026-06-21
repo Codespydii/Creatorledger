@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { FEATURES } from '@/components/marketing/nav-data'
-import { getPostSlugs } from '@/lib/blog'
+import { getPublishedSlugs } from '@/lib/blog'
 
 const BASE_URL = 'https://usecaelo.com'
 
@@ -71,7 +71,7 @@ function collectRoutes(dir: string, segments: string[] = []): string[] {
   return routes
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date()
 
   // Normalize (the root page yields "/", collapse any stray slashes), dedupe,
@@ -109,7 +109,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  const blogEntries: MetadataRoute.Sitemap = getPostSlugs().map((slug) => ({
+  const blogEntries: MetadataRoute.Sitemap = (await getPublishedSlugs()).map((slug) => ({
     url: `${BASE_URL}/blog/${slug}`,
     lastModified,
     changeFrequency: 'monthly',
