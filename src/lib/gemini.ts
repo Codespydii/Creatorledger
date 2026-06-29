@@ -1,6 +1,6 @@
 import 'server-only'
 
-const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash'
+const DEFAULT_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite'
 
 export class GeminiConfigError extends Error {
   constructor() {

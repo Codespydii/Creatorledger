@@ -31,7 +31,7 @@ Pick from **USD, GBP, EUR, CAD, AUD, INR** in Settings. Every monetary display f
 - **Framework:** Next.js 16.2 (App Router, Turbopack), React 19, TypeScript
 - **Database:** PostgreSQL via Supabase, Prisma 7 with `@prisma/adapter-pg`
 - **Auth:** JWT sessions (`jose`) in HttpOnly cookies, bcrypt password hashing, Google Sign-In OAuth
-- **AI:** Google Gemini 2.5 Flash for contract analysis, receipt OCR, email-to-deal extraction
+- **AI:** Google Gemini 3.1 Flash Lite for contract analysis, receipt OCR, email-to-deal extraction
 - **Email:** Resend (transactional + reminders)
 - **Payments:** Stripe payment links (per-creator key, Connect deferred)
 - **Styling:** Tailwind CSS v4, Lucide icons, Recharts
@@ -61,7 +61,7 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 # AI features (free tier at https://aistudio.google.com/apikey)
 GEMINI_API_KEY="<your gemini key>"
-GEMINI_MODEL="gemini-2.5-flash"  # optional, defaults to flash
+GEMINI_MODEL="gemini-3.1-flash-lite"  # optional, defaults to 3.1 flash lite
 
 # Google OAuth — for Sign-in and YouTube sync
 GOOGLE_OAUTH_CLIENT_ID=""
