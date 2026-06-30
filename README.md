@@ -210,7 +210,7 @@ See [persona walkthrough findings] in commit history for the full list of known 
 ## Deploy to Vercel
 
 1. **Push to GitHub** (already done — this repo).
-2. Go to https://vercel.com/new and import `Codespydii/Creatorledger`.
+2. Go to https://vercel.com/new .
 3. Vercel auto-detects Next.js. **Framework Preset:** Next.js. **Build Command:** `next build` (default). **Install Command:** `npm install` (default).
 4. Add all environment variables from `.env.local` to **Project Settings → Environment Variables**. At minimum: `DATABASE_URL`, `SESSION_SECRET`, `GEMINI_API_KEY`, `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CRON_SECRET`, `NEXT_PUBLIC_APP_URL` (set to your Vercel URL or custom domain), plus Google OAuth + Upstash if using.
 5. Click **Deploy**. First build takes ~3 minutes.
