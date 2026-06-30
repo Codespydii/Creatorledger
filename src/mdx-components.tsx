@@ -1,6 +1,7 @@
 import type { MDXComponents } from 'mdx/types'
 import Link from 'next/link'
 import type { ComponentPropsWithoutRef } from 'react'
+import { BlogFigure } from '@/components/marketing/blog-figure'
 
 // Global styling for every MDX file in the app (blog posts live in
 // src/content/blog/*.mdx). Rather than pull in @tailwindcss/typography, we map
@@ -60,14 +61,10 @@ const components: MDXComponents = {
   h4: (props: ComponentPropsWithoutRef<'h4'>) => (
     <h4 className="mt-6 mb-2 text-lg font-semibold text-foreground" {...props} />
   ),
-  img: (props: ComponentPropsWithoutRef<'img'>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className="my-6 w-full rounded-xl border border-border" alt={props.alt ?? ''} {...props} />
-  ),
-  figure: (props: ComponentPropsWithoutRef<'figure'>) => <figure className="my-8" {...props} />,
-  figcaption: (props: ComponentPropsWithoutRef<'figcaption'>) => (
-    <figcaption className="mt-2 text-center text-sm italic text-muted-foreground" {...props} />
-  ),
+  // Inline blog images go through <Figure> (next/image: optimized formats,
+  // responsive srcset, and explicit dimensions that reserve space to avoid CLS).
+  // Use <Figure> in MDX rather than raw markdown image syntax.
+  Figure: BlogFigure,
 }
 
 export function useMDXComponents(): MDXComponents {

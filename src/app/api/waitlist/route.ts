@@ -4,6 +4,17 @@ import { rateLimit, rateLimitErrorMessage } from '@/lib/rate-limit'
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// EMAIL_RX blocks whitespace and '@' but not HTML-significant characters in the
+// local part, so escape before interpolating a submitted email into any HTML body.
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://usecaelo.com'
 const FROM = process.env.RESEND_FROM_EMAIL ?? 'noreply@usecaelo.com'
 const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL ?? 'support@usecaelo.com'
@@ -90,7 +101,7 @@ export async function POST(req: Request) {
             from: `Caelo Signups <${FROM}>`,
             to: FOUNDER_EMAIL,
             subject: `New beta signup: ${email}`,
-            html: `<p>New founding member: <strong>${email}</strong></p><p>Check Resend Audiences for the full list.</p>`,
+            html: `<p>New founding member: <strong>${escapeHtml(email)}</strong></p><p>Check Resend Audiences for the full list.</p>`,
           })
         : Promise.resolve(),
     ])
