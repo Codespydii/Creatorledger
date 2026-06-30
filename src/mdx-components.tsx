@@ -64,6 +64,10 @@ const components: MDXComponents = {
     // eslint-disable-next-line @next/next/no-img-element
     <img className="my-6 w-full rounded-xl border border-border" alt={props.alt ?? ''} {...props} />
   ),
+  figure: (props: ComponentPropsWithoutRef<'figure'>) => <figure className="my-8" {...props} />,
+  figcaption: (props: ComponentPropsWithoutRef<'figcaption'>) => (
+    <figcaption className="mt-2 text-center text-sm italic text-muted-foreground" {...props} />
+  ),
 }
 
 export function useMDXComponents(): MDXComponents {
